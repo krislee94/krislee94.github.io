@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="http," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="确保Web安全的HTTPS在HTTP协议中有可能 存在 信息窃听或身份伪装等安全问题。使用HTTPS通信机制可以有效地防止这些问题。 HTTP的缺点 通信使用明文(不加密)，内容可能会被窃听 不验证通信方的身份，因此有可能遭遇伪装 无法证明报文的完整性，所以有可能已遭遇创思  当然这些问题不仅仅是在HTTP上出现，其他未加密协议中也会存在这类问题。 除此之外，HTTP本身还有很多缺点。而且，还有像">
+<meta name="keywords" content="http">
+<meta property="og:type" content="article">
+<meta property="og:title" content="http 理解(中)">
+<meta property="og:url" content="http://yoursite.com/2018/05/15/http-理解-中/index.html">
+<meta property="og:site_name" content="Krislee的个人博客">
+<meta property="og:description" content="确保Web安全的HTTPS在HTTP协议中有可能 存在 信息窃听或身份伪装等安全问题。使用HTTPS通信机制可以有效地防止这些问题。 HTTP的缺点 通信使用明文(不加密)，内容可能会被窃听 不验证通信方的身份，因此有可能遭遇伪装 无法证明报文的完整性，所以有可能已遭遇创思  当然这些问题不仅仅是在HTTP上出现，其他未加密协议中也会存在这类问题。 除此之外，HTTP本身还有很多缺点。而且，还有像">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-16T02:13:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="http 理解(中)">
+<meta name="twitter:description" content="确保Web安全的HTTPS在HTTP协议中有可能 存在 信息窃听或身份伪装等安全问题。使用HTTPS通信机制可以有效地防止这些问题。 HTTP的缺点 通信使用明文(不加密)，内容可能会被窃听 不验证通信方的身份，因此有可能遭遇伪装 无法证明报文的完整性，所以有可能已遭遇创思  当然这些问题不仅仅是在HTTP上出现，其他未加密协议中也会存在这类问题。 除此之外，HTTP本身还有很多缺点。而且，还有像">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/15/http-理解-中/"/>
+
+
+
+
+
+  <title>http 理解(中) | Krislee的个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Krislee的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/15/http-理解-中/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="KrisLee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Krislee的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">http 理解(中)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-15T14:53:22+08:00">
+                2018-05-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="确保Web安全的HTTPS"><a href="#确保Web安全的HTTPS" class="headerlink" title="确保Web安全的HTTPS"></a>确保Web安全的HTTPS</h2><p>在HTTP协议中有可能 存在 信息窃听或身份伪装等安全问题。使用HTTPS通信机制可以有效地防止这些问题。</p>
+<h3 id="HTTP的缺点"><a href="#HTTP的缺点" class="headerlink" title="HTTP的缺点"></a>HTTP的缺点</h3><ul>
+<li>通信使用明文(不加密)，内容可能会被窃听</li>
+<li>不验证通信方的身份，因此有可能遭遇伪装</li>
+<li>无法证明报文的完整性，所以有可能已遭遇创思</li>
+</ul>
+<p>当然这些问题不仅仅是在HTTP上出现，其他未加密协议中也会存在这类问题。</p>
+<p>除此之外，HTTP本身还有很多缺点。而且，还有像某些特定的Web服务器和特定的Web浏览器在实际应用中存在的不足。</p>
+<p><strong>加密处理防止被窃听</strong></p>
+<p>通信的加密</p>
+<p>HTTP协议中没有加密机制。但可以通过和SSL 或 TLS 的组合使用，加密HTTP的通信内容。</p>
+<ul>
+<li>用SSL建立安全通信路线之后，就可以在这条线路上进行HTTP通信了，与SSL组合使用的HTTP被称之为 HTTPS</li>
+<li>查明对方的证书</li>
+<li>通过MD5和SHA-1等散列值校验方法</li>
+</ul>
+<h3 id="HTTP-加密-认证-完整性保护-HTTPS"><a href="#HTTP-加密-认证-完整性保护-HTTPS" class="headerlink" title="HTTP + 加密 + 认证 + 完整性保护 = HTTPS"></a>HTTP + 加密 + 认证 + 完整性保护 = HTTPS</h3><p>既然HTTPS那么安全可靠，那为何所有的Web网站不一直使用HTTPS。</p>
+<ul>
+<li><p>与纯文本通信相比，加密通信会消耗更多的CPU和内存资源，如果每次通信都加密，会消耗相当多的资源，平摊到一台计算机上时，能够处理的请求数量必定也会随之减少。</p>
+</li>
+<li><p>购买证书的开销也是原因之一。</p>
+</li>
+</ul>
+<h2 id="确认访问用户身份的认证"><a href="#确认访问用户身份的认证" class="headerlink" title="确认访问用户身份的认证"></a>确认访问用户身份的认证</h2><p>谱写web页面指向让特定的人浏览，或者干脆仅本人可见。为达到这个目标，必不可少的就是认证功能。</p>
+<p>通常我们知道的认证 有以下：</p>
+<ul>
+<li>密码</li>
+<li>动态令牌</li>
+<li>数字证书</li>
+<li>生物认证</li>
+<li>IC卡等</li>
+</ul>
+<h3 id="HTTP-使用的认证方式"><a href="#HTTP-使用的认证方式" class="headerlink" title="HTTP 使用的认证方式"></a>HTTP 使用的认证方式</h3><p>HTTP/1.1 使用的认证方式如下所示。</p>
+<ul>
+<li>BASIC 认证(基本认证)</li>
+<li>DIGEST 认证(摘要认证)</li>
+<li>SSL 客户端认证</li>
+<li>FormBase 认证(基于表单认证)</li>
+</ul>
+<p>前面两个用的不多，在这里就不过多描述，SSL 虽然安全，但是如果是个人网站，则购买证书也需要花费金额。因此大多数会采用基于表单认证。</p>
+<p><strong>Session 管理 及 Cookie 应用</strong></p>
+<h2 id="基于HTTP的动能追加协议"><a href="#基于HTTP的动能追加协议" class="headerlink" title="基于HTTP的动能追加协议"></a>基于HTTP的动能追加协议</h2><p>虽然HTTP协议既简单又简洁，但随着时代的发展，其功能使用上捉襟见肘的疲态已经凸现。</p>
+<h3 id="消除HTTP瓶颈的SPDY"><a href="#消除HTTP瓶颈的SPDY" class="headerlink" title="消除HTTP瓶颈的SPDY"></a>消除HTTP瓶颈的SPDY</h3><p>Google在2010年发布了SPDY，其开发目标旨在解决HTTP的性能瓶颈，缩短Web页面的加载时间</p>
+<p>http标准的瓶颈：</p>
+<ul>
+<li>一条连接上只可发送一个请求</li>
+<li>请求只能从客户端开始。客户端不可以接受除响应以外的指令</li>
+<li>请求/响应首部未经压缩就发送。首部信息越多延迟越大。</li>
+<li>发送冗长的首部。每次互相发送相同的首部造成的浪费较多。</li>
+<li>可任意选择数据压缩格式。非强制压缩发送。</li>
+</ul>
+<p>AJAX的方案 和 comet的方案的出现解决一部分问题，但是仍为解决http的瓶颈问题。</p>
+<p>SPDY的目标</p>
+<p>SPDY没有完全改写HTTP协议，而是在TCP/IP的应用层与传输层之间通过新加会话层的形式运作。同时，考虑到安全性问题，SPDY规定通信中使用SSL。</p>
+<p>使用SPDY后，HTTP协议获得额外功能。</p>
+<ul>
+<li><p>多路复用流<br><em>通过单一的TCP连接，可以无限制处理多个HTTP请求。所有请求的处理都在一条TCP连接上完成，因此TCP的处理效率得到提高。</em></p>
+</li>
+<li><p>赋予请求优先级<br><em>SPDY不仅可以无限制地并发处理请求，还可以给请求逐个分配优先级。这样主要是为了在发送多个请求时，解决因带宽低而导致响应变慢的问题</em></p>
+</li>
+<li><p>压缩HTTP首部<br><em>压缩HTTP请求和响应的首部。这样依赖，通信产生的数据包数量和发送的字节数就更少了</em></p>
+</li>
+<li>推送功能 <em>支持服务器主动向客户端推送数据的功能。这样，服务器可直接发送数据，而不必等待客户端的请求</em></li>
+<li>服务器提示功能 <em>服务器可以主动提示客户端请求所需的资源，由于在客户端发现资源之前就可以获得资源的存在，因此在资源已经缓存等情况下，可以避免发送不必要的请求</em></li>
+</ul>
+<h3 id="使用浏览器进行全双工通信的-WebSocket"><a href="#使用浏览器进行全双工通信的-WebSocket" class="headerlink" title="使用浏览器进行全双工通信的 WebSocket"></a>使用浏览器进行全双工通信的 WebSocket</h3><p>利用Ajax和Comet技术进行通信可以提升Web的浏览速度。但问题在于通信若使用HTTP协议，就无法彻底解决瓶颈问题。WebSocket网络技术正是为解决这些问题而实现的一套新协议及API。</p>
+<h4 id="WebSocket的设计与功能"><a href="#WebSocket的设计与功能" class="headerlink" title="WebSocket的设计与功能"></a>WebSocket的设计与功能</h4><p>WebSocket，即Web浏览器与Web服务器之间全双工通信标准。其中，WebSocket协议由IETF定为标准，WebSocket API 由W3C定为标准。扔在开发中的WebSocket技术主要是为了解决Ajax 和 Comet里XMLHttpRequest附带的缺陷所引起的问题。</p>
+<p>成功握手确立WebSocket连接之后，通信时，不再使用HTTP的数据帧，而采用WebSocket独立的数据帧。</p>
+<h2 id="HTTP-2-0"><a href="#HTTP-2-0" class="headerlink" title="HTTP/2.0"></a>HTTP/2.0</h2><p>HTTP/2.0 的目标是改善用户在使用Web时的速度体验。由于基本上都会先通过HTTP/1.1与TCP连接，现在我们以下面这些协议为基础，探讨一下它们的实现方法。</p>
+<ul>
+<li>SPDY</li>
+<li>HTTP Speed + Mobiliity</li>
+<li>Network-Friendly HTTP Upgrade</li>
+</ul>
+<p><strong>HTTP Speed + Mobiliity </strong>是由微软起草，用于改善并提高移动通信时的通信速度和性能的标准。它建立在Google公司提出的SPDY与WEBSOCKET的基础上。</p>
+<p><strong>Network-Friendly HTTP Upgrade</strong> 主要是在移动端通信时改善HTTP性能的标准。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/http/" rel="tag"># http</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/14/http理解-上/" rel="next" title="http理解(上)">
+                <i class="fa fa-chevron-left"></i> http理解(上)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/16/http-理解-下/" rel="prev" title="http 理解(下)">
+                http 理解(下) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">KrisLee</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/krislee94" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="lidazhoukris@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-globe"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#确保Web安全的HTTPS"><span class="nav-number">1.</span> <span class="nav-text">确保Web安全的HTTPS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP的缺点"><span class="nav-number">1.1.</span> <span class="nav-text">HTTP的缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-加密-认证-完整性保护-HTTPS"><span class="nav-number">1.2.</span> <span class="nav-text">HTTP + 加密 + 认证 + 完整性保护 = HTTPS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#确认访问用户身份的认证"><span class="nav-number">2.</span> <span class="nav-text">确认访问用户身份的认证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-使用的认证方式"><span class="nav-number">2.1.</span> <span class="nav-text">HTTP 使用的认证方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于HTTP的动能追加协议"><span class="nav-number">3.</span> <span class="nav-text">基于HTTP的动能追加协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#消除HTTP瓶颈的SPDY"><span class="nav-number">3.1.</span> <span class="nav-text">消除HTTP瓶颈的SPDY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用浏览器进行全双工通信的-WebSocket"><span class="nav-number">3.2.</span> <span class="nav-text">使用浏览器进行全双工通信的 WebSocket</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#WebSocket的设计与功能"><span class="nav-number">3.2.1.</span> <span class="nav-text">WebSocket的设计与功能</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-2-0"><span class="nav-number">4.</span> <span class="nav-text">HTTP/2.0</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KrisLee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
