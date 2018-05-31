@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="dva," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="目录准备工作划分结构设计model在了解了项目基本的结构划分以后，我们将要开始设计 model，在设计 model 之前，我们来回顾一下我们需要做的项目是什么样的：  Model的抽象从设计稿中我们可以看出，这部分功能基本是围绕 以用户数据为基础 的操作，其中包含：  用户信息的展示（查询） 用户信息的操作（增加，删除，修改  我们在项目的model 下新增一个users.js 我们可以按照两个纬">
+<meta name="keywords" content="dva">
+<meta property="og:type" content="article">
+<meta property="og:title" content="dva的进一步学习创建UCRD项目(简书版)">
+<meta property="og:url" content="http://yoursite.com/2018/05/31/dva的进一步学习创建UCRD项目/index.html">
+<meta property="og:site_name" content="Krislee的个人博客">
+<meta property="og:description" content="目录准备工作划分结构设计model在了解了项目基本的结构划分以后，我们将要开始设计 model，在设计 model 之前，我们来回顾一下我们需要做的项目是什么样的：  Model的抽象从设计稿中我们可以看出，这部分功能基本是围绕 以用户数据为基础 的操作，其中包含：  用户信息的展示（查询） 用户信息的操作（增加，删除，修改  我们在项目的model 下新增一个users.js 我们可以按照两个纬">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://cloud.githubusercontent.com/assets/1179603/17655205/dfde2f4e-62dd-11e6-9c91-657ee4c17b91.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5531021-64ef72a9abb9749c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5531021-64ef72a9abb9749c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-05-31T16:42:03.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="dva的进一步学习创建UCRD项目(简书版)">
+<meta name="twitter:description" content="目录准备工作划分结构设计model在了解了项目基本的结构划分以后，我们将要开始设计 model，在设计 model 之前，我们来回顾一下我们需要做的项目是什么样的：  Model的抽象从设计稿中我们可以看出，这部分功能基本是围绕 以用户数据为基础 的操作，其中包含：  用户信息的展示（查询） 用户信息的操作（增加，删除，修改  我们在项目的model 下新增一个users.js 我们可以按照两个纬">
+<meta name="twitter:image" content="https://cloud.githubusercontent.com/assets/1179603/17655205/dfde2f4e-62dd-11e6-9c91-657ee4c17b91.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/31/dva的进一步学习创建UCRD项目/"/>
+
+
+
+
+
+  <title>dva的进一步学习创建UCRD项目(简书版) | Krislee的个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Krislee的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/31/dva的进一步学习创建UCRD项目/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="KrisLee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Krislee的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">dva的进一步学习创建UCRD项目(简书版)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-31T01:07:50+08:00">
+                2018-05-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><h2 id="划分结构"><a href="#划分结构" class="headerlink" title="划分结构"></a>划分结构</h2><h2 id="设计model"><a href="#设计model" class="headerlink" title="设计model"></a>设计model</h2><p>在了解了项目基本的结构划分以后，我们将要开始设计 model，在设计 model 之前，我们来回顾一下我们需要做的项目是什么样的：</p>
+<p><img src="https://cloud.githubusercontent.com/assets/1179603/17655205/dfde2f4e-62dd-11e6-9c91-657ee4c17b91.png" alt="pic1"></p>
+<h3 id="Model的抽象"><a href="#Model的抽象" class="headerlink" title="Model的抽象"></a>Model的抽象</h3><p>从设计稿中我们可以看出，这部分功能基本是围绕 以用户数据为基础 的操作，其中包含：</p>
+<ol>
+<li>用户信息的展示（查询）</li>
+<li>用户信息的操作（增加，删除，修改</li>
+</ol>
+<p>我们在项目的model 下新增一个users.js</p>
+<p>我们可以按照两个纬度的东西来看：1. 按照数据纬度 2. 按照业务纬度</p>
+<h4 id="数据纬度"><a href="#数据纬度" class="headerlink" title="数据纬度"></a>数据纬度</h4><p>按照数据维度的 model 设计原则就是抽离数据本身以及相关操作的方法，比如在本例的 users ：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * model users.js的设计、</span><br><span class="line"> * 按照数据维度的 model 设计原则就是抽离数据本身以及相关操作的方法，</span><br><span class="line"> */</span><br><span class="line"> export default &#123;</span><br><span class="line">     namespace:&apos;users&apos;,</span><br><span class="line">     state:&#123;</span><br><span class="line">         list:[],</span><br><span class="line">         total:null,</span><br><span class="line">     &#125;,</span><br><span class="line">     effects:&#123;</span><br><span class="line">        *query()&#123;&#125;,</span><br><span class="line">		*create()&#123;&#125;,</span><br><span class="line">		// 因为delete是关键字</span><br><span class="line">		*&apos;delete&apos;()&#123;&#125;,</span><br><span class="line">		*update()&#123;&#125;,</span><br><span class="line">     &#125;,</span><br><span class="line">     reducers: &#123;</span><br><span class="line">		querySuccess()&#123;&#125;,</span><br><span class="line">		createSuccess()&#123;&#125;,</span><br><span class="line">		deleteSuccess()&#123;&#125;,</span><br><span class="line">		updateSuccess()&#123;&#125;,</span><br><span class="line">	&#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>如果你写过后台代码，你会发现这跟我们常常写的后台接口是很类似的，只关心数据本身，至于在使用 users model 的组件中所遇到的状态管理等信息跟 model 无关，而是作为组件自身的state维护。</p>
+<p>这种设计方式使得 model 很纯粹，在设计通用数据信息 model 的时候比较适用，比如当前用户登陆信息等数据 model。但是在数据跟业务状态交互比较紧密，数据不是那么独立的时候会有些不那么方便，因为在数据跟业务状态紧密相连的场景下，将状态放到 model 里面维护会使得我们的代码更加清晰可控，而这种方式就是下面将要介绍的<em>业务维度</em>方式的设计。</p>
+<h4 id="业务纬度"><a href="#业务纬度" class="headerlink" title="业务纬度"></a>业务纬度</h4><p>按照业务维度的 model 设计，则是将数据以及使用强关联数据的组件中的状态统一抽象成 model 的方法，(<strong>更多会考虑交互上的方法，比如loading 的展示或者消失，modal的展示或者消失，在这个例子中，我们的组件会使用ant-design中的设计</strong>)在本例中，users model设计如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * model users.js的设计、</span><br><span class="line"> * 按照数据维度的 model 设计原则就是抽离数据本身以及相关操作的方法，</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line"> export default &#123;</span><br><span class="line">     namespace:&apos;users&apos;,</span><br><span class="line">     state:&#123;</span><br><span class="line">         list:[],</span><br><span class="line">         total:null,</span><br><span class="line">         loading: false, // 控制加载状态</span><br><span class="line">         current: null, // 当前分页信息</span><br><span class="line">         currentItem: &#123;&#125;, // 当前操作的用户对象</span><br><span class="line">         modalVisible: false, // 弹出窗的显示状态</span><br><span class="line">         modalType: &apos;create&apos;, // 弹出窗的类型（添加用户，编辑用户）</span><br><span class="line">     &#125;,</span><br><span class="line">     effects:&#123;</span><br><span class="line">        *query()&#123;&#125;,</span><br><span class="line">		*create()&#123;&#125;,</span><br><span class="line">		// 因为delete是关键字</span><br><span class="line">		*&apos;delete&apos;()&#123;&#125;,</span><br><span class="line">		*update()&#123;&#125;,</span><br><span class="line">     &#125;,</span><br><span class="line">     reducers: &#123;</span><br><span class="line">        //业务纬度的设计(更多会考虑交互上的问题)</span><br><span class="line">        showLoading()&#123;&#125;, // 控制加载状态的 reducer</span><br><span class="line">		showModal()&#123;&#125;, // 控制 Modal 显示状态的 reducer</span><br><span class="line">		hideModal()&#123;&#125;,</span><br><span class="line">        //数据纬度的设计</span><br><span class="line">		querySuccess()&#123;&#125;,</span><br><span class="line">		createSuccess()&#123;&#125;,</span><br><span class="line">		deleteSuccess()&#123;&#125;,</span><br><span class="line">		updateSuccess()&#123;&#125;,</span><br><span class="line">	&#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="组件设计方法"><a href="#组件设计方法" class="headerlink" title="组件设计方法"></a>组件设计方法</h2><p>在初步确定了 model 的设计方法以后，让我们来看看如何设计 dva 中的 React 组件。</p>
+<p>React 应用是由一个个独立的 Component 组成的，我们在拆分 Component 的过程中要尽量让<strong>每个 Component 专注做自己的事</strong>。(这也是react的核心思想，组件化的思想，在设计和使用的时候，我们拆分组件，让组件做自己的事情。)</p>
+<p><em>一般来说，我们的组件有两种设计：</em></p>
+<ul>
+<li>Container Component</li>
+<li>Presentational Component</li>
+</ul>
+<p><strong>Container Component</strong>一般指的是具有<em>监听数据</em>行为的组件，一般来说它们的职责是绑定相关联的 model 数据。以数据容器的角色包含其它子组件。</p>
+<p><strong>通常的写法为：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import React, &#123; Component, PropTypes &#125; from &apos;react&apos;;</span><br><span class="line"></span><br><span class="line">// dva 的 connect 方法可以将组件和数据关联在一起</span><br><span class="line">import &#123; connect &#125; from &apos;dva&apos;;</span><br><span class="line"></span><br><span class="line">// 组件本身</span><br><span class="line">const MyComponent = (props)=&gt;&#123;&#125;;</span><br><span class="line">MyComponent.propTypes = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">// 监听属性，建立组件和数据的映射关系</span><br><span class="line">function mapStateToProps(state) &#123;</span><br><span class="line">  return &#123;...state.data&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 关联 model</span><br><span class="line">export default connect(mapStateToProps)(MyComponent);</span><br></pre></td></tr></table></figure>
+<p><strong>Presentational Component</strong> 的名称已经说明了它的职责，展示形组件，一般也称作：Dumb Component，它不会关联订阅 model 上的数据，而所需数据的传递则是通过 props 传递到组件内部。</p>
+<p>通常写法为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import React, &#123; Component, PropTypes &#125; from &apos;react&apos;;</span><br><span class="line"></span><br><span class="line">// 组件本身</span><br><span class="line">// 所需要的数据通过 Container Component 通过 props 传递下来</span><br><span class="line">const MyComponent = (props)=&gt;&#123;&#125;</span><br><span class="line">MyComponent.propTypes = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">// 并不会监听数据</span><br><span class="line">export default MyComponent;</span><br></pre></td></tr></table></figure>
+<h5 id="那么拆分组件有什么好处呢？"><a href="#那么拆分组件有什么好处呢？" class="headerlink" title="那么拆分组件有什么好处呢？"></a>那么拆分组件有什么好处呢？</h5><ul>
+<li>让项目的数据处理更加集中；</li>
+<li>让组件高内聚低耦合，更加聚焦；</li>
+</ul>
+<p>试想如果每个组件都去订阅数据 model，那么一方面组件本身跟 model 耦合太多，另一方面代码过于零散，到处都在操作数据，会带来后期维护的烦恼。</p>
+<p>除了写法上订阅数据的区别以外，在设计思路上两个组件也有很大不同。 Presentational Component是独立的纯粹的，这方面很好的例子，大家可以参考 ant.design UI组件的React实现 ，每个组件跟业务数据并没有耦合关系，只是完成自己独立的任务，需要的数据通过 props 传递进来，需要操作的行为通过接口暴露出去。 而 Container Component 更像是状态管理器，它表现为一个容器，订阅子组件需要的数据，组织子组件的交互逻辑和展示。</p>
+<h2 id="组件设计实践"><a href="#组件设计实践" class="headerlink" title="组件设计实践"></a>组件设计实践</h2><p>首先啊，咱们需要先创建路由，设置 Users Router Container 的访问路径，并且在 /routes/ 下创建我们的组件文件 Users.jsx。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// .src/router.js</span><br><span class="line">import React, &#123; PropTypes &#125; from &apos;react&apos;;</span><br><span class="line">import &#123; Router, Route &#125; from &apos;dva/router&apos;;</span><br><span class="line">import Users from &apos;./routes/Users&apos;;</span><br><span class="line"></span><br><span class="line">export default function(&#123; history &#125;) &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;Router history=&#123;history&#125;&gt;</span><br><span class="line">      &lt;Route path=&quot;/users&quot; component=&#123;Users&#125; /&gt;</span><br><span class="line">    &lt;/Router&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>之后创建路由容器组件users.jsx</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// .src/routes/Users.jsx</span><br><span class="line">import React, &#123; PropTypes &#125; from &apos;react&apos;;</span><br><span class="line"></span><br><span class="line">function Users() &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;div&gt;User Router Component&lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Users.propTypes = &#123;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">export default Users;</span><br></pre></td></tr></table></figure>
+<h3 id="Users-Container-Component-的设计"><a href="#Users-Container-Component-的设计" class="headerlink" title="Users Container Component 的设计"></a>Users Container Component 的设计</h3><p>我们采用自顶向下的设计方法，修改 ./src/routes/Users.jsx</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">// ./src/routes/Users.jsx</span><br><span class="line">import React, &#123; Component, PropTypes &#125; from &apos;react&apos;;</span><br><span class="line"></span><br><span class="line">// Users 的 Presentational Component</span><br><span class="line">// 暂时都没实现</span><br><span class="line">import UserList from &apos;../components/Users/UserList&apos;;</span><br><span class="line">import UserSearch from &apos;../components/Users/UserSearch&apos;;</span><br><span class="line">import UserModal from &apos;../components/Users/UserModal&apos;;</span><br><span class="line"></span><br><span class="line">// 引入对应的样式</span><br><span class="line">// 可以暂时新建一个空的</span><br><span class="line">import styles from &apos;./Users.less&apos;;</span><br><span class="line"></span><br><span class="line">function Users() &#123;</span><br><span class="line"></span><br><span class="line">  const userSearchProps = &#123;&#125;;</span><br><span class="line">  const userListProps = &#123;&#125;;</span><br><span class="line">  const userModalProps = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  return (</span><br><span class="line">    &lt;div className=&#123;styles.normal&#125;&gt;</span><br><span class="line">      &#123;/* 用户筛选搜索框 */&#125;</span><br><span class="line">      &lt;UserSearch &#123;...userSearchProps&#125; /&gt;</span><br><span class="line">      &#123;/* 用户信息展示列表 */&#125;</span><br><span class="line">      &lt;UserList &#123;...userListProps&#125; /&gt;</span><br><span class="line">      &#123;/* 添加用户 &amp; 修改用户弹出的浮层 */&#125;</span><br><span class="line">      &lt;UserModal &#123;...userModalProps&#125; /&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default Users;</span><br></pre></td></tr></table></figure>
+<p><strong>创建UserList,UserSearch,UserModal这三个组件</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// ./src/components/Users/UserSearch.jsx</span><br><span class="line">import React, &#123; PropTypes &#125; from &apos;react&apos;;</span><br><span class="line">export default ()=&gt;&lt;div&gt;user search&lt;/div&gt;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// ./src/components/Users/UserList.jsx</span><br><span class="line">import React, &#123; PropTypes &#125; from &apos;react&apos;;</span><br><span class="line">export default ()=&gt;&lt;div&gt;user list&lt;/div&gt;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// ./src/components/Users/UserModal.jsx</span><br><span class="line">import React, &#123; PropTypes &#125; from &apos;react&apos;;</span><br><span class="line">export default ()=&gt;&lt;div&gt;user modal&lt;/div&gt;;</span><br></pre></td></tr></table></figure>
+<p>这样如果你到现在都是成功的话，那么访问本地的地址，如：<a href="http://localhost:8000/#/users" target="_blank" rel="noopener">http://localhost:8000/#/users</a> 应该是展示</p>
+<p>user search<br>user list<br>user modal</p>
+<p>这样的数据的。</p>
+<p>值得注意的地方，通常定义我们的组件一般有三种方式：</p>
+<p>// 1. 传统写法<br>const App = React.createClass({});</p>
+<p>// 2. es6 的写法<br>class App extends React.Component({});</p>
+<p>// 3. stateless 的写法（我们推荐的写法）<br>const App = (props) =&gt; ({});</p>
+<p>其中第1种是我们不推荐的写法，第2种是在你的组件涉及 react 的生命周期方法的时候采用这种写法，而第3种则是我们一般推荐的写法。详细内容可以参看<a href="https://reactjs.org/docs/components-and-props.html#stateless-functions" target="_blank" rel="noopener">Stateless Functions</a>。</p>
+<h3 id="UserList-组件"><a href="#UserList-组件" class="headerlink" title="UserList 组件"></a>UserList 组件</h3><p>暂时放下<usersearch>和<usermodal>，先来看看<userlist>的实现，这是一个用户的展示列表，我们期望只需要把数据传入进去，修改 ./src/components/Users/UserList.jsx：</userlist></usermodal></usersearch></p>
+<p>这里我们采用antd UI组件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import &#123; Table, message, Popconfirm &#125; from &apos;antd&apos;;</span><br></pre></td></tr></table></figure>
+<p>这里我们不难发现。我们使用Table组件，因此需要传入一些参数。这里我们使用了stateless的写法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">// ./src/components/Users/UserList.jsx</span><br><span class="line">import React, &#123; Component, PropTypes &#125; from &apos;react&apos;;</span><br><span class="line"></span><br><span class="line">// 采用antd的UI组件</span><br><span class="line">import &#123; Table, message, Popconfirm &#125; from &apos;antd&apos;;</span><br><span class="line"></span><br><span class="line">// 采用 stateless 的写法</span><br><span class="line">// export default ()=&gt;&lt;div&gt;user list&lt;/div&gt;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">const UserList = (&#123;</span><br><span class="line">    total,</span><br><span class="line">    current,</span><br><span class="line">    loading,</span><br><span class="line">    dataSource,</span><br><span class="line">&#125;) =&gt; &#123;</span><br><span class="line">    const columns = [&#123;</span><br><span class="line">        title: &apos;姓名&apos;,</span><br><span class="line">        dataIndex: &apos;name&apos;,</span><br><span class="line">        key: &apos;name&apos;,</span><br><span class="line">        render: (text) =&gt; &lt;a href=&quot;#&quot;&gt;&#123;text&#125;&lt;/a&gt;,</span><br><span class="line">      &#125;, &#123;</span><br><span class="line">        title: &apos;年龄&apos;,</span><br><span class="line">        dataIndex: &apos;age&apos;,</span><br><span class="line">        key: &apos;age&apos;,</span><br><span class="line">      &#125;, &#123;</span><br><span class="line">        title: &apos;住址&apos;,</span><br><span class="line">        dataIndex: &apos;address&apos;,</span><br><span class="line">        key: &apos;address&apos;,</span><br><span class="line">      &#125;, &#123;</span><br><span class="line">        title: &apos;操作&apos;,</span><br><span class="line">        key: &apos;operation&apos;,</span><br><span class="line">        render: (text, record) =&gt; (</span><br><span class="line">          &lt;p&gt;</span><br><span class="line">            &lt;a onClick=&#123;()=&gt;&#123;&#125;&#125;&gt;编辑&lt;/a&gt;</span><br><span class="line">            &amp;nbsp;</span><br><span class="line">            &lt;Popconfirm title=&quot;确定要删除吗？&quot; onConfirm=&#123;()=&gt;&#123;&#125;&#125;&gt;</span><br><span class="line">              &lt;a&gt;删除&lt;/a&gt;</span><br><span class="line">            &lt;/Popconfirm&gt;</span><br><span class="line">          &lt;/p&gt;</span><br><span class="line">        ),</span><br><span class="line">      &#125;];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">      //定义分页对象</span><br><span class="line"></span><br><span class="line">      const pagination = &#123;</span><br><span class="line">        total,</span><br><span class="line">        current,</span><br><span class="line">        pageSize: 10,</span><br><span class="line">        onChange: ()=&gt;&#123;&#125;,</span><br><span class="line">      &#125;;</span><br><span class="line"></span><br><span class="line">      return (</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">          &lt;Table</span><br><span class="line">            columns=&#123;columns&#125;</span><br><span class="line">            dataSource=&#123;dataSource&#125;</span><br><span class="line">            loading=&#123;loading&#125;</span><br><span class="line">            rowKey=&#123;record =&gt; record.id&#125;</span><br><span class="line">            pagination=&#123;pagination&#125;</span><br><span class="line">          /&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">      );</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">export default UserList;</span><br></pre></td></tr></table></figure>
+<p><strong>需要注意的是，由于我们采用了 antd，所以我们需要在我们的代码中添加样式，可以在 ./src/index.js 中添加一行:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import &apos;antd/dist/antd.css&apos;</span><br></pre></td></tr></table></figure>
+<p>接下来。由于我们传递了 columns ，dataSource ，loading ，rowKey，pagination等props，因此，我们需要制造一些假数据传入，使得页面更真实。</p>
+<p>在routes/Users.jsx中，新增假数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">const userListProps = &#123;</span><br><span class="line">  //默认先传一些假数据</span><br><span class="line">  total: 3,</span><br><span class="line">  current: 1,</span><br><span class="line">  loading: false,</span><br><span class="line">  dataSource: [</span><br><span class="line">    &#123;</span><br><span class="line">      name: &apos;张三&apos;,</span><br><span class="line">      age: 23,</span><br><span class="line">      address: &apos;成都&apos;,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      name: &apos;李四&apos;,</span><br><span class="line">      age: 24,</span><br><span class="line">      address: &apos;杭州&apos;,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      name: &apos;王五&apos;,</span><br><span class="line">      age: 25,</span><br><span class="line">      address: &apos;上海&apos;,</span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>最终展现的效果图如下所示：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5531021-64ef72a9abb9749c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="效果图"></p>
+<h3 id="组件设计小结"><a href="#组件设计小结" class="headerlink" title="组件设计小结"></a>组件设计小结</h3><p>虽然我们上面实现的代码很简单，但是已经包含了组件设计的主要思路，可以看到 UserList 组件是一个很纯粹的 Presentation Component，所需要的数据以及状态是通过 Users Router Component 传递的，我们现在还是用的静态数据，接下来我们来看看如何在 model 创建 reducer 来将我们的数据抽象出来。</p>
+<h2 id="添加Reducer"><a href="#添加Reducer" class="headerlink" title="添加Reducer"></a>添加Reducer</h2><p>如果对redux有所了解的话，那么就能很好的理解 Reducer，在这里我做个不恰当的比方，好比李云龙负责带兵打仗，那么李云龙在整个react中其实是负责展示这一块，我们知道军队还有后勤这一块，那么赵政委就是负责后勤这一块，告诉李云龙，这里不需要你负责，你只要展示，他们如果展示，如果操控我来负责。其实赵政委就是redux 。而Reducer 是主要控制状态改变 也就是我们所说的 state，而发出改变的命令是action来操控的。这也就有了dispatch的概念，dispatch其实就是命令。当然之后react-redux优化了这一块，使得我们在改变数据源的时候更加的方便。</p>
+<h3 id="给UserModal添加Reducers"><a href="#给UserModal添加Reducers" class="headerlink" title="给UserModal添加Reducers"></a>给UserModal添加Reducers</h3><p>回到我们之前的 /models/users.js，我们在之前已经定义好了它的 state，接下来我们看看如何根据新的数据来修改本身的 state，这就是 reducers 要做的事情。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">export default &#123;</span><br><span class="line">  namespace: &apos;users&apos;,</span><br><span class="line"></span><br><span class="line">  state: &#123;</span><br><span class="line">    list: [],</span><br><span class="line">    total: null,</span><br><span class="line">    loading: false, // 控制加载状态</span><br><span class="line">    current: null, // 当前分页信息</span><br><span class="line">    currentItem: &#123;&#125;, // 当前操作的用户对象</span><br><span class="line">    modalVisible: false, // 弹出窗的显示状态</span><br><span class="line">    modalType: &apos;create&apos;, // 弹出窗的类型（添加用户，编辑用户）</span><br><span class="line">  &#125;,</span><br><span class="line">  effects: &#123;</span><br><span class="line">    *query()&#123;&#125;,</span><br><span class="line">    *create()&#123;&#125;,</span><br><span class="line">    *&apos;delete&apos;()&#123;&#125;,</span><br><span class="line">    *update()&#123;&#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  reducers: &#123;</span><br><span class="line">    showLoading()&#123;&#125;, // 控制加载状态的 reducer</span><br><span class="line">    showModal()&#123;&#125;, // 控制 Modal 显示状态的 reducer</span><br><span class="line">    hideModal()&#123;&#125;,</span><br><span class="line">    // 使用静态数据返回</span><br><span class="line">    querySuccess(state)&#123;</span><br><span class="line">      const mock = &#123;</span><br><span class="line">        total: 3,</span><br><span class="line">        current: 1,</span><br><span class="line">        loading: false,</span><br><span class="line">        list: [</span><br><span class="line">          &#123;</span><br><span class="line">            id: 1,</span><br><span class="line">            name: &apos;张三&apos;,</span><br><span class="line">            age: 23,</span><br><span class="line">            address: &apos;成都&apos;,</span><br><span class="line">          &#125;,</span><br><span class="line">          &#123;</span><br><span class="line">            id: 2,</span><br><span class="line">            name: &apos;李四&apos;,</span><br><span class="line">            age: 24,</span><br><span class="line">            address: &apos;杭州&apos;,</span><br><span class="line">          &#125;,</span><br><span class="line">          &#123;</span><br><span class="line">            id: 3,</span><br><span class="line">            name: &apos;王五&apos;,</span><br><span class="line">            age: 25,</span><br><span class="line">            address: &apos;上海&apos;,</span><br><span class="line">          &#125;,</span><br><span class="line">        ],</span><br><span class="line"></span><br><span class="line">      &#125;;</span><br><span class="line">      return &#123;...state, ...mock, loading: false&#125;;</span><br><span class="line">    &#125;,</span><br><span class="line">    createSuccess()&#123;&#125;,</span><br><span class="line">    deleteSuccess()&#123;&#125;,</span><br><span class="line">    updateSuccess()&#123;&#125;,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们把之前 UserList 组件中模拟的静态数据，移动到了 reducers 中，通过调用 users/query/success 这个 reducer，我们就可以将 Users Model 的数据变成静态数据，那么我们如何调用这个 reducer，能够让这个数据传入 UserList 组件呢，接下来需要做的是：关联Model。</p>
+<h3 id="关联Model"><a href="#关联Model" class="headerlink" title="关联Model"></a>关联Model</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">// ./src/routes/Users.jsx</span><br><span class="line">import React, &#123; Component, PropTypes &#125; from &apos;react&apos;;</span><br><span class="line"></span><br><span class="line">// 引入 connect 工具函数</span><br><span class="line">import &#123; connect &#125; from &apos;dva&apos;;</span><br><span class="line"></span><br><span class="line">// Users 的 Presentational Component</span><br><span class="line">// 暂时都没实现</span><br><span class="line">import UserList from &apos;../components/Users/UserList&apos;;</span><br><span class="line">import UserSearch from &apos;../components/Users/UserSearch&apos;;</span><br><span class="line">import UserModal from &apos;../components/Users/UserModal&apos;;</span><br><span class="line"></span><br><span class="line">// 引入对应的样式</span><br><span class="line">// 可以暂时新建一个空的</span><br><span class="line">import styles from &apos;./Users.less&apos;;</span><br><span class="line"></span><br><span class="line">function Users(&#123; location, dispatch, users &#125;) &#123;</span><br><span class="line"></span><br><span class="line">  const &#123;</span><br><span class="line">    loading, list, total, current,</span><br><span class="line">    currentItem, modalVisible, modalType</span><br><span class="line">    &#125; = users;</span><br><span class="line"></span><br><span class="line">  const userSearchProps=&#123;&#125;;</span><br><span class="line">  const userListProps=&#123;</span><br><span class="line">		dataSource: list,</span><br><span class="line">		total,</span><br><span class="line">		loading,</span><br><span class="line">		current,</span><br><span class="line">	&#125;;</span><br><span class="line">  const userModalProps=&#123;&#125;;</span><br><span class="line"></span><br><span class="line">  return (</span><br><span class="line">    &lt;div className=&#123;styles.normal&#125;&gt;</span><br><span class="line">      &#123;/* 用户筛选搜索框 */&#125;</span><br><span class="line">      &lt;UserSearch &#123;...userSearchProps&#125; /&gt;</span><br><span class="line">      &#123;/* 用户信息展示列表 */&#125;</span><br><span class="line">      &lt;UserList &#123;...userListProps&#125; /&gt;</span><br><span class="line">      &#123;/* 添加用户 &amp; 修改用户弹出的浮层 */&#125;</span><br><span class="line">      &lt;UserModal &#123;...userModalProps&#125; /&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Users.propTypes = &#123;</span><br><span class="line">  users: PropTypes.object,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// 指定订阅数据，这里关联了 users</span><br><span class="line">function mapStateToProps(&#123; users &#125;) &#123;</span><br><span class="line">  return &#123;users&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 建立数据关联关系</span><br><span class="line">export default connect(mapStateToProps)(Users);</span><br></pre></td></tr></table></figure>
+<p>在之前的 组件设计 中讲到了 Presentational Component 的设计概念，在订阅了数据以后，就可以通过 props 访问到 model 的数据了，而 UserList 展示组件的数据，也是 Container Component 通过 props 传递的过来的。</p>
+<p>组件和 model 建立了关联关系以后，如何在组件中获取 reduers 的数据呢，或者如何调用 reducers呢，就是需要发起一个 action。</p>
+<h3 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h3><p>actions 的概念跟 reducers 一样，也是来自于 dva 封装的 redux，表达的概念是发起一个修改数据的行为，主要的作用是传递信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dispatch(&#123;</span><br><span class="line">	type: &apos;&apos;, // action 的名称，与 reducers（effects）对应</span><br><span class="line">	... // 调用时传递的参数，在 reducers（effects）可以获取</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>需要注意的是：action的名称（type）如果是在 model 以外调用需要添加 namespace。</p>
+</blockquote>
+<p>回到例子中，目前传入 UserList 组件的只是默认空数据，那么如何调用 reducers 获取刚才定义的静态数据呢？发起一个 actions：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dispatch(&#123;</span><br><span class="line">	type: &apos;users/querySuccess&apos;, // 调用一个actions</span><br><span class="line">	payload: &#123;&#125;, // 调用时传递的参数</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>知道了如何发起一个 action，那么剩下的就是发起的时机了，通常我们建议在组件内部的生命周期发起，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">componentDidMount() &#123;</span><br><span class="line">	this.props.dispatch(&#123;</span><br><span class="line">		type: &apos;model/action&apos;,</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不过在本例中采用另一种发起 action 的场景，在本例中获取用户数据信息的时机就是访问 /users/ 这个页面，所以我们可以监听路由信息，只要路径是 /users/ 那么我们就会发起 action，获取用户数据：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">// ./src/models/users.js</span><br><span class="line">import &#123; hashHistory &#125; from &apos;dva/router&apos;;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">  namespace: &apos;users&apos;,</span><br><span class="line"></span><br><span class="line">  state: &#123;</span><br><span class="line">    list: [],</span><br><span class="line">    total: null,</span><br><span class="line">    loading: false, // 控制加载状态</span><br><span class="line">    current: null, // 当前分页信息</span><br><span class="line">    currentItem: &#123;&#125;, // 当前操作的用户对象</span><br><span class="line">    modalVisible: false, // 弹出窗的显示状态</span><br><span class="line">    modalType: &apos;create&apos;, // 弹出窗的类型（添加用户，编辑用户）</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  // Quick Start 已经介绍过 subscriptions 的概念，这里不在多说</span><br><span class="line">  subscriptions: &#123;</span><br><span class="line">    setup(&#123; dispatch, history &#125;) &#123;</span><br><span class="line">      history.listen(location =&gt; &#123;</span><br><span class="line">        if (location.pathname === &apos;/users&apos;) &#123;</span><br><span class="line">          dispatch(&#123;</span><br><span class="line">            type: &apos;querySuccess&apos;,</span><br><span class="line">            payload: &#123;&#125;</span><br><span class="line">          &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  effects: &#123;</span><br><span class="line">    *query()&#123;&#125;,</span><br><span class="line">    *create()&#123;&#125;,</span><br><span class="line">    *&apos;delete&apos;()&#123;&#125;,</span><br><span class="line">    *update()&#123;&#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  reducers: &#123;</span><br><span class="line">    showLoading()&#123;&#125;, // 控制加载状态的 reducer</span><br><span class="line">    showModal()&#123;&#125;, // 控制 Modal 显示状态的 reducer</span><br><span class="line">    hideModal()&#123;&#125;,</span><br><span class="line">    // 使用静态数据返回</span><br><span class="line">    querySuccess(state)&#123;</span><br><span class="line">      const mock = &#123;</span><br><span class="line">        total: 3,</span><br><span class="line">        current: 1,</span><br><span class="line">        loading: false,</span><br><span class="line">        list: [</span><br><span class="line">          &#123;</span><br><span class="line">            name: &apos;张三&apos;,</span><br><span class="line">            age: 23,</span><br><span class="line">            address: &apos;成都&apos;,</span><br><span class="line">          &#125;,</span><br><span class="line">          &#123;</span><br><span class="line">            name: &apos;李四&apos;,</span><br><span class="line">            age: 24,</span><br><span class="line">            address: &apos;杭州&apos;,</span><br><span class="line">          &#125;,</span><br><span class="line">          &#123;</span><br><span class="line">            name: &apos;王五&apos;,</span><br><span class="line">            age: 25,</span><br><span class="line">            address: &apos;上海&apos;,</span><br><span class="line">          &#125;,</span><br><span class="line">        ],</span><br><span class="line"></span><br><span class="line">      &#125;;</span><br><span class="line">      return &#123;...state, ...mock, loading: false&#125;;</span><br><span class="line">    &#125;,</span><br><span class="line">    createSuccess()&#123;&#125;,</span><br><span class="line">    deleteSuccess()&#123;&#125;,</span><br><span class="line">    updateSuccess()&#123;&#125;,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上代码在浏览器访问 /users 路径的时候就会发起一个 action，数据准备完毕，别忘了回到 index.js 中，添加我们的 models：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">// ./src/index.js</span><br><span class="line">import &apos;./index.html&apos;;</span><br><span class="line">import &apos;./index.less&apos;;</span><br><span class="line">import dva, &#123; connect &#125; from &apos;dva&apos;;</span><br><span class="line"></span><br><span class="line">import &apos;antd/dist/antd.css&apos;;</span><br><span class="line"></span><br><span class="line">// 1. Initialize</span><br><span class="line">const app = dva();</span><br><span class="line"></span><br><span class="line">// 2. Model</span><br><span class="line">app.model(require(&apos;./models/users.js&apos;));</span><br><span class="line"></span><br><span class="line">// 3. Router</span><br><span class="line">app.router(require(&apos;./router&apos;));</span><br><span class="line"></span><br><span class="line">// 4. Start</span><br><span class="line">app.start(document.getElementById(&apos;root&apos;));</span><br></pre></td></tr></table></figure>
+<p>这样我们依旧可以看到如下的效果:</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5531021-64ef72a9abb9749c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="效果图"></p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>在这个例子中，我们在 合适的时机（进入 /users/ ）发起（dispatch）了一个 action，修改了 model 的数据，并且通过 Container Components 关联了 model，通过 props 传递到 Presentation Components，组件成功显示。如果你想了解更多关于 reducers &amp; actions 的信息，可以参看 redux。</p>
+<h2 id="Effects"><a href="#Effects" class="headerlink" title="Effects"></a>Effects</h2><p>在之前的教程中，我们已经完成了静态数据的操作，但是在真实场景，数据都是从服务器来的，我们需要发起异步请求，在请求回来以后设置数据，更新 state，那么在 dva 中，这一切是怎么操作的呢，首先我们先来简单了解一下 Effects。</p>
+<p>Effects 来源于 dva 封装的底层库 redux-sagas 的概念，主要指的是处理 Side Effects ，指的是副作用（源于函数式编程），在这里可以简单理解成异步操作，所以我们是不是可以理解成 Reducers 处理同步，Effects 处理异步？这么理解也没有问题，但是要认清 Reducers 的本质是修改 model 的 state，而 Effects 主要是 控制数据流程 ，所以最终往往我们<strong>在 Effects 中会调用 Reducers</strong>。</p>
+<h3 id="给Users-Model添加Effects"><a href="#给Users-Model添加Effects" class="headerlink" title="给Users Model添加Effects"></a>给Users Model添加Effects</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">// ./src/models/users.js</span><br><span class="line">import &#123; hashHistory &#125; from &apos;dva/router&apos;;</span><br><span class="line">//import &#123; create, remove, update, query &#125; from &apos;../services/users&apos;;</span><br><span class="line"></span><br><span class="line">// 处理异步请求</span><br><span class="line">import request from &apos;../utils/request&apos;;</span><br><span class="line">import qs from &apos;qs&apos;;</span><br><span class="line">async function query(params) &#123;</span><br><span class="line">  return request(`/api/users?$&#123;qs.stringify(params)&#125;`);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">  namespace: &apos;users&apos;,</span><br><span class="line"></span><br><span class="line">  state: &#123;</span><br><span class="line">    list: [],</span><br><span class="line">    total: null,</span><br><span class="line">    loading: false, // 控制加载状态</span><br><span class="line">    current: null, // 当前分页信息</span><br><span class="line">    currentItem: &#123;&#125;, // 当前操作的用户对象</span><br><span class="line">    modalVisible: false, // 弹出窗的显示状态</span><br><span class="line">    modalType: &apos;create&apos;, // 弹出窗的类型（添加用户，编辑用户）</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  subscriptions: &#123;</span><br><span class="line">    setup(&#123; dispatch, history &#125;) &#123;</span><br><span class="line">      history.listen(location =&gt; &#123;</span><br><span class="line">        if (location.pathname === &apos;/users&apos;) &#123;</span><br><span class="line">          dispatch(&#123;</span><br><span class="line">            type: &apos;query&apos;,</span><br><span class="line">            payload: &#123;&#125;</span><br><span class="line">          &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  effects: &#123;</span><br><span class="line">    *query(&#123; payload &#125;, &#123; select, call, put &#125;) &#123;</span><br><span class="line">      yield put(&#123; type: &apos;showLoading&apos; &#125;);</span><br><span class="line">      const &#123; data &#125; = yield call(query);</span><br><span class="line">      if (data) &#123;</span><br><span class="line">        yield put(&#123;</span><br><span class="line">          type: &apos;querySuccess&apos;,</span><br><span class="line">          payload: &#123;</span><br><span class="line">            list: data.data,</span><br><span class="line">            total: data.page.total,</span><br><span class="line">            current: data.page.current</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    *create()&#123;&#125;,</span><br><span class="line">    *&apos;delete&apos;()&#123;&#125;,</span><br><span class="line">    *update()&#123;&#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  reducers: &#123;</span><br><span class="line">    showLoading(state, action)&#123;</span><br><span class="line">      return &#123; ...state, loading: true &#125;;</span><br><span class="line">    &#125;, // 控制加载状态的 reducer</span><br><span class="line">    showModal()&#123;&#125;, // 控制 Modal 显示状态的 reducer</span><br><span class="line">    hideModal()&#123;&#125;,</span><br><span class="line">    // 使用服务器数据返回</span><br><span class="line">    querySuccess(state, action)&#123;</span><br><span class="line">      return &#123;...state, ...action.payload, loading: false&#125;;</span><br><span class="line">    &#125;,</span><br><span class="line">    createSuccess()&#123;&#125;,</span><br><span class="line">    deleteSuccess()&#123;&#125;,</span><br><span class="line">    updateSuccess()&#123;&#125;,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先我们需要增加 <em>query 第二个参数 </em>query({ payload }, { select, call, put }) ，其中 call 和 put 是 dva 提供的方便操作 effects 的函数，简单理解 call 是调用执行一个函数而 put 则是相当于 dispatch 执行一个 action，而 select 则可以用来访问其它 model，更多可以参看 <a href="https://github.com/superRaytin/redux-saga-in-chinese" target="_blank" rel="noopener">redux-saga-in-chinese</a>。</p>
+<p>而在 query 函数里面，可以看到我们处理异步的方式跟同步一样，所以能够很好的控制异步流程，这也是我们使用 Effects 的原因，关于相关的更多内容可以参看 Generator 函数的含义与用法。</p>
+<p>这里我们把请求的处理直接写在了代码里面，接下来我们需要把它拆分到 /services/ 里面统一处理</p>
+<h2 id="定义Services"><a href="#定义Services" class="headerlink" title="定义Services"></a>定义Services</h2><p>之前我们已经：</p>
+<ol>
+<li>设计好了 model state -&gt; 抽象数据</li>
+<li>完善了组件 -&gt; 完善展示</li>
+<li>添加了 Reducers -&gt; 数据同步处理</li>
+<li>添加了 Effects -&gt; 数据异步处理</li>
+</ol>
+<p>接下来就是将请求相关（与后台系统的交互）抽离出来，单独放到 /services/ 中，进行统一维护管理，所以我们只需要将之前定义在 Effects 的以下代码，移动到 /services/users.js 中即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import request from &apos;../utils/request&apos;;</span><br><span class="line"></span><br><span class="line">import qs from &apos;qs&apos;;</span><br><span class="line"></span><br><span class="line">export async function query(params) &#123;</span><br><span class="line">    return request(`/api/users?$&#123;qs.stringify(params)&#125;`);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后在 users model 中引入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import &#123; query &#125; from &apos;../services/users&apos;;</span><br></pre></td></tr></table></figure>
+<p>之后无论是更新，删除、添加等操作，跟用户相关的都可以统一放置在 /services/users.js 中。</p>
+<p>没错，我们虽然有了接口，但是我们还没有数据，在 dva 中，我们配套的工具能够很方便的模拟数据，这样就可以脱离服务器复杂的环境进行模拟的本地调试开发。下面一节就会一起来看下，如何 mock 数据。</p>
+<h2 id="mock数据"><a href="#mock数据" class="headerlink" title="mock数据"></a>mock数据</h2><p>我们采用了<a href="https://github.com/dora-js/dora-plugin-proxy" target="_blank" rel="noopener">dora-plugin-proxy</a>工具来完成了我们的数据 mock 功能。</p>
+<h2 id="roadhog"><a href="#roadhog" class="headerlink" title="roadhog"></a>roadhog</h2><p>如果不用dora-plugin-proxy ，我们可以采用roadhog。Roadhog 是一个包含 dev、build 和 test 的命令行工具，他基于 react-dev-utils，和 create-react-app 的体验保持一致。你可以想象他为可配置版的 create-react-app。</p>
+<h3 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h3><ul>
+<li>📦 开箱即用的 react 应用开发工具，内置 css-modules、babel、postcss、HMR 等</li>
+<li>🚨 create-react-app 的体验</li>
+<li>🐠 JSON 格式的 webpack 配置</li>
+<li>✂️ mock</li>
+<li>🔥 基于 jest 的 test，包括 UI 测试（基于 enzyme）</li>
+</ul>
+<h2 id="遗留问题"><a href="#遗留问题" class="headerlink" title="遗留问题"></a>遗留问题</h2><p>目前不知是不是proxy 的问题，导致无法获取到请求到数据。先上传代码。该问题之后有空来解决。</p>
+<p>参考的文档上，给出的源码已经更改，我的github上的代码是根据文档来的，但是无法获取到数据。</p>
+<p><a href="https://github.com/krislee94/DVA_DEMO/tree/master/user-dashboard" target="_blank" rel="noopener">github地址</a>在这里。</p>
+<h2 id="问题报错"><a href="#问题报错" class="headerlink" title="问题报错"></a>问题报错</h2><p><em>app.model: namespace should be defined</em></p>
+<p><a href="https://github.com/dvajs/dva/issues/1624" target="_blank" rel="noopener">遇到的问题查询github的issue解决</a></p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://github.com/superRaytin/redux-saga-in-chinese" target="_blank" rel="noopener">redux-sagas中文文档</a></p>
+<p><a href="https://github.com/dvajs/dva-docs/blob/master/v1/zh-cn/tutorial/01-%E6%A6%82%E8%A6%81.md" target="_blank" rel="noopener">参考文档</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/dva/" rel="tag"># dva</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/28/dva的初识/" rel="next" title="dva的初识">
+                <i class="fa fa-chevron-left"></i> dva的初识
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">KrisLee</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/krislee94" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="lidazhoukris@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-globe"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#目录"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备工作"><span class="nav-number">2.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#划分结构"><span class="nav-number">3.</span> <span class="nav-text">划分结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计model"><span class="nav-number">4.</span> <span class="nav-text">设计model</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Model的抽象"><span class="nav-number">4.1.</span> <span class="nav-text">Model的抽象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#数据纬度"><span class="nav-number">4.1.1.</span> <span class="nav-text">数据纬度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#业务纬度"><span class="nav-number">4.1.2.</span> <span class="nav-text">业务纬度</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件设计方法"><span class="nav-number">5.</span> <span class="nav-text">组件设计方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#那么拆分组件有什么好处呢？"><span class="nav-number">5.0.0.1.</span> <span class="nav-text">那么拆分组件有什么好处呢？</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件设计实践"><span class="nav-number">6.</span> <span class="nav-text">组件设计实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Users-Container-Component-的设计"><span class="nav-number">6.1.</span> <span class="nav-text">Users Container Component 的设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UserList-组件"><span class="nav-number">6.2.</span> <span class="nav-text">UserList 组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组件设计小结"><span class="nav-number">6.3.</span> <span class="nav-text">组件设计小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加Reducer"><span class="nav-number">7.</span> <span class="nav-text">添加Reducer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#给UserModal添加Reducers"><span class="nav-number">7.1.</span> <span class="nav-text">给UserModal添加Reducers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关联Model"><span class="nav-number">7.2.</span> <span class="nav-text">关联Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Action"><span class="nav-number">7.3.</span> <span class="nav-text">Action</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">7.4.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Effects"><span class="nav-number">8.</span> <span class="nav-text">Effects</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#给Users-Model添加Effects"><span class="nav-number">8.1.</span> <span class="nav-text">给Users Model添加Effects</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义Services"><span class="nav-number">9.</span> <span class="nav-text">定义Services</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mock数据"><span class="nav-number">10.</span> <span class="nav-text">mock数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#roadhog"><span class="nav-number">11.</span> <span class="nav-text">roadhog</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Features"><span class="nav-number">11.1.</span> <span class="nav-text">Features</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遗留问题"><span class="nav-number">12.</span> <span class="nav-text">遗留问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题报错"><span class="nav-number">13.</span> <span class="nav-text">问题报错</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">14.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KrisLee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
