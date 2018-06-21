@@ -79,18 +79,22 @@
 
 
 
-<meta name="description" content="最近写了一个web微信端的项目。关于世界杯竞猜类的活动。对于第一次写H5有些陌生但却又有些熟悉。而且写项目的那几天很多东西也都是现学现卖。遇到的问题和解决的思路，在这里我先总结一下。 对之后">
+<meta name="description" content="最近写了一个web微信端的项目。关于世界杯竞猜类的活动。对于第一次写H5有些陌生但却又有些熟悉。而且写项目的那几天很多东西也都是现学现卖。遇到的问题和解决的思路，在这里我先总结一下。  1. h5移动端我们选择哪种方式 2. h5页面的适配问题 3. h5的跨域问题以及解决方案 4. 微信授权的一些必要知识点  h5移动端我们选择哪种方式  传统在我们写h5页面的时候，我们会选择jquery +">
 <meta name="keywords" content="web">
 <meta property="og:type" content="article">
 <meta property="og:title" content="微信web的开发总结">
 <meta property="og:url" content="http://yoursite.com/2018/06/21/微信web的开发总结/index.html">
 <meta property="og:site_name" content="Krislee的个人博客">
-<meta property="og:description" content="最近写了一个web微信端的项目。关于世界杯竞猜类的活动。对于第一次写H5有些陌生但却又有些熟悉。而且写项目的那几天很多东西也都是现学现卖。遇到的问题和解决的思路，在这里我先总结一下。 对之后">
+<meta property="og:description" content="最近写了一个web微信端的项目。关于世界杯竞猜类的活动。对于第一次写H5有些陌生但却又有些熟悉。而且写项目的那几天很多东西也都是现学现卖。遇到的问题和解决的思路，在这里我先总结一下。  1. h5移动端我们选择哪种方式 2. h5页面的适配问题 3. h5的跨域问题以及解决方案 4. 微信授权的一些必要知识点  h5移动端我们选择哪种方式  传统在我们写h5页面的时候，我们会选择jquery +">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-21T03:51:44.036Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5531021-ea412b89d0afbdcb.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5531021-45ad382d4e2eed56.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5531021-04072b632f1711db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-06-21T07:37:10.506Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微信web的开发总结">
-<meta name="twitter:description" content="最近写了一个web微信端的项目。关于世界杯竞猜类的活动。对于第一次写H5有些陌生但却又有些熟悉。而且写项目的那几天很多东西也都是现学现卖。遇到的问题和解决的思路，在这里我先总结一下。 对之后">
+<meta name="twitter:description" content="最近写了一个web微信端的项目。关于世界杯竞猜类的活动。对于第一次写H5有些陌生但却又有些熟悉。而且写项目的那几天很多东西也都是现学现卖。遇到的问题和解决的思路，在这里我先总结一下。  1. h5移动端我们选择哪种方式 2. h5页面的适配问题 3. h5的跨域问题以及解决方案 4. 微信授权的一些必要知识点  h5移动端我们选择哪种方式  传统在我们写h5页面的时候，我们会选择jquery +">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5531021-ea412b89d0afbdcb.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -320,7 +324,44 @@
       
 
       
-        <p>最近写了一个web微信端的项目。关于世界杯竞猜类的活动。对于第一次写H5有些陌生但却又有些熟悉。而且写项目的那几天很多东西也都是现学现卖。遇到的问题和解决的思路，在这里我先总结一下。 对之后</p>
+        <p>最近写了一个web微信端的项目。关于世界杯竞猜类的活动。对于第一次写H5有些陌生但却又有些熟悉。而且写项目的那几天很多东西也都是现学现卖。遇到的问题和解决的思路，在这里我先总结一下。<br><img src="https://upload-images.jianshu.io/upload_images/5531021-ea412b89d0afbdcb.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="WechatIMG1.jpeg"></p>
+<ul>
+<li><a href="#1">1. h5移动端我们选择哪种方式</a></li>
+<li><a href="#2">2. h5页面的适配问题</a></li>
+<li><a href="#3">3. h5的跨域问题以及解决方案</a></li>
+<li><a href="#4">4. 微信授权的一些必要知识点</a></li>
+</ul>
+<h3 id="1">h5移动端我们选择哪种方式</h3>
+
+<p>传统在我们写h5页面的时候，我们会选择jquery + h5 + css 来解决。但是在移动端的时候，因为涉及到移动端的一些情况，我们选择了zepto.js来，因为zepto 是一个轻量级的库，加载项目，我们只需要使用他的api，而zepto的使用极大的参考了jquery，可以说，95%的和jquery的相似。<br><img src="https://upload-images.jianshu.io/upload_images/5531021-45ad382d4e2eed56.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2018-06-16 下午10.23.34.png"><br><a href="http://zeptojs.com/" target="_blank" rel="noopener">更多的信息请看官网</a>。<br>通过上图其实我们不难发现，其实zeptojs的掌握只需要了解他的四大模块，第一就是core的一些方法的使用，第二就是，event 包括on()&amp;off()的处理，第三是ajax 的请求。第四就是 form表单的一些内容。</p>
+<h3 id="2">h5页面的适配问题</h3>
+
+<p>h5的适配在项目中，我们通过增加meta。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,user-scalable=no&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
+<p>并且在渲染的function中增加如下代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">    (function () &#123;</span><br><span class="line">        var html = document.documentElement;</span><br><span class="line">        var htmlWidth = html.getBoundingClientRect().width;</span><br><span class="line">        html.style.fontSize = htmlWidth / 15 + &quot;px&quot;;</span><br><span class="line">    &#125;)()</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>这样在计算的时候，比如项目的高保真(通常是以iphone6为基准 正式宽高的两倍)测量的高度是 50，这个时候 50/50 = 1 rem 。放入实际项目中运用。当然啦，这个需要我们不断的运算。如果使用less 或 sass 的话，会极大的方便我们的使用。</p>
+<p>当然这里的适配方案不唯一。</p>
+<h3 id="3">h5的跨域问题以及解决方案</h3>
+
+<p>最糟心的其实是H5的跨域问题。原本因为项目只有一天写代码的时间，而且我看内容也很简单，就没想着package.json。node_module的方式去写，更没用想过写server 去 request 后台请求给前台。</p>
+<p>因为后台只支持post请求， 并且也没加入 cors ，其实最简单的方式就是后台加入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">response.setHeader(&quot;Access-Control-Allow-Origin&quot;,&quot;*&quot;);</span><br></pre></td></tr></table></figure></p>
+<p>更多关于cors的信息，请看阮一峰老师的文章<a href="http://www.ruanyifeng.com/blog/2016/04/cors.html" target="_blank" rel="noopener">跨域资源共享 CORS 详解</a></p>
+<p>或者支持get请求的时候，前台请求使用jsonp的方式。</p>
+<p>以上方式都不支持的时候，通常有两种方式，第一种是<strong>前端部署+nginx代理</strong>。第二种 也就是这次我使用的方式就是 使用 <strong>thymeleaf</strong>。<br><a href="https://www.cnblogs.com/topwill/p/7434955.html" target="_blank" rel="noopener">关于thymeleaf的一些用法</a>。<br>写习惯了react项目，习惯了MVVM的方式。但是thymeleaf是很典型的mvc的模式，在control层写入请求，把数据response或者放置在model层中，前端直接拿数据使用渲染View层。</p>
+<h3 id="4">微信授权的一些必要知识点</h3>
+
+<p><a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1421140842" target="_blank" rel="noopener">微信网页授权官网</a></p>
+<p>这里的信息基本都是来自上面的官网信息的。首先，想要获取授权，一定要有一个服务号(300一年的认证，必不可少)。其次认证之后。需要在公众平台官网中的“开发 - 接口权限 - 网页服务 - 网页帐号 - 网页授权获取用户基本信息”的配置选项中，修改授权回调域名。请注意，这里填写的是域名（是一个字符串），而不是URL，因此请勿加 http:// 等协议头；</p>
+<h4 id="关于网页授权的两种scope的区别说明"><a href="#关于网页授权的两种scope的区别说明" class="headerlink" title="关于网页授权的两种scope的区别说明"></a>关于网页授权的两种scope的区别说明</h4><ul>
+<li>以snsapi_base为scope发起的网页授权，是用来获取进入页面的用户的openid</li>
+<li>以snsapi_userinfo为scope发起的网页授权，是用来获取用户的基本信息的</li>
+</ul>
+<p>项目中我们采用下面这个。</p>
+<p>用户授权获取code的方案。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&amp;redirect_uri=REDIRECT_URI&amp;response_type=code&amp;scope=SCOPE&amp;state=STATE#wechat_redirect 若提示“该链接无法访问”，请检查参数是否填写错误，是否拥有scope参数对应的授权作用域权限。</span><br></pre></td></tr></table></figure></p>
+<p>这里需要突出强调的是回调的地址 -需要对回调的地址做urlEncode处理，其他的参数配置好，当我们点击上述链接的时候，微信会自动重定向到我们写入的回调地址。而不需要用户自己ajax请求。</p>
+<p>回调的同时我们会取到code ，这个时候，第二步：通过code换取网页授权access_token</p>
+<p>第三步：刷新access_token（如果需要）</p>
+<p>第四步：拉取用户信息(需scope为 snsapi_userinfo) 以access_token和openid为基础去取信息。</p>
+<p>需要测试的话，我们可以使用微信公众号给出的测试账号来进行测试。<br>拿到你自己的测试账号，配置参数。<br><img src="https://upload-images.jianshu.io/upload_images/5531021-04072b632f1711db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>关注你自己的测试公众号就可以进行测试。以上就是微信web开发的一些个人经验。在这里记录。学习了也增长了知识，果然上手项目才是学习和入门最好的方式。</p>
 
       
     </div>
@@ -417,8 +458,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -494,6 +544,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1"><span class="nav-number">1.</span> <span class="nav-text">h5移动端我们选择哪种方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2"><span class="nav-number">2.</span> <span class="nav-text">h5页面的适配问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3"><span class="nav-number">3.</span> <span class="nav-text">h5的跨域问题以及解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4"><span class="nav-number">4.</span> <span class="nav-text">微信授权的一些必要知识点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关于网页授权的两种scope的区别说明"><span class="nav-number">4.1.</span> <span class="nav-text">关于网页授权的两种scope的区别说明</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
