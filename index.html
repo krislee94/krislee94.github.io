@@ -249,6 +249,186 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/11/react-高阶组件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="KrisLee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Krislee的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/11/react-高阶组件/" itemprop="url">react-高阶组件</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-11T09:42:35+08:00">
+                2018-07-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="组件间抽象"><a href="#组件间抽象" class="headerlink" title="组件间抽象"></a>组件间抽象</h2><p>在React组件的构建过程中，常常有这样的场景，有一类功能需要被不同的组件公用，此时，就涉及抽象的话题，在不同设计理念下，有许多的抽象方法，而针对React，我们重点讨论两种：mixin和高阶组件。<br><img src="https://upload-images.jianshu.io/upload_images/5531021-60fd010022847f78.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="png"></p>
+<h3 id="mixin"><a href="#mixin" class="headerlink" title="mixin"></a>mixin</h3><p>mixin的特性一直广泛存在于各种面向对象语言中。比如在Ruby中，include关键词即是mixin。是将一个模块混入到一个另一个模块中，或是一个类中。</p>
+<p>为什么编程语言要引入这样一种特性呢？</p>
+<p>事实上，包括C++等一些年龄较大的OOP语言，它们都有一个强大但危险的多重继承特性。在现代语言中，为了权衡利弊，大都舍弃了多重继承，只采用单继承，但单继承在实现抽象时有很多不方便的地方，为了弥补缺失，java引入了接口interface。其他一些语言则引入了像mixin的技巧。</p>
+<h3 id="封装mixin方法"><a href="#封装mixin方法" class="headerlink" title="封装mixin方法"></a>封装mixin方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">const mixin = function(obj,mixins)&#123;</span><br><span class="line">	const newObj = obj;</span><br><span class="line"></span><br><span class="line">	newObj.prototype = Object.create(obj.prototype);</span><br><span class="line"></span><br><span class="line">	for(let prop in mixins)&#123;</span><br><span class="line">		if(mixins.hasOwnProperty(prop))&#123;</span><br><span class="line">			newObj.prototype[prop] = mixins[prop];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return newObj;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const BigMixin = &#123;</span><br><span class="line">	fly:()=&gt;&#123;</span><br><span class="line">		console.log(&apos;I can fly&apos;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const Big = function()&#123;</span><br><span class="line">	console.log(&apos;new big&apos;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const FlyBig = mixin(Big,BigMixin);</span><br><span class="line"></span><br><span class="line">const flyBig = new FlyBig();  //=&gt;&apos;new big&apos;</span><br><span class="line"> </span><br><span class="line">flyBig.fly(); //=&gt; &apos;I can fly&apos;</span><br></pre></td></tr></table></figure>
+<p>从上面的代码，我们不难看出，对于广义的mixin方法，就是用赋值的方式将mixin对象里的方法都挂载到原对象上，来实现对对象的混入。</p>
+<p>从上述的实现，我们可以联想到 underscore库中的extend 或 lodash库中的 assign方法，或者说ES6中的Object.assign()方法。</p>
+<h3 id="在react中使用mixin"><a href="#在react中使用mixin" class="headerlink" title="在react中使用mixin"></a>在react中使用mixin</h3><p>在官方封装的’reat-addons-pure-render-mixin’；在git上没找到相关的有价值的库，应该是react认为mixin是一种反模式形式。</p>
+<p>但是发现了react-immutable-render-mixin这样的库。只是很久没维护了，不建议使用<br><a href="https://github.com/jurassix/react-immutable-render-mixin" target="_blank" rel="noopener">参考链接</a></p>
+<p>我们可以看到，使用createClass实现的mixin为组件做了两件事。</p>
+<p><strong>工具方法</strong>:这是mixin的基本功能，如果你想共享一些工具类方法，就可以定义它们，直接在各个组件中使用。<br><strong>生命周期继承</strong>:prips与state合并。这是mixin特别重要的功能，</p>
+<h3 id="ES6-Classes-与-decorator"><a href="#ES6-Classes-与-decorator" class="headerlink" title="ES6 Classes 与 decorator"></a>ES6 Classes 与 decorator</h3><p>然而，使用我们推荐的ES6 classes形势构建组件时，它并不支持mixin。React文档中也未能给出解决方法。</p>
+<p>要在class的基础上封装mixin，就要说到class的本质。ES6并没有改变js面向对象方法基于原型的本质，不过再次智商提供了一些语法糖。class就是其中之一。</p>
+<p>对于是按mixin方法来说，这就没什么不一样了。接下来我们来聊聊另一个语法糖decorator。正巧可以用来实现class的mixin。</p>
+<p>decorator 是ES7定义的新特性，与java 的 pre-defined annotation（预定义注解）相似。但与java 的annotation 不同的是，decorator是运用在运行时的方法，在Redux或其他一些应用层框架中，越来越多的使用decorator以实现对组件的修饰。</p>
+<p>这样我们就可以使用@mixin。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">import &#123;getOwnPropertyDescriptors&#125; from &apos;./private/utils&apos;;</span><br><span class="line"></span><br><span class="line">const &#123; defineProperty &#125; = Object;</span><br><span class="line"></span><br><span class="line">function handleClass(target,mixins)&#123;</span><br><span class="line">	if(!mixins.length)&#123;</span><br><span class="line">		throw new SyntaxError(&apos;@mixin() class .....&apos;)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	for(let i=0;i&lt;mixins.length;i++)&#123;</span><br><span class="line"></span><br><span class="line">		const descs = getOwnPropertyDescriptors(mixins[i]);</span><br><span class="line"></span><br><span class="line">		for(const key in descs)&#123;</span><br><span class="line">			if(!(key intarget.prototype))&#123;</span><br><span class="line">				defineProperty(target.prototype,key,descs[key])</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default function mixin(...mixins)&#123;</span><br><span class="line">	if(typeof mixins[0] == &apos;function&apos;)&#123;</span><br><span class="line">		return handelClass(mixins[0],[]);</span><br><span class="line">	&#125;</span><br><span class="line">	else&#123;</span><br><span class="line">		return target=&gt;&#123;</span><br><span class="line">			return handleClass(target,mixins);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到，源代码十分简单，它将每一个mixin对象的方法都跌价到target 对象的原型上以达到mixin的目的，这样，就可以用@mixin来做多个重用模块的叠加了。</p>
+<p>对于react，我们自然可以用上述方法来实现mixin。但不幸的是，社区从0.14版本开始渐渐开始剥离mixin。那么，到底是什么原因导致mixin成为反模式了呢？</p>
+<h3 id="mixin问题"><a href="#mixin问题" class="headerlink" title="mixin问题"></a>mixin问题</h3><ul>
+<li>破坏了原有组件的封装</li>
+<li>命名冲突</li>
+<li>增加复杂性</li>
+</ul>
+<p>针对这些困扰，React社区提出来新的方式来取代mixin，那就是高阶组件。</p>
+<h3 id="高阶组件-Higher-Order-Components"><a href="#高阶组件-Higher-Order-Components" class="headerlink" title="高阶组件(Higher-Order Components)"></a>高阶组件(Higher-Order Components)</h3><p>高阶组件（HOC）是 React 中用于重用组件逻辑的高级技术。 HOC 本身不是 React API 的一部分。 它们是从 React 构思本质中浮现出来的一种模式。</p>
+<p>具体来说，高阶组件是一个函数，能够接受一个组件并返回一个新的组件。</p>
+<p>在我们项目中使用react-redux框架的时候，有一个<code>connect</code>的概念，这里的<code>connect</code>其实就是一个高阶组件。也包括类似react-router-dom中的withRouter的概念</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5531021-651f4f73389534eb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="connect"></p>
+<h3 id="构建一个简单的hoc"><a href="#构建一个简单的hoc" class="headerlink" title="构建一个简单的hoc"></a>构建一个简单的hoc</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function hello ()&#123;</span><br><span class="line">    console.log(&quot;hello i  love react &quot;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">function hoc(fn)&#123;</span><br><span class="line">    return ()=&gt;&#123;</span><br><span class="line">          console.log(&quot;first&quot;);</span><br><span class="line">            fn();</span><br><span class="line">          console.log(&quot;end&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">hello = hoc(hello);</span><br><span class="line"></span><br><span class="line">hello();</span><br></pre></td></tr></table></figure>
+<h3 id="实现高阶组件的方法"><a href="#实现高阶组件的方法" class="headerlink" title="实现高阶组件的方法"></a>实现高阶组件的方法</h3><p>实现高阶组件的方法有如下两种：</p>
+<ul>
+<li><strong>属性代理</strong>。高阶组件通过呗包裹的React组件来操作props</li>
+<li><strong>反向继承</strong>。高阶组件继承于被包裹的React组件</li>
+</ul>
+<p>接下来我们分别来阐述这两种方法。</p>
+<h4 id="属性代理"><a href="#属性代理" class="headerlink" title="属性代理"></a>属性代理</h4><p>属性代理是我们react中常见高阶组件的实现方法，我们通过一个例子来说明：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import React,&#123;Component&#125; from &apos;react&apos;;</span><br><span class="line"></span><br><span class="line">const MyContainer = (WraooedComponent) =&gt; </span><br><span class="line">	</span><br><span class="line">	class extends Component &#123;</span><br><span class="line">		render()&#123;</span><br><span class="line">			return &lt;WrappedComponent &#123;...this.props&#125; /&gt;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>从这里看到最重要部分是render 方法中返回了传入 WrappedComponent的React组件。这样，我们就可以通过高阶组件来传递props。这种方法即为属性代理。</p>
+<p>自然，我们想要使用MyContainer这个高阶组件就变得非常容易：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import React,&#123;Component&#125; from &apos;react&apos;;</span><br><span class="line"></span><br><span class="line">class MyComponent extends Component&#123;</span><br><span class="line">	//...</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default MyContainer(MyComponent);</span><br></pre></td></tr></table></figure>
+<p>这样组件就可以一层层地作为参数被调用，原始组件就具备了高阶组件对它的修饰。就这么简单，保持单个组件封装性的同时还保留了易用性。当然，我们也可以用decorator来转换。</p>
+<p>当使用属性代理构建高阶组件时，调用顺序不同于mixin。上述执行生命周期的过程类似于堆栈调用：</p>
+<p><strong>didmount -&gt;HOC didmount -&gt;(HOCs didmount)-&gt;(HOCs will unmount)-&gt;HOC will unmount -&gt; unmount</strong></p>
+<h4 id="反向继承"><a href="#反向继承" class="headerlink" title="反向继承"></a>反向继承</h4><p>另一种构建高阶组件的方法称为反向继承，从字面意思上看，它一定与继承性相关。我们同样来看一个简单的实现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const MyContainer = (WrappedComponent)=&gt;&#123;</span><br><span class="line">	class extends WrappedComponent &#123;</span><br><span class="line">		render()&#123;</span><br><span class="line">			return super.render();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如上代码。高阶组件返回的组件继承于 WrappedComponent 。因为被动地继承了 WrappedComponent，所有的调用都会反向，这也是种方法的由来。</p>
+<p>这种方法与属性代理不太一样。它通过继承WrappedComponent来实现，方法可以通过super来顺序调用。因为依赖于继承机制。HOC的调用顺序和队列是一样的。</p>
+<p><strong>didmount -&gt; HOC didmount -&gt;(HOCs didmount) -&gt; will unmount -&gt;HOC will unmount -&gt;(HOCs will unmount)</strong></p>
+<p>在反向继承方法中，高阶组件可以使用 WrappedComponent 引用，这意味着它可以使用 WrappedComponent 的state 、props。生命周期和render方法。但它不能保证完整的子组件树被解析。它有两个比较大的特点，下面我们展开来讲一讲。</p>
+<h5 id="渲染劫持"><a href="#渲染劫持" class="headerlink" title="渲染劫持"></a>渲染劫持</h5><p>渲染劫持就是指的是高阶组件可以控制 WrappedComponent的渲染过程，并渲染各种各样的结果。我们可以在这个过程中在任何React元素输出的结果中读取、增加、修改、删除props，或读取或修改React元素树，或条件显示。又或者用样式包裹元素树</p>
+<h5 id="控制state"><a href="#控制state" class="headerlink" title="控制state"></a>控制state</h5><p>高阶组件可以读取、修改或删除WrappedComponent实例中的state，如果需要的话，也可以增加state。</p>
+<h4 id="组件命名"><a href="#组件命名" class="headerlink" title="组件命名"></a>组件命名</h4><p>当包裹一个高阶组件时，我们失去了原始 WrappedComponent的displayName，而组件名字是方便我们开发与调试的重要属性。</p>
+<h4 id="组件参数"><a href="#组件参数" class="headerlink" title="组件参数"></a>组件参数</h4><p>有时，我们调用高阶组件需要传入一些参数，这可以用非常简单的方式来实现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import React from &apos;react&apos;</span><br><span class="line"></span><br><span class="line">function HOCFactoryFactory(...params)&#123;</span><br><span class="line">	return function HOCFactory(WrappedComponent)&#123;</span><br><span class="line">		return class HOC extends Component&#123;</span><br><span class="line">			render()&#123;</span><br><span class="line">				return &lt;WrappedComponent &#123;...this.props&#125; /&gt;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当你使用的时候，可以这么写：</p>
+<p><code>HOCFactoryFactory(params)(WrappedComponent)</code></p>
+<p>//or</p>
+<p><code>@HOCFactoryFactory(params)</code><br><code>class WrappedComponent extends React.Component{}</code></p>
+<p>这也是利用了函数式编程的特征。可见，在React抽象的过程中，处处可见它的影子。</p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="http://react.css88.com/docs/higher-order-components.html" target="_blank" rel="noopener">react中文文档</a><br><a href="">深入React技术栈 作者：陈屹 出版社：人民邮电出版社</a><br><a href="https://segmentfault.com/a/1190000010371752" target="_blank" rel="noopener">深入浅出React高阶组件</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/26/react实现仿大众点评WebAPP-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -268,7 +448,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/26/react实现仿大众点评WebAPP-1/" itemprop="url">react实现仿大众点评WebAPP-1</a></h1>
+                <a class="post-title-link" href="/2018/06/26/react实现仿大众点评WebAPP-1/" itemprop="url">react实现boss直聘app</a></h1>
         
 
         <div class="post-meta">
@@ -383,7 +563,7 @@
 <h4 id="封装post请求"><a href="#封装post请求" class="headerlink" title="封装post请求"></a>封装post请求</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">import &apos;whatwg-fetch&apos;</span><br><span class="line">import &apos;es6-promise&apos;</span><br><span class="line"></span><br><span class="line">// 将对象拼接成 key1=val1&amp;key2=val2&amp;key3=val3 的字符串形式</span><br><span class="line">function obj2params(obj) &#123;</span><br><span class="line">    var result = &apos;&apos;;</span><br><span class="line">    var item;</span><br><span class="line">    for (item in obj) &#123;</span><br><span class="line">        result += &apos;&amp;&apos; + item + &apos;=&apos; + encodeURIComponent(obj[item]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (result) &#123;</span><br><span class="line">        result = result.slice(1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 发送 post 请求</span><br><span class="line">export function post(url, paramsObj) &#123;</span><br><span class="line">    var result = fetch(url, &#123;</span><br><span class="line">        method: &apos;POST&apos;,</span><br><span class="line">        credentials: &apos;include&apos;,</span><br><span class="line">        headers: &#123;</span><br><span class="line">            &apos;Accept&apos;: &apos;application/json, text/plain, */*&apos;,</span><br><span class="line">            &apos;Content-Type&apos;: &apos;json&apos;</span><br><span class="line">        &#125;,</span><br><span class="line">        body: obj2params(paramsObj)</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>fetch的请求的data，一般是string类型，因此会采用string拼接。这里我们请求的时候尽量会使用对象类型。因此我们写一个obj2params。</p>
 <p>demo：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">import &#123; get &#125; from &apos;./get.js&apos;</span><br><span class="line">import &#123; post &#125; from &apos;./post.js&apos;</span><br><span class="line"></span><br><span class="line">export function getData() &#123;</span><br><span class="line">    // &apos;/api/1&apos; 获取字符串</span><br><span class="line">    var result = get(&apos;/api/1&apos;)</span><br><span class="line"></span><br><span class="line">    result.then(res =&gt; &#123;</span><br><span class="line">        return res.text()</span><br><span class="line">    &#125;).then(text =&gt; &#123;</span><br><span class="line">        console.log(text)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    // &apos;/api/2&apos; 获取json</span><br><span class="line">    var result1 = get(&apos;/api/2&apos;)</span><br><span class="line"></span><br><span class="line">    result1.then(res =&gt; &#123;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;).then(json =&gt; &#123;</span><br><span class="line">        console.log(json)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export function postData() &#123;</span><br><span class="line">    // &apos;/api/post&apos; 提交数据</span><br><span class="line">    var result = post(&apos;/api/post&apos;, &#123;</span><br><span class="line">        a: 100,</span><br><span class="line">        b: 200</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    result.then(res =&gt; &#123;</span><br><span class="line">        return res.json();</span><br><span class="line">    &#125;).then(json =&gt; &#123;</span><br><span class="line">        console.log(json)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>基础知识点就以上这么多，之后的几天，每一个点都需要自己仔细看，了解其中的知识点，接下来，我们开发一个仿大众点评的webapp</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>基础知识点就以上这么多，之后的几天，每一个点都需要自己仔细看，了解其中的知识点</p>
 <h2 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h2><p><a href="https://coding.imooc.com/class/99.html" target="_blank" rel="noopener">本章的知识来源-imooc实战</a></p>
 <p>[深入React技术栈]</p>
 <p><a href="https://www.webpackjs.com/concepts/" target="_blank" rel="noopener">webpack中文网</a></p>
@@ -1861,137 +2041,13 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/07/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="KrisLee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Krislee的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/07/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-07T10:54:14+08:00">
-                2018-05-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -2035,7 +2091,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
