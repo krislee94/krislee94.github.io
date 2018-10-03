@@ -249,6 +249,200 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/03/JavaScript数据可视化库/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="KrisLee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Krislee的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/03/JavaScript数据可视化库/" itemprop="url">JavaScript数据可视化库</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-03T21:09:10+08:00">
+                2018-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h6 id="在前端的开发中…数据是枯燥的，但是图形的展示却是有趣的。有些时候我们需要借助一些三方的js库来实现数据可视化。让用户更加直观的看透数据的变化更替。下面我们列出如下："><a href="#在前端的开发中…数据是枯燥的，但是图形的展示却是有趣的。有些时候我们需要借助一些三方的js库来实现数据可视化。让用户更加直观的看透数据的变化更替。下面我们列出如下：" class="headerlink" title="在前端的开发中…数据是枯燥的，但是图形的展示却是有趣的。有些时候我们需要借助一些三方的js库来实现数据可视化。让用户更加直观的看透数据的变化更替。下面我们列出如下："></a>在前端的开发中…数据是枯燥的，但是图形的展示却是有趣的。有些时候我们需要借助一些三方的js库来实现数据可视化。让用户更加直观的看透数据的变化更替。下面我们列出如下：</h6><h3 id="D3-js"><a href="#D3-js" class="headerlink" title="D3.js"></a>D3.js</h3><p><strong>star 数：80K</strong></p>
+<p>它允许你将任意数据绑定到文档对象模型（DOM），然后在文档上应用数据转换。</p>
+<p><a href="https://github.com/d3/d3/blob/master/API.md" target="_blank" rel="noopener">这里是D3的API</a></p>
+<p><strong>如果使用npm</strong></p>
+<figure class="highlight plain"><figcaption><span>install d3```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">**你也可以加载d3使用如下： d3js.org, CDNJS, or unpkg.**</span><br></pre></td></tr></table></figure>
+<p><script src="https://d3js.org/d3.v5.js"></script><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<p><script src="https://d3js.org/d3.v5.min.js"></script><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<p>import * as d3 from “d3”;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<p>import {scaleLinear} from “d3-scale”;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">**在node里**</span><br></pre></td></tr></table></figure></p>
+<p>var d3 = require(“d3”);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">当然你也可以按模块加载使用Object.assign</span><br><span class="line"></span><br><span class="line">```var d3 = Object.assign(&#123;&#125;, require(&quot;d3-format&quot;), require(&quot;d3-geo&quot;), require(&quot;d3-geo-projection&quot;));</span><br></pre></td></tr></table></figure></p>
+<p>这里有一个很棒的例子 ：<a href="https://github.com/d3/d3/wiki/Gallery" target="_blank" rel="noopener">https://github.com/d3/d3/wiki/Gallery</a></p>
+<p>项目地址：<a href="https://github.com/d3/d3/" target="_blank" rel="noopener">https://github.com/d3/d3/</a></p>
+<h3 id="ChartJS"><a href="#ChartJS" class="headerlink" title="ChartJS"></a>ChartJS</h3><p><strong>star 数：40K</strong></p>
+<p>一个非常受欢迎的开源 HTML5 图表库，它使用画布元素构建响应式 Web 应用。ChartJS 提供了混合图表类型，新的图表轴类型和漂亮的动画。它的设计简单而优雅，有 8 种基本的图表类型，你可以将该库与 moment.js 结合在一起使用，用于渲染时间轴。</p>
+<p>如果项目中使用的是react，这里有<a href="https://github.com/reactjs/react-chartjs" target="_blank" rel="noopener">react-chartjs</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var LineChart = require(&quot;react-chartjs&quot;).Line;</span><br><span class="line"></span><br><span class="line">var MyComponent = React.createClass(&#123;</span><br><span class="line">  render: function() &#123;</span><br><span class="line">    return &lt;LineChart data=&#123;chartData&#125; options=&#123;chartOptions&#125; width=&quot;600&quot; height=&quot;250&quot;/&gt;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>项目地址：<a href="https://cdnjs.com/libraries/Chart.js" target="_blank" rel="noopener">https://cdnjs.com/libraries/Chart.js</a></p>
+<h3 id="ThreeJS"><a href="#ThreeJS" class="headerlink" title="ThreeJS"></a>ThreeJS</h3><p>ThreeJS 用 WebGL 创建 3d 动画。该项目的灵活性和抽象性意味着它也可用于 2 维或 3 维的数据可视化。</p>
+<p>使用方法：<br><a href="https://threejs.org/build/three.min.js" target="_blank" rel="noopener">下载微型库</a>并包含在你的html代码中，同样你可以使用npm，通过install 然后import 在你的模块中，二者选一，这也取决你如何搭建你的项目。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=&quot;js/three.min.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h6 id="这段代码创建一个场景、一个摄像机和一个几何立方体，并将立方体添加到场景中。然后，它为场景和摄像机创建一个WebGL渲染器，并将该视图添加到文档中。body元素。最后，它为摄像机动画场景中的立方体。"><a href="#这段代码创建一个场景、一个摄像机和一个几何立方体，并将立方体添加到场景中。然后，它为场景和摄像机创建一个WebGL渲染器，并将该视图添加到文档中。body元素。最后，它为摄像机动画场景中的立方体。" class="headerlink" title="这段代码创建一个场景、一个摄像机和一个几何立方体，并将立方体添加到场景中。然后，它为场景和摄像机创建一个WebGL渲染器，并将该视图添加到文档中。body元素。最后，它为摄像机动画场景中的立方体。"></a>这段代码创建一个场景、一个摄像机和一个几何立方体，并将立方体添加到场景中。然后，它为场景和摄像机创建一个WebGL渲染器，并将该视图添加到文档中。body元素。最后，它为摄像机动画场景中的立方体。</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">var camera, scene, renderer;</span><br><span class="line">var geometry, material, mesh;</span><br><span class="line"></span><br><span class="line">init();</span><br><span class="line">animate();</span><br><span class="line"></span><br><span class="line">function init() &#123;</span><br><span class="line"></span><br><span class="line">	camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 10 );</span><br><span class="line">	camera.position.z = 1;</span><br><span class="line"></span><br><span class="line">	scene = new THREE.Scene();</span><br><span class="line"></span><br><span class="line">	geometry = new THREE.BoxGeometry( 0.2, 0.2, 0.2 );</span><br><span class="line">	material = new THREE.MeshNormalMaterial();</span><br><span class="line"></span><br><span class="line">	mesh = new THREE.Mesh( geometry, material );</span><br><span class="line">	scene.add( mesh );</span><br><span class="line"></span><br><span class="line">	renderer = new THREE.WebGLRenderer( &#123; antialias: true &#125; );</span><br><span class="line">	renderer.setSize( window.innerWidth, window.innerHeight );</span><br><span class="line">	document.body.appendChild( renderer.domElement );</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function animate() &#123;</span><br><span class="line"></span><br><span class="line">	requestAnimationFrame( animate );</span><br><span class="line"></span><br><span class="line">	mesh.rotation.x += 0.01;</span><br><span class="line">	mesh.rotation.y += 0.02;</span><br><span class="line"></span><br><span class="line">	renderer.render( scene, camera );</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Echarts-amp-Highcharts"><a href="#Echarts-amp-Highcharts" class="headerlink" title="Echarts &amp; Highcharts"></a>Echarts &amp; Highcharts</h3><p><strong>star 数：30K</strong></p>
+<p>百度的 Echarts 项目是一个基于浏览器的交互式图表和可视化库。它是用纯 JavaScript 编写的，基于 zrender 画布。它支持以画布、SVG(4.0+) 和 VML 的形式绘制图表。除了 PC 和移动浏览器外，ECharts 还可以与 node 上的 node-canvas 一起使用，以便进行高效的服务器端渲染（SSR）。</p>
+<p>这也是个人比较推荐的项目…因为也是有比较清晰和明确的中文文档。</p>
+<p>echarts可以个性化自定义定制属于自己的主题，地址如下：<br><a href="http://echarts.baidu.com/theme-builder/#acc-line-body" target="_blank" rel="noopener">http://echarts.baidu.com/theme-builder/#acc-line-body</a></p>
+<p>库的下载地址如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://echarts.baidu.com/download.html</span><br></pre></td></tr></table></figure>
+<p><strong>Highcharts</strong></p>
+<p><strong>star 数：8K</strong></p>
+<p>Highcharts JS 是一个广受欢迎的基于 SVG 的 JavaScript 图表库，针对旧的浏览器可降级到 VML 和画布。世界上最大的 100 家公司中，有 72 家公司（Facebook、Twitter 等）使用了这个库，这使得它成为世界上最流行的 JS 图表 API。</p>
+<p>项目地址:<br><a href="https://github.com/highcharts/highcharts" target="_blank" rel="noopener">https://github.com/highcharts/highcharts</a></p>
+<h3 id="Metric-Graphics"><a href="#Metric-Graphics" class="headerlink" title="Metric-Graphics"></a>Metric-Graphics</h3><p><strong>star 数：7K</strong></p>
+<p>Metric-Graphics 用于可视化和布局时间序列数据。它相对较小（80kb），提供了小而优雅的线条图、散点图、直方图、柱状图和数据表，以及地格图（rug plot）和基本线性回归等特性。</p>
+<p>这里有一个交互式的示例库：</p>
+<p><a href="https://metricsgraphicsjs.org/examples.htm" target="_blank" rel="noopener">https://metricsgraphicsjs.org/examples.htm</a></p>
+<p>项目地址：</p>
+<p><a href="https://github.com/metricsgraphics/metrics-graphics" target="_blank" rel="noopener">https://github.com/metricsgraphics/metrics-graphics</a></p>
+<h3 id="Recharts"><a href="#Recharts" class="headerlink" title="Recharts"></a>Recharts</h3><p>Recharts 是一个使用 React 和 D3 构建的图表库，可以作为声明性的 React 组件使用。 该库提供原生 SVG 支持，轻量级依赖树（D3 子模块）高度可定制。官网文档中可以找到很多例子。</p>
+<p>项目地址：</p>
+<p><a href="https://github.com/recharts/recharts" target="_blank" rel="noopener">https://github.com/recharts/recharts</a></p>
+<h3 id="Raphael"><a href="#Raphael" class="headerlink" title="Raphael"></a>Raphael</h3><p><strong>star 数：10K</strong></p>
+<p>Raphael 是一个 JavaScript 矢量库，可在 Web 中绘制矢量图形。该库使用 SVG W3C 和 VML 作为创建图形的基础，因此每个图形对象也是 DOM 对象，你可以附加 JavaScript 事件处理程序。Raphael 目前支持 Firefox 3.0+、Safari 3.0+、Chrome 5.0+、Opera 9.5+ 和 Internet Explorer 6.0+。</p>
+<p>项目地址：</p>
+<p><a href="https://github.com/DmitryBaranovskiy/raphael" target="_blank" rel="noopener">https://github.com/DmitryBaranovskiy/raphael</a></p>
+<h3 id="C3js"><a href="#C3js" class="headerlink" title="C3js"></a>C3js</h3><p><strong>star 数：8K</strong></p>
+<p>C3 是一个基于 D3 的可重用 Web 应用图表库。该库为每个元素提供了相应的类，这样你就可以通过这些类来自定义样式，并通过 D3 直接扩展结构。它还提供了多种 API 和回调来访问图表状态。借助它们，你可以更新图表，即使是已经渲染好的图标。</p>
+<p>看看这些例子：<a href="https://c3js.org/examples.html" target="_blank" rel="noopener">https://c3js.org/examples.html</a></p>
+<p>项目地址：<a href="https://github.com/c3js/c3" target="_blank" rel="noopener">https://github.com/c3js/c3</a></p>
+<h3 id="React-Vis"><a href="#React-Vis" class="headerlink" title="React Vis"></a>React Vis</h3><p><strong>star 数：4K</strong></p>
+<p>React-vis 是 Uber 开发的一系列数据可视化组件，包括线 / 面 / 柱状图、热图、散热图、等高线图、六角热图等等。使用该库不需要事先掌握 D3 或任何其他 data-vis 库的知识，并提供了低级模块化的构建块组件，如 x/y 轴。</p>
+<p>项目地址：<a href="https://github.com/uber/react-vis" target="_blank" rel="noopener">https://github.com/uber/react-vis</a></p>
+<h3 id="React-Virtualized"><a href="#React-Virtualized" class="headerlink" title="React Virtualized"></a>React Virtualized</h3><p><strong>star 数：12K</strong></p>
+<p>React virtualized 是一组 React 组件，有效地呈现大型列表和表格数据。ES6、CommonJS 和 UMD 版本可以在每个分发版中使用，该项目支持 Webpack 4 工作流。请注意，为了避免版本冲突，必须将 react，react-dom 指定为 peer 依赖。</p>
+<p>项目地址：<a href="https://github.com/bvaughn/react-virtualized" target="_blank" rel="noopener">https://github.com/bvaughn/react-virtualized</a></p>
+<h3 id="Victory"><a href="#Victory" class="headerlink" title="Victory"></a>Victory</h3><p><strong>star 数：6K+</strong></p>
+<p>Victory 在 Web 和 React Native 应用程序中使用相同的 API，以便于跨平台绘制图表。一种优雅而灵活的方式来利用 React 组件来支持实用的数据可视化。</p>
+<p>项目地址：</p>
+<p><a href="https://github.com/FormidableLabs/victory" target="_blank" rel="noopener">https://github.com/FormidableLabs/victory</a></p>
+<h3 id="CartoDB"><a href="#CartoDB" class="headerlink" title="CartoDB"></a>CartoDB</h3><p><strong>star 数：2K</strong></p>
+<p>Carto 是一个位置智能和数据可视化工具，用于发现位置数据中的见解。你可以通过 Web 表单上传地理空间数据（Shapefiles、GeoJSON 等），并在数据集或地图上将其可视化，使用 SQL 进行搜索，并使用 CartoCSS 来应用地图样式。</p>
+<p>这里有一些视频演示：<a href="https://vimeo.com/channels/carto" target="_blank" rel="noopener">https://vimeo.com/channels/carto</a></p>
+<p>项目地址：<a href="https://github.com/CartoDB/cartodb" target="_blank" rel="noopener">https://github.com/CartoDB/cartodb</a></p>
+<h3 id="Raw-graphs"><a href="#Raw-graphs" class="headerlink" title="Raw graphs"></a>Raw graphs</h3><p><strong>star 数：5K</strong></p>
+<p>Raw 是电子表格和数据可视化之间的连接，基于 d3.js 库创建基于向量的自定义可视化。它可以处理表格数据（电子表格和 CSV）和从其他应用程序复制和粘贴的文本。因为是 SVG 格式，所以可以使用矢量图形编辑器编辑，或直接嵌入到网页中。</p>
+<p>这里有一个例子：<a href="https://rawgraphs.io/gallery/" target="_blank" rel="noopener">https://rawgraphs.io/gallery/</a></p>
+<p>项目地址：</p>
+<p><a href="https://github.com/densitydesign/raw" target="_blank" rel="noopener">https://github.com/densitydesign/raw</a></p>
+<h3 id="Metabase"><a href="#Metabase" class="headerlink" title="Metabase"></a>Metabase</h3><p><strong>star 数：11K+</strong></p>
+<p>Metabase 是一种相当快速和简单的方法，可以在不了解 SQL 的情况下创建数据仪表盘（分析师和数据专业人士可使用 SQL 模式）。 你可以创建片段和度量指标，发送数据到 Slack（通过 MetaBot 在 Slack 中查看数据）等等。它可能是一个很好的工具，可用它在团队内部可视化数据，尽管可能需要做一些维护工作。</p>
+<p>项目地址：</p>
+<p><a href="https://github.com/metabase/metabase" target="_blank" rel="noopener">https://github.com/metabase/metabase</a></p>
+<h3 id="tauCharts"><a href="#tauCharts" class="headerlink" title="tauCharts"></a>tauCharts</h3><p><strong>star 数：2K</strong></p>
+<p>tauCharts 一个基于 D3 的图表库。该库提供了一个声明接口，用于将数据字段快速映射到可视化属性，它的架构允许你使用插件构建切面和扩展图表行为。</p>
+<p>项目地址：</p>
+<p><a href="https://github.com/TargetProcess/tauCharts" target="_blank" rel="noopener">https://github.com/TargetProcess/tauCharts</a></p>
+<h3 id="原文链接：https-blog-bitsrc-io-11-javascript-charts-and-data-visualization-libraries-for-2018-f01a283a5727"><a href="#原文链接：https-blog-bitsrc-io-11-javascript-charts-and-data-visualization-libraries-for-2018-f01a283a5727" class="headerlink" title="原文链接：https://blog.bitsrc.io/11-javascript-charts-and-data-visualization-libraries-for-2018-f01a283a5727"></a>原文链接：<a href="https://blog.bitsrc.io/11-javascript-charts-and-data-visualization-libraries-for-2018-f01a283a5727" target="_blank" rel="noopener">https://blog.bitsrc.io/11-javascript-charts-and-data-visualization-libraries-for-2018-f01a283a5727</a></h3>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/09/微信小程序8月开发记录/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1923,142 +2117,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/13/通过github-hexo-nexT搭建个人博客/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="KrisLee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Krislee的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/13/通过github-hexo-nexT搭建个人博客/" itemprop="url">通过github/hexo/nexT搭建个人博客</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-13T09:43:04+08:00">
-                2018-05-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>文章整个搭建参考下面的文章，搭建时间大概一天左右。中间也踩了一点坑，不过 搜索一下 ，也是可以很快解决的。</p>
-<p>唯一的一个大坑，大概就是，每次 hexo g 的时候总是不通过。 通过 强大的 搜索引擎。</p>
-<p>发现在 _config.yml 文件中 # Site， #URL 的冒号 后面需要手动加空格，不然编译不过(哪怕那里没有内容，也要加空格)</p>
-<p>至于其他的内容，参考下面的参考链接。都很详细 。</p>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://www.jianshu.com/p/15848a8c70db" target="_blank" rel="noopener">简书作者：ShmilyCoder 文章 基于GitHub和Hexo搭建个人博客</a>  </p>
-<p><a href="http://theme-next.iissnan.com/" target="_blank" rel="noopener">nexT官方文档</a></p>
-<h2 id="hexo的新建文章"><a href="#hexo的新建文章" class="headerlink" title="hexo的新建文章"></a>hexo的新建文章</h2><ul>
-<li><code>hexo new &#39;xxx&#39;</code></li>
-<li><code>找到资源文件_post下的md，更新文章</code></li>
-<li><code>hexo clean</code></li>
-<li><code>hexo s （查看本地）</code></li>
-<li><code>hexo g  (部署)</code></li>
-<li><code>hexo d (发布)</code></li>
-</ul>
-<p>其中<code>hexo clean</code>并不需要每次都使用</p>
-<h2 id="搭建完成的博客"><a href="#搭建完成的博客" class="headerlink" title="搭建完成的博客"></a>搭建完成的博客</h2><p><a href="http://www.krislee-vip.com/" target="_blank" rel="noopener">kris-lee的个人博客</a></p>
-<p>博客地址  ： <a href="http://www.krislee-vip.com/" target="_blank" rel="noopener">http://www.krislee-vip.com/</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2109,7 +2167,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
