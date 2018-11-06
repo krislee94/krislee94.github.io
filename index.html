@@ -249,6 +249,210 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/06/git原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="KrisLee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Krislee的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/06/git原理/" itemprop="url">git原理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-06T08:50:20+08:00">
+                2018-11-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>如果你不是太懂git…那么你可以通过阅读<a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="noopener">廖雪峰的官网</a>来使用。这里讲解的git浅显易懂。</p>
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>首先，让我们创建一个项目目录，并进入该目录。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir my-project</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd my-project</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+<p>这里的<code>git init</code> 只做一件事，就是在项目根目录下创建一个.git的子目录，用来保存版本信息。<br><img src="https://upload-images.jianshu.io/upload_images/5531021-c3a3f78d6d07cc88.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2018-11-06 上午9.06.33.png"></p>
+<h3 id="保存对象"><a href="#保存对象" class="headerlink" title="保存对象"></a>保存对象</h3><p>接下来，新建一个空文件 <strong>test.txt</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch test.txt</span><br></pre></td></tr></table></figure>
+<p>然后，把这个文件加入git仓库，也就是为test。txt的当前内容创建一个副本。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git hash-object -w test.txt</span><br></pre></td></tr></table></figure>
+<p>输出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">e69de29bb2d1d6434b8b29ae775ad8c2e48c5391</span><br></pre></td></tr></table></figure></p>
+<p>上面代码中，git hash-object命令把test。txt的当前内容压缩成二进制文件，存入Git。压缩后的二进制文件，称为一个Git对象，保存在.git/objects目录。</p>
+<p>这个命令还会计算当前内容的SHA1 哈希值（长度40的字符串）作为该对象的文件名。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ls -R .git/objects</span><br><span class="line"></span><br><span class="line">.git/objects/e6:</span><br><span class="line">9de29bb2d1d6434b8b29ae775ad8c2e48c5391</span><br></pre></td></tr></table></figure>
+<p>上面代码可以看到，.git/objects下面多了一个子目录，目录名是哈希值的前2个字符，该子目录下面有一个文件，文件名是哈希值的后38个字符。</p>
+<p>再看一下这个文件的内容。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cat .git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391</span><br></pre></td></tr></table></figure>
+<p>上面代码输出的文件内容，都是一些二进制字符。你可能会问，test.txt是一个空文件，为什么会有内容？这是因为二进制对象里面还保存一些元数据。</p>
+<p>如果想看该文件原始的文本内容，要用git cat-file命令。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git cat-file -p e69de29bb2d1d6434b8b29ae775ad8c2e48c5391</span><br></pre></td></tr></table></figure>
+<p>因为原始文件是空文件，所以上面的命令什么也看不到，现在向test.txt写入一些内容。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ echo &apos;hello world&apos; &gt; test.txt</span><br></pre></td></tr></table></figure>
+<p>因为文件内容已经改变，需要将它再次保存成Git对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git hash-object -w test.txt</span><br><span class="line"></span><br><span class="line">3b18e512dba79e4c8300dd08aeb37f8e728b8dad</span><br></pre></td></tr></table></figure>
+<p>上面代码可以看到，随着内容改变，test.txt的哈希值已经变了。同时，新文件.git/objects/3b/18e512dba79e4c8300dd08aeb37f8e728b8dad 也已经生成了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git cat-file -p 3b18e512dba79e4c8300dd08aeb37f8e728b8dad</span><br></pre></td></tr></table></figure>
+<p>输出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hello world</span><br></pre></td></tr></table></figure></p>
+<h3 id="暂存区"><a href="#暂存区" class="headerlink" title="暂存区"></a>暂存区</h3><p>文件保存成二进制对象以后，还需要通知 Git 哪些文件发生了变动。所有变动的文件，Git 都记录在一个区域，叫做”暂存区”（英文叫做 index 或者 stage）。等到变动告一段落，再统一把暂存区里面的文件写入正式的版本历史。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git update-index //用于在暂存区记录一个发生变动的文件。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git update-index --add --cacheinfo 100644 \</span><br><span class="line">3b18e512dba79e4c8300dd08aeb37f8e728b8dad test.txt</span><br></pre></td></tr></table></figure>
+<p>上面命令向暂存区写入文件名test.txt、二进制对象名（哈希值）和文件权限。</p>
+<p>git ls-files命令可以显示暂存区当前的内容。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git ls-files --stage</span><br><span class="line"></span><br><span class="line">100644 3b18e512dba79e4c8300dd08aeb37f8e728b8dad 0   test.txt</span><br></pre></td></tr></table></figure>
+<p>上面代码表示，暂存区现在只有一个文件test.txt，以及它的二进制对象名和权限。知道了二进制对象名，就可以在.git/objects子目录里面读出这个文件的内容。</p>
+<p>git status命令会产生更可读的结果。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git status</span><br><span class="line"></span><br><span class="line">要提交的变更：</span><br><span class="line">    新文件：   test.txt</span><br></pre></td></tr></table></figure>
+<h3 id="git-add命令"><a href="#git-add命令" class="headerlink" title="git add命令"></a>git add命令</h3><p>上面两步（保存对象和更新暂存区），如果每个文件都做一遍，那是很麻烦的。Git 提供了git add命令简化操作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git add --all  // git add .</span><br></pre></td></tr></table></figure>
+<p>上面命令相当于，对当前项目所有变动的文件，执行前面的两步操作。</p>
+<h3 id="commit的概念"><a href="#commit的概念" class="headerlink" title="commit的概念"></a>commit的概念</h3><p>暂存区保留本次变动的文件信息，等到修改了差不多了，就要把这些信息写入历史，这就相当于生成了当前项目的一个快照（snapshot）。</p>
+<p>项目的历史就是由不同时点的快照构成。Git 可以将项目恢复到任意一个快照。快照在 Git 里面有一个专门名词，叫做 commit，生成快照又称为完成一次提交。</p>
+<p>下文所有提到”快照”的地方，指的就是 commit。</p>
+<h3 id="完成提交"><a href="#完成提交" class="headerlink" title="完成提交"></a>完成提交</h3><p>首先，设置一下用户名和 Email，保存快照的时候，会记录是谁提交的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name &quot;用户名&quot; </span><br><span class="line">$ git config --global user.email &quot;Email 地址&quot;</span><br></pre></td></tr></table></figure>
+<p>接下来，要保存当前的目录结构。前面保存对象的时候，只是保存单个文件，并没有记录文件之间的目录关系（哪个文件在哪里）。</p>
+<p><strong>git write-tree</strong>命令用来将当前的目录结构，生成一个 Git 对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git write-tree</span><br><span class="line"></span><br><span class="line">c3b8bb102afeca86037d5b5dd89ceeb0090eae9d</span><br></pre></td></tr></table></figure>
+<p>上面代码中，目录结构也是作为二进制对象保存的，也保存在.git/objects目录里面，对象名就是哈希值。</p>
+<p>git commit-tree命令用于将目录树对象写入版本历史。</p>
+<p>git log命令也可以用来查看某个快照信息。</p>
+<h3 id="git-commit命令"><a href="#git-commit命令" class="headerlink" title="git commit命令"></a>git commit命令</h3><p>Git 提供了git commit命令，简化提交操作。保存进暂存区以后，只要git commit一个命令，就同时提交目录结构和说明，生成快照。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m &quot;first commit&quot;</span><br></pre></td></tr></table></figure>
+<p>此外，还有两个命令也很有用</p>
+<ul>
+<li>git checkout命令用于切换到某个快照。</li>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout c9053865e9dff393fd2f7a92a18f9bd7f2caa7fa</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>git show命令用于展示某个快照的所有代码变动。</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git show c9053865e9dff393fd2f7a92a18f9bd7f2caa7fa</span><br></pre></td></tr></table></figure>
+<h3 id="branch的概念"><a href="#branch的概念" class="headerlink" title="branch的概念"></a>branch的概念</h3><p>到了这一步，还没完。如果这时用git log命令查看整个版本历史，你看不到新生成的快照。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log</span><br></pre></td></tr></table></figure>
+<p>上面命令没有任何输出，这是为什么呢？快照明明已经写入历史了。</p>
+<p>原来git log命令只显示当前分支的变动，虽然我们前面已经提交了快照，但是还没有记录这个快照属于哪个分支。</p>
+<p>所谓分支（branch）就是指向某个快照的指针，分支名就是指针名。哈希值是无法记忆的，分支使得用户可以为快照起别名。而且，分支会自动更新，如果当前分支有新的快照，指针就会自动指向它。比如，master 分支就是有一个叫做 master 指针，它指向的快照就是 master 分支的当前快照。</p>
+<p>用户可以对任意快照新建指针。比如，新建一个 fix-typo 分支，就是创建一个叫做 fix-typo 的指针，指向某个快照。所以，Git 新建分支特别容易，成本极低。</p>
+<p>Git 有一个特殊指针HEAD， 总是指向当前分支的最近一次快照。另外，Git 还提供简写方式，HEAD^指向 HEAD的前一个快照（父节点），HEAD~6则是HEAD之前的第6个快照。</p>
+<p>每一个分支指针都是一个文本文件，保存在.git/refs/heads/目录，该文件的内容就是它所指向的快照的二进制对象名（哈希值）。</p>
+<h3 id="更新分支"><a href="#更新分支" class="headerlink" title="更新分支"></a>更新分支</h3><p>git log的运行过程是这样的：</p>
+<ol>
+<li>查找HEAD指针对应的分支，本例是master</li>
+<li><p>找到master指针指向的快照，本例是 785f188674ef3c6ddc5b516307884e1d551f53ca</p>
+</li>
+<li><p>找到父节点（前一个快照）c9053865e9dff393fd2f7a92a18f9bd7f2caa7fa</p>
+</li>
+<li>以此类推，显示当前分支的所有快照</li>
+</ol>
+<p><strong>最后，补充一点。前面说过，分支指针是动态的。原因在于，下面三个命令会自动改写分支指针。</strong></p>
+<ul>
+<li>git commit：当前分支指针移向新创建的快照。</li>
+<li>git pull：当前分支与远程分支合并后，指针指向新创建的快照。</li>
+<li>git reset [commit_sha]：当前分支指针重置为指定快照。</li>
+</ul>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="https://medium.com/@shalithasuranga/how-does-git-work-internally-7c36dcb1f2cf" target="_blank" rel="noopener">How does git work internally</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/03/redux思想写微信小程序/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1859,201 +2063,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/15/http-理解-中/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="KrisLee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Krislee的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/15/http-理解-中/" itemprop="url">http 理解(中)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-15T14:53:22+08:00">
-                2018-05-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="确保Web安全的HTTPS"><a href="#确保Web安全的HTTPS" class="headerlink" title="确保Web安全的HTTPS"></a>确保Web安全的HTTPS</h2><p>在HTTP协议中有可能 存在 信息窃听或身份伪装等安全问题。使用HTTPS通信机制可以有效地防止这些问题。</p>
-<h3 id="HTTP的缺点"><a href="#HTTP的缺点" class="headerlink" title="HTTP的缺点"></a>HTTP的缺点</h3><ul>
-<li>通信使用明文(不加密)，内容可能会被窃听</li>
-<li>不验证通信方的身份，因此有可能遭遇伪装</li>
-<li>无法证明报文的完整性，所以有可能已遭遇创思</li>
-</ul>
-<p>当然这些问题不仅仅是在HTTP上出现，其他未加密协议中也会存在这类问题。</p>
-<p>除此之外，HTTP本身还有很多缺点。而且，还有像某些特定的Web服务器和特定的Web浏览器在实际应用中存在的不足。</p>
-<p><strong>加密处理防止被窃听</strong></p>
-<p>通信的加密</p>
-<p>HTTP协议中没有加密机制。但可以通过和SSL 或 TLS 的组合使用，加密HTTP的通信内容。</p>
-<ul>
-<li>用SSL建立安全通信路线之后，就可以在这条线路上进行HTTP通信了，与SSL组合使用的HTTP被称之为 HTTPS</li>
-<li>查明对方的证书</li>
-<li>通过MD5和SHA-1等散列值校验方法</li>
-</ul>
-<h3 id="HTTP-加密-认证-完整性保护-HTTPS"><a href="#HTTP-加密-认证-完整性保护-HTTPS" class="headerlink" title="HTTP + 加密 + 认证 + 完整性保护 = HTTPS"></a>HTTP + 加密 + 认证 + 完整性保护 = HTTPS</h3><p>既然HTTPS那么安全可靠，那为何所有的Web网站不一直使用HTTPS。</p>
-<ul>
-<li><p>与纯文本通信相比，加密通信会消耗更多的CPU和内存资源，如果每次通信都加密，会消耗相当多的资源，平摊到一台计算机上时，能够处理的请求数量必定也会随之减少。</p>
-</li>
-<li><p>购买证书的开销也是原因之一。</p>
-</li>
-</ul>
-<h2 id="确认访问用户身份的认证"><a href="#确认访问用户身份的认证" class="headerlink" title="确认访问用户身份的认证"></a>确认访问用户身份的认证</h2><p>谱写web页面指向让特定的人浏览，或者干脆仅本人可见。为达到这个目标，必不可少的就是认证功能。</p>
-<p>通常我们知道的认证 有以下：</p>
-<ul>
-<li>密码</li>
-<li>动态令牌</li>
-<li>数字证书</li>
-<li>生物认证</li>
-<li>IC卡等</li>
-</ul>
-<h3 id="HTTP-使用的认证方式"><a href="#HTTP-使用的认证方式" class="headerlink" title="HTTP 使用的认证方式"></a>HTTP 使用的认证方式</h3><p>HTTP/1.1 使用的认证方式如下所示。</p>
-<ul>
-<li>BASIC 认证(基本认证)</li>
-<li>DIGEST 认证(摘要认证)</li>
-<li>SSL 客户端认证</li>
-<li>FormBase 认证(基于表单认证)</li>
-</ul>
-<p>前面两个用的不多，在这里就不过多描述，SSL 虽然安全，但是如果是个人网站，则购买证书也需要花费金额。因此大多数会采用基于表单认证。</p>
-<p><strong>Session 管理 及 Cookie 应用</strong></p>
-<h2 id="基于HTTP的动能追加协议"><a href="#基于HTTP的动能追加协议" class="headerlink" title="基于HTTP的动能追加协议"></a>基于HTTP的动能追加协议</h2><p>虽然HTTP协议既简单又简洁，但随着时代的发展，其功能使用上捉襟见肘的疲态已经凸现。</p>
-<h3 id="消除HTTP瓶颈的SPDY"><a href="#消除HTTP瓶颈的SPDY" class="headerlink" title="消除HTTP瓶颈的SPDY"></a>消除HTTP瓶颈的SPDY</h3><p>Google在2010年发布了SPDY，其开发目标旨在解决HTTP的性能瓶颈，缩短Web页面的加载时间</p>
-<p>http标准的瓶颈：</p>
-<ul>
-<li>一条连接上只可发送一个请求</li>
-<li>请求只能从客户端开始。客户端不可以接受除响应以外的指令</li>
-<li>请求/响应首部未经压缩就发送。首部信息越多延迟越大。</li>
-<li>发送冗长的首部。每次互相发送相同的首部造成的浪费较多。</li>
-<li>可任意选择数据压缩格式。非强制压缩发送。</li>
-</ul>
-<p>AJAX的方案 和 comet的方案的出现解决一部分问题，但是仍为解决http的瓶颈问题。</p>
-<p>SPDY的目标</p>
-<p>SPDY没有完全改写HTTP协议，而是在TCP/IP的应用层与传输层之间通过新加会话层的形式运作。同时，考虑到安全性问题，SPDY规定通信中使用SSL。</p>
-<p>使用SPDY后，HTTP协议获得额外功能。</p>
-<ul>
-<li><p>多路复用流<br><em>通过单一的TCP连接，可以无限制处理多个HTTP请求。所有请求的处理都在一条TCP连接上完成，因此TCP的处理效率得到提高。</em></p>
-</li>
-<li><p>赋予请求优先级<br><em>SPDY不仅可以无限制地并发处理请求，还可以给请求逐个分配优先级。这样主要是为了在发送多个请求时，解决因带宽低而导致响应变慢的问题</em></p>
-</li>
-<li><p>压缩HTTP首部<br><em>压缩HTTP请求和响应的首部。这样依赖，通信产生的数据包数量和发送的字节数就更少了</em></p>
-</li>
-<li>推送功能 <em>支持服务器主动向客户端推送数据的功能。这样，服务器可直接发送数据，而不必等待客户端的请求</em></li>
-<li>服务器提示功能 <em>服务器可以主动提示客户端请求所需的资源，由于在客户端发现资源之前就可以获得资源的存在，因此在资源已经缓存等情况下，可以避免发送不必要的请求</em></li>
-</ul>
-<h3 id="使用浏览器进行全双工通信的-WebSocket"><a href="#使用浏览器进行全双工通信的-WebSocket" class="headerlink" title="使用浏览器进行全双工通信的 WebSocket"></a>使用浏览器进行全双工通信的 WebSocket</h3><p>利用Ajax和Comet技术进行通信可以提升Web的浏览速度。但问题在于通信若使用HTTP协议，就无法彻底解决瓶颈问题。WebSocket网络技术正是为解决这些问题而实现的一套新协议及API。</p>
-<h4 id="WebSocket的设计与功能"><a href="#WebSocket的设计与功能" class="headerlink" title="WebSocket的设计与功能"></a>WebSocket的设计与功能</h4><p>WebSocket，即Web浏览器与Web服务器之间全双工通信标准。其中，WebSocket协议由IETF定为标准，WebSocket API 由W3C定为标准。扔在开发中的WebSocket技术主要是为了解决Ajax 和 Comet里XMLHttpRequest附带的缺陷所引起的问题。</p>
-<p>成功握手确立WebSocket连接之后，通信时，不再使用HTTP的数据帧，而采用WebSocket独立的数据帧。</p>
-<h2 id="HTTP-2-0"><a href="#HTTP-2-0" class="headerlink" title="HTTP/2.0"></a>HTTP/2.0</h2><p>HTTP/2.0 的目标是改善用户在使用Web时的速度体验。由于基本上都会先通过HTTP/1.1与TCP连接，现在我们以下面这些协议为基础，探讨一下它们的实现方法。</p>
-<ul>
-<li>SPDY</li>
-<li>HTTP Speed + Mobiliity</li>
-<li>Network-Friendly HTTP Upgrade</li>
-</ul>
-<p><strong>HTTP Speed + Mobiliity </strong>是由微软起草，用于改善并提高移动通信时的通信速度和性能的标准。它建立在Google公司提出的SPDY与WEBSOCKET的基础上。</p>
-<p><strong>Network-Friendly HTTP Upgrade</strong> 主要是在移动端通信时改善HTTP性能的标准。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2104,7 +2113,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
