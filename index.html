@@ -249,6 +249,261 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/02/面向对象的JS-设计模式（1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="KrisLee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Krislee的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/02/面向对象的JS-设计模式（1/" itemprop="url">面向对象的JS-设计模式（1)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-02T14:31:38+08:00">
+                2019-01-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li><a href="#js1"><strong>面向对象编程风格</strong></a></li>
+<li><a href="#js2"><strong>封装</strong></a></li>
+<li><a href="#js3"><strong>继承</strong></a></li>
+<li><a href="#js4"><strong>多态</strong></a></li>
+</ul>
+<hr>
+<p><span id="js1"><strong>编程风格</strong></span></p>
+<p>面向对象变成就是将你的需求抽象成一个对象，然后针对这个对象分析其特征(属性)与动作(方法)。这个对象我们称之为类。面向对象编程思想其中一个特点就是封装，就是说把你需要的功能放在一个对象里。</p>
+<p><span id="js2"><strong>封装</strong></span></p>
+<p>在js中创建一个类很容易，首先声明一个函数保存在一个变量里。按编程习惯，一般将这个代表类的变量名首字母大写。然后在这个函数(类)的内部通过对this(函数内部自带的一个变量，用于指向当前这个对象)变量添加属性或者方法来实现对类添加属性或者方法,例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Book = <span class="function"><span class="keyword">function</span> (<span class="params">id,bookname,price</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.id = id;</span><br><span class="line">	<span class="keyword">this</span>.bookname = bookname;</span><br><span class="line">	<span class="keyword">this</span>.price = price;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然也可以通过原型的方式来实现，在JS中类、函数都是一个对象，所以也有原型prototype。在原型上添加属性和方法有两种</p>
+<p><em>一种是一一为原型对象属性赋值，另一种则是将一个对象赋值给类的原型对象</em></p>
+<p>######ps:这两种方式不要混用.</p>
+<ul>
+<li><p>一</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Book..prototype.display = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>二</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Book.prototype = &#123;</span><br><span class="line">    display:function()&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<pre><code>***
+</code></pre><p><strong>封装好了类，那么我们如何使用？</strong></p>
+<p>我们不能直接使用这个Book类、需要用new关键字来实例化(创建)新的对象。使用实例化对象的属性或者方法时，可以通过点语法访问，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var Book = function (id,bookname,price)&#123;</span><br><span class="line">	this.id = id;</span><br><span class="line">	this.bookname = bookname;</span><br><span class="line">	this.price = price;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var book = new Book(10,&quot;js高级进阶&quot;,88.88);</span><br><span class="line"></span><br><span class="line">console.log(book.bookname); // js高级进阶</span><br></pre></td></tr></table></figure>
+<p><em>问题：那么通过this添加的属性和方法同在prototype中添加的属性和方法有什么区别呢？</em></p>
+<p>通过this添加的属性、方法是在当前对象上添加的，然而JavaScipt是一种基于原prototype的语言，所以每创建一个对象时，她都有一个prototype用于指向其继承的属性、方法。</p>
+<p>这样通过prototype继承的方法并不是对象自身的，所以在使用这些方法时，需要通过prototype一级一级查找来得到。这样你就会发现通过this定义的属性或者方法是该对象自身拥有的，所以我们每次通过类创建一个新对象，this指向的属性和方法都会得到相应的创建，而通过prototype继承的属性或者方法是每个对象通过prototype访问到，所以我们每次通过类创建一个新对象时这些属性和方法不会再次创建。</p>
+<p><em>问题：在java中有public 、 private等关键字来创建 公共，私有变量，那么JS里也有吗？如果没有JS如何实现呢？</em></p>
+<p>首先你需要这么几点…</p>
+<ol>
+<li>js的函数(类)是 原型 prototype</li>
+<li>js的函数级作用域，在作用域内声明的变量，外部是访问不到的</li>
+<li>但是函数作用域内this创建的属性和方法,在类创建对象时，每个对象自身都拥有一份并且可以在外部访问到。</li>
+<li>this创建的方法可以访问函数内私有的属性和私有的方法。</li>
+</ol>
+<p>那么接下来，我们来看一下这个demo。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Book = <span class="function"><span class="keyword">function</span> (<span class="params">id, name,price</span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//私有属性</span></span><br><span class="line">	<span class="keyword">var</span> num = <span class="number">1</span>;</span><br><span class="line">	<span class="comment">//私有方法</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">checkId</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">this</span>.id = id;</span><br><span class="line">	<span class="comment">//特权方法</span></span><br><span class="line">	<span class="keyword">this</span>.getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.id = id;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.id;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">this</span>.getPrice = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.price = price;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.price;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">this</span>.setName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">this</span>.setPrice = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">   <span class="comment">//对象公有属性</span></span><br><span class="line">	<span class="keyword">this</span>.name = name;</span><br><span class="line">	<span class="comment">//对象公有方法</span></span><br><span class="line">	<span class="keyword">this</span>.copy = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">   <span class="comment">//构造器</span></span><br><span class="line">	<span class="keyword">this</span>.setNmae(name);</span><br><span class="line">	<span class="keyword">this</span>.setPrice(price);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>这样我们就可以理解了，通过JS函数级作用域的特征来实现在函数内部创建外部访问不到的私有化变量和私有方法。</strong></p>
+<p><strong>通过new关键字实例化对象时，由于对类执行一次，所以类的内部this上定义的属性和方法自然就可以复制到新创建的对象上，成为对象公有化的属性与方法，而其中一些方法能访问到类的私有属性和方法</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var b = new Book(11,&apos;jsvascript设计模式&apos;,50);</span><br><span class="line"></span><br><span class="line">console.log(b.num); //undefined</span><br><span class="line"></span><br><span class="line">console.log(b.isChinses); //undefined</span><br><span class="line"></span><br><span class="line">console.log(b.id); //11</span><br><span class="line">console.log(b.isJSBook);//false</span><br></pre></td></tr></table></figure>
+<p><strong>闭包的实现</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">var Book = (function()&#123;</span><br><span class="line"></span><br><span class="line">	//静态私有变量</span><br><span class="line">	var bookNum = 0 ;</span><br><span class="line">	//静态私有方法</span><br><span class="line">	function checkBook(name)&#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	//返回构造函数</span><br><span class="line">	return function(newId,newName,newPrice)&#123;</span><br><span class="line">		//私有变量</span><br><span class="line">		var name,price;</span><br><span class="line">		//私有方法</span><br><span class="line">		function checkID(id)&#123;&#125;</span><br><span class="line">		//特权方法</span><br><span class="line">		this.getName = function()&#123;</span><br><span class="line">			console.log(&quot;1111&quot;)</span><br><span class="line">		&#125;;</span><br><span class="line">		this.getPrice = function()&#123;&#125;;</span><br><span class="line">		this.setName = function()&#123;&#125;;</span><br><span class="line">		this.setPrice = function()&#123;&#125;;</span><br><span class="line">		//公有属性</span><br><span class="line">		this.id = newId;</span><br><span class="line">		//公有方法</span><br><span class="line">		this.copy = function()&#123;&#125;;</span><br><span class="line"></span><br><span class="line">		bookNum++;</span><br><span class="line"></span><br><span class="line">		if(bookNum &gt; 2)&#123;</span><br><span class="line">			throw new Error(&apos;heiheihei&apos;)</span><br><span class="line">		&#125;</span><br><span class="line">		//构造器</span><br><span class="line">		this.setName(name);</span><br><span class="line">		this.setPrice(price);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// //构造原型</span><br><span class="line">	// _book.prototype = &#123;</span><br><span class="line">	// 	//静态公有属性</span><br><span class="line">	// 	isJSBook : false,</span><br><span class="line">	// 	display :function()&#123;&#125;;</span><br><span class="line">	// &#125;;</span><br><span class="line"></span><br><span class="line">	// //返回类</span><br><span class="line"></span><br><span class="line">	// return _book;</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line">Book.prototype=&#123;</span><br><span class="line">	isJSBook : false,</span><br><span class="line">	display : function()&#123;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>“闭包是有权访问另外一个函数作用域中变量的函数，<strong>即-在一个函数内部创建另一个函数</strong>，我们将这个闭包作为创建对象的构造函数，这样它既是闭包又是可实例对象的函数，即可访问到类函数作用域中的变量,如<strong>bookNum</strong>这个变量。此时这个变量叫静态私有变量。”</p>
+<p>“但是，在闭包外部添加原型属性和方法看上去像似脱离了闭包这个类…”</p>
+<p>“所以有时候在闭包内部实现一个完整的类然后将其返回”</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">var Book = (function()&#123;</span><br><span class="line"></span><br><span class="line">	//静态私有变量</span><br><span class="line">	var bookNum = 0 ;</span><br><span class="line">	//静态私有方法</span><br><span class="line">	function checkBook(name)&#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	//返回构造函数</span><br><span class="line">	return function(newId,newName,newPrice)&#123;</span><br><span class="line">		//私有变量</span><br><span class="line">		var name,price;</span><br><span class="line">		//私有方法</span><br><span class="line">		function checkID(id)&#123;&#125;</span><br><span class="line">		//特权方法</span><br><span class="line">		this.getName = function()&#123;</span><br><span class="line">			console.log(&quot;1111&quot;)</span><br><span class="line">		&#125;;</span><br><span class="line">		this.getPrice = function()&#123;&#125;;</span><br><span class="line">		this.setName = function()&#123;&#125;;</span><br><span class="line">		this.setPrice = function()&#123;&#125;;</span><br><span class="line">		//公有属性</span><br><span class="line">		this.id = newId;</span><br><span class="line">		//公有方法</span><br><span class="line">		this.copy = function()&#123;&#125;;</span><br><span class="line"></span><br><span class="line">		bookNum++;</span><br><span class="line"></span><br><span class="line">		if(bookNum &gt; 2)&#123;</span><br><span class="line">			throw new Error(&apos;heiheihei&apos;)</span><br><span class="line">		&#125;</span><br><span class="line">		//构造器</span><br><span class="line">		this.setName(name);</span><br><span class="line">		this.setPrice(price);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//构造原型</span><br><span class="line">	_book.prototype = &#123;</span><br><span class="line">		//静态公有属性</span><br><span class="line">		isJSBook : false,</span><br><span class="line">		display :function()&#123;&#125;;</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	//返回类</span><br><span class="line"></span><br><span class="line">	return _book;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<p><strong>instanceof</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var Book = function (title,time,type)&#123;</span><br><span class="line">	if(this instanceof Book)&#123;</span><br><span class="line">		this.title = title;</span><br><span class="line">		this.time = time;</span><br><span class="line">		this.type = type;</span><br><span class="line">	&#125;else&#123;</span><br><span class="line">		return new Book(title,time,type);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var book = Book(&apos;JAVASCRIPT&apos;,&apos;2004&apos;,&apos;JS&apos;);</span><br></pre></td></tr></table></figure>
+<p>这样即便没new出来关键字也同样可以出结果</p>
+<p><span id="js3"><strong>继承</strong></span></p>
+<p>JS作为面向对象的弱类型语言，继承也是其非常强大的特性之一。那么如何在JS中实现继承呢？<br>首先先创建一个父类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">function Animal(name)&#123;</span><br><span class="line">	//属性</span><br><span class="line">	this.name = name || &apos;Animal&apos;;</span><br><span class="line">	this.pro = [&apos;1&apos;,&apos;2&apos;,&apos;3&apos;];</span><br><span class="line">	//实例方法</span><br><span class="line">	this.sleep = function ()&#123;</span><br><span class="line">		console.log(this.name + &apos;正在睡觉&apos;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//原型方法</span><br><span class="line"></span><br><span class="line">Animal.prototype.eat = function(food)&#123;</span><br><span class="line">	console.log(this.name + &apos;正在吃&apos; + food);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="原型链继承"><a href="#原型链继承" class="headerlink" title="原型链继承"></a>原型链继承</h5><p><em>核心： 将父类的实例作为子类的原型</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">function Cat()&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Cat.prototype = new Animal();</span><br><span class="line">Cat.prototype.name = &apos;cat&apos;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//Test Code </span><br><span class="line"></span><br><span class="line">var cat = new Cat();</span><br><span class="line">console.log(cat.name);</span><br><span class="line">console.log(cat.eat(&apos;fish&apos;));</span><br><span class="line">cat.sleep();</span><br><span class="line">console.log(cat instanceof Animal);</span><br><span class="line">console.log(cat instanceof Cat);</span><br></pre></td></tr></table></figure>
+<p>打印结果….<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cat</span><br><span class="line">cat正在吃fish</span><br><span class="line">undefined</span><br><span class="line">cat正在睡觉</span><br><span class="line">true</span><br><span class="line">true</span><br><span class="line">[ &apos;1&apos;, &apos;2&apos;, &apos;3&apos;, &apos;5&apos; ]</span><br></pre></td></tr></table></figure></p>
+<p><strong>优点</strong></p>
+<ol>
+<li>非常纯粹的继承关系，实例是子类的实例，也是父类的实例</li>
+<li>父类新增原型方法/原型属性，子类都能访问到</li>
+<li>简单，易于实现</li>
+</ol>
+<p><strong>缺点</strong></p>
+<ol>
+<li>要想为子类新增属性和方法，必须要在new Animal()这样的语句之后执行，不能放到构造器中</li>
+<li>无法实现多继承</li>
+<li>来自原型对象的所有属性被所有实例共享</li>
+<li>创建子类实例时，无法向父类构造函数传参</li>
+</ol>
+<p><strong>构造继承</strong></p>
+<p><em>核心：使用父类的构造函数来增强子类实例，等于是复制父类的实例属性给子类（没用到原型）</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">function Cat(name)&#123;</span><br><span class="line">	Animal.call(this);</span><br><span class="line">	this.name = name || &apos;Tome&apos;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Test code </span><br><span class="line">var cat = new Cat();</span><br><span class="line">console.log(cat.name);</span><br><span class="line">cat.sleep();</span><br><span class="line">console.log(cat instanceof Animal);</span><br><span class="line">console.log(cat instanceof Cat);</span><br></pre></td></tr></table></figure>
+<p><strong>输出</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Tome</span><br><span class="line">Tome正在睡觉</span><br><span class="line">false</span><br><span class="line">true</span><br></pre></td></tr></table></figure>
+<p><strong>优点</strong></p>
+<ol>
+<li>解决了1中，子类实例共享父类引用属性的问题</li>
+<li>创建子类实例时，可以向父类传递参数</li>
+<li>可以实现多继承（call多个父类对象）</li>
+</ol>
+<p><strong>缺点</strong></p>
+<ol>
+<li>实例并不是父类的实例，只是子类的实例</li>
+<li>只能继承父类的实例属性和方法，不能继承原型属性/方法</li>
+<li>无法实现函数复用，每个子类都有父类实例函数的副本，影响性能</li>
+</ol>
+<p><strong>实例继承</strong></p>
+<p><em>核心：为父类实例添加新特性，作为子类实例返回</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function Cat(name)&#123;</span><br><span class="line">	var instance = new Animal();</span><br><span class="line">	instance.name = name || &apos;Tome&apos;;</span><br><span class="line">	return instance ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Test code </span><br><span class="line"> var cat = new Cat();</span><br><span class="line"> console.log(cat.name);</span><br><span class="line"> cat.sleep();</span><br><span class="line"> console.log(cat instanceof Animal);  // true</span><br><span class="line"> console.log(cat instanceof Cat); // false</span><br></pre></td></tr></table></figure>
+<p><strong>优点</strong></p>
+<ol>
+<li>不限制调用方式，不管是new 子类()还是子类(),返回的对象具有相同的效果</li>
+</ol>
+<p><strong>缺点</strong></p>
+<ul>
+<li>实例是父类的实例，不是子类的实例</li>
+<li>不支持多继承</li>
+</ul>
+<p><strong>拷贝继承</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function Cat(name)&#123;</span><br><span class="line">	var animal = new Animal();</span><br><span class="line">	for (let p in animal)&#123;</span><br><span class="line">		Cat.prototype[p] = animal[p];</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	Cat.prototype.name = name || &apos;tom&apos;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// test code </span><br><span class="line"></span><br><span class="line">var cat = new Cat();</span><br><span class="line"></span><br><span class="line">console.log(cat.name);</span><br><span class="line">cat.sleep();</span><br><span class="line">console.log(cat instanceof Animal); // false</span><br><span class="line">console.log(cat instanceof Cat); // true</span><br></pre></td></tr></table></figure>
+<p><strong>优点</strong></p>
+<ol>
+<li>支持多继承</li>
+</ol>
+<p><strong>缺点</strong></p>
+<ol>
+<li>效率较低，内存占用高（因为要拷贝父类的属性）</li>
+<li>无法获取父类不可枚举的方法（不可枚举方法，不能使用for in 访问到）</li>
+</ol>
+<p><strong>组合继承</strong></p>
+<p><em>核心：通过调用父类构造，继承父类的属性并保留传参的优点，然后通过将父类实例作为子类原型，实现函数复用</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">function Cat(name)&#123;</span><br><span class="line">	Animal.call (this);</span><br><span class="line">	this.name = name || &apos;TOM&apos;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Cat.prototype = new Animal();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Cat.prototype.constructor = Cat;</span><br><span class="line"></span><br><span class="line">//test-code </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">var cat = new Cat();</span><br><span class="line"></span><br><span class="line">console.log(cat.name);</span><br><span class="line">cat.sleep();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">console.log(cat instanceof Animal); // true</span><br><span class="line">console.log(cat instanceof Cat); // true</span><br></pre></td></tr></table></figure>
+<p><strong>优点</strong></p>
+<ol>
+<li>弥补了方式2的缺陷，可以继承实例属性/方法，也可以继承原型属性/方法</li>
+<li>既是子类的实例，也是父类的实例</li>
+<li>不存在引用属性共享问题</li>
+<li>可传参</li>
+<li>函数可复用</li>
+</ol>
+<p><strong>缺点</strong></p>
+<ol>
+<li>调用了两次父类构造函数，生成了两份实例（子类实例将子类原型上的那份屏蔽了）</li>
+</ol>
+<p><strong>寄生组合继承</strong></p>
+<p><em>核心：通过寄生方式，砍掉父类的实例属性，这样，在调用两次父类的构造的时候，就不会初始化两次实例方法/属性，避免的组合继承的缺点</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">function Cat(name)&#123;</span><br><span class="line">	Animal.call(this);</span><br><span class="line">	this.name = name || &apos;kris&apos;;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">(function ()&#123;</span><br><span class="line">	//创建一个没有实例方法的类</span><br><span class="line">	var Super = function()&#123;&#125;</span><br><span class="line">	Super.prototype = Animal.prototype;</span><br><span class="line">	//将实例作为子类的原型</span><br><span class="line">	Cat.prototype = new Super();</span><br><span class="line"></span><br><span class="line">	Cat.prototype.constructor = Cat;</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line">var cat = new Cat();</span><br><span class="line">console.log(cat.name);</span><br><span class="line">cat.sleep();</span><br><span class="line">console.log(cat instanceof Animal); // true</span><br><span class="line">console.log(cat instanceof Cat); //true</span><br></pre></td></tr></table></figure>
+<p><span id="js4"><strong>多态</strong></span></p>
+<p>在面向对象编程中，还有一种特性叫做多态。所谓多态其实就是同一个方法多种调用方式。<br>只不过在JS中要对传入的参数做判断以实现多种调用方式，如我们定义一个add方法…如果不传则返回10，传了1个参数则+10，传了两个参数，就把结果相加。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">// function add()&#123;</span><br><span class="line">// 	var arg = arguments</span><br><span class="line"></span><br><span class="line">// 	len = arg.length;</span><br><span class="line"></span><br><span class="line">// 	switch(len)&#123;</span><br><span class="line">// 		case 0:</span><br><span class="line">// 		return 10;</span><br><span class="line">// 		case 1 :</span><br><span class="line">// 		return 10 + arg[0];</span><br><span class="line">// 		case 2 :</span><br><span class="line">// 		return arg[0]+arg[1];</span><br><span class="line">// 	&#125;</span><br><span class="line">// &#125;</span><br><span class="line"></span><br><span class="line">// console.log(add())</span><br><span class="line">// console.log(add(5));</span><br><span class="line">// console.log(add(6,7));</span><br></pre></td></tr></table></figure>
+<p>当然，我们也可以转化为我们认为简而有效的类的形式…</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">function Add()&#123;</span><br><span class="line">	function zero()&#123;</span><br><span class="line">		return 10;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	function one(num)&#123;</span><br><span class="line">		return 10 + num;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	function two(num1,num2)&#123;</span><br><span class="line">		return num1 + num2;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	this.add = function()&#123;</span><br><span class="line">		var arg = arguments;</span><br><span class="line">		len = arg.length;</span><br><span class="line"></span><br><span class="line">		switch(len)&#123;</span><br><span class="line">			case 0:</span><br><span class="line">			 return zero();</span><br><span class="line">			 case 1 :</span><br><span class="line">			 return one(arg[0] + 10);</span><br><span class="line">			 case 2 :</span><br><span class="line">			 // console.log(&quot;222&quot;)</span><br><span class="line">			 return two(arg[0],arg[1])</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">var A = new Add();</span><br><span class="line"></span><br><span class="line">console.log(A.add());</span><br><span class="line">console.log(A.add(5));</span><br><span class="line">console.log(A.add(6,7));</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/28/JS的运行机制/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1832,198 +2087,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/28/dva的初识/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="KrisLee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Krislee的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/28/dva的初识/" itemprop="url">dva的初识</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-28T15:02:34+08:00">
-                2018-05-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="内心独白"><a href="#内心独白" class="headerlink" title="内心独白"></a>内心独白</h2><p>这段时间以前的同事和我极力安利<em>dva</em> 这个框架，我之前确实了解过，但是心想着，我会redux，看到一个技术文章介绍是什么极简的redux实现方式的标题，我就没想深入去了解，何况，本着会<em>react</em>,<em>redux</em>,<em>react-router</em>,<em>ant-design</em>吃天下的原则。我就没去深入了解，但是慢慢的接触，我发现dva的框架做的事情真的很多，而且在很多方式简化了编程。今天就了解第一步咱们的dva。</p>
-<h2 id="dva-是什么"><a href="#dva-是什么" class="headerlink" title="dva 是什么"></a>dva 是什么</h2><p><a href="https://github.com/dvajs/dva/issues/1" target="_blank" rel="noopener">详细的介绍请看这里</a><br>这个其实是支付宝整合的一套框架，集成了 (redux + react-router + redux-saga 等)的一层轻量封装。dva 是 framework，不是 library，类似 emberjs。<br>他最核心的是提供了 app.model 方法，用于把 reducer, initialState, action, saga 封装到一起。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">app.model(&#123;</span><br><span class="line">  namespace: <span class="string">'products'</span>,</span><br><span class="line">  state: &#123;</span><br><span class="line">    list: [],</span><br><span class="line">    loading: <span class="literal">false</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  subscriptions: [</span><br><span class="line">    <span class="function"><span class="keyword">function</span>(<span class="params">dispatch</span>) </span>&#123;</span><br><span class="line">      dispatch(&#123;<span class="attr">type</span>: <span class="string">'products/query'</span>&#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line">  effects: &#123;</span><br><span class="line">    [<span class="string">'products/query'</span>]: <span class="function"><span class="keyword">function</span>*(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">yield</span> call(delay(<span class="number">800</span>));</span><br><span class="line">      <span class="keyword">yield</span> put(&#123;</span><br><span class="line">        type: <span class="string">'products/query/success'</span>,</span><br><span class="line">        payload: [<span class="string">'ant-tool'</span>, <span class="string">'roof'</span>],</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  reducers: &#123;</span><br><span class="line">    [<span class="string">'products/query'</span>](state) &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123; ...state, <span class="attr">loading</span>: <span class="literal">true</span>, &#125;;</span><br><span class="line">    &#125;,</span><br><span class="line">    [<span class="string">'products/query/success'</span>](state, &#123; payload &#125;) &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123; ...state, <span class="attr">loading</span>: <span class="literal">false</span>, <span class="attr">list</span>: payload &#125;;</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>现在来介绍一下这些key:<br><strong>(假设你已经熟悉了 redux, redux-saga 这一套应用架构)</strong></p>
-<ul>
-<li>namespace - 对应 reducer 在 combine 到 rootReducer 时的 key 值</li>
-<li>state - 对应 reducer 的 initialState</li>
-<li>subscription - <a href="mailto:elm@0.17" target="_blank" rel="noopener">elm@0.17</a> 的新概念，在 dom ready 后执行，这里不展开解释</li>
-<li>effects - 对应 saga，并简化了使用</li>
-<li>reducers - 相当于数据模型<h2 id="安装一个脚手架吧"><a href="#安装一个脚手架吧" class="headerlink" title="安装一个脚手架吧"></a>安装一个脚手架吧</h2>dva-cli github的地址在这里：<a href="https://github.com/dvajs/dva-cli" target="_blank" rel="noopener">https://github.com/dvajs/dva-cli</a> 。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install dva-cli -g</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dva new myapp &amp;&amp; cd myapp</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm start</span><br></pre></td></tr></table></figure>
-<p>如果一切进行的顺利，那么基本上应该是进入到这个页面</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/5531021-2bdb5bd7ecb058c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="dva-demo"></p>
-<h2 id="完成几个demo-？"><a href="#完成几个demo-？" class="headerlink" title="完成几个demo ？"></a>完成几个demo ？</h2><p>参考链接 - <a href="https://github.com/dvajs/dva-docs/blob/master/v1/zh-cn/getting-started.md" target="_blank" rel="noopener">https://github.com/dvajs/dva-docs/blob/master/v1/zh-cn/getting-started.md</a></p>
-<p>这里会教我们启动和开始一个demo ，从而熟悉整个项目</p>
-<h4 id="如何去写？"><a href="#如何去写？" class="headerlink" title="如何去写？"></a>如何去写？</h4><p>接到需求之后推荐的做法不是立刻编码，而是先以上帝模式做整体设计。</p>
-<ol>
-<li>先设计 model</li>
-<li>再设计 component</li>
-<li>最后连接 model 和 component</li>
-</ol>
-<h4 id="首先我们要先定义model"><a href="#首先我们要先定义model" class="headerlink" title="首先我们要先定义model"></a>首先我们要先定义model</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">app.model(&#123;</span><br><span class="line">  namespace: &apos;count&apos;,</span><br><span class="line">  state: &#123;</span><br><span class="line">    record : 0,</span><br><span class="line">    current: 0,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>namespace 是 model state 在全局 state 所用的 key，state 是默认数据。然后 state 里的 record 表示 highest record，current 表示当前速度。</p>
-<h4 id="其次设计component"><a href="#其次设计component" class="headerlink" title="其次设计component"></a>其次设计component</h4><p>完成 Model 之后，我们来编写 Component 。推荐尽量通过 stateless functions 的方式组织 Component，在 dva 的架构里我们基本上不需要用到 state 。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import styles from &apos;./index.less&apos;;</span><br><span class="line">const CountApp = (&#123;count, dispatch&#125;) =&gt; &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;div className=&#123;styles.normal&#125;&gt;</span><br><span class="line">      &lt;div className=&#123;styles.record&#125;&gt;Highest Record: &#123;count.record&#125;&lt;/div&gt;</span><br><span class="line">      &lt;div className=&#123;styles.current&#125;&gt;&#123;count.current&#125;&lt;/div&gt;</span><br><span class="line">      &lt;div className=&#123;styles.button&#125;&gt;</span><br><span class="line">        &lt;button onClick=&#123;() =&gt; &#123; dispatch(&#123;type: &apos;count/add&apos;&#125;); &#125;&#125;&gt;+&lt;/button&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>这里先 import styles from ‘./index.less’;，再通过 styles.xxx 的方式声明 css classname 是基于 css-modules 的方式，后面的样式部分会用上</li>
-<li>通过 props 传入两个值，count 和 dispatch，count 对应 model 上的 state，在后面 connect 的时候绑定，dispatch 用于分发 action</li>
-<li>dispatch({type: ‘count/add’}) 表示分发了一个 {type: ‘count/add’} 的 action</li>
-</ul>
-<h4 id="更新state"><a href="#更新state" class="headerlink" title="更新state"></a>更新state</h4><p>更新 state 是通过 reducers 处理的。</p>
-<p>reducer 是唯一可以更新 state 的地方，这个唯一性让我们的 App 更具可预测性，所有的数据修改都有据可查。reducer 是 pure function，他接收参数 state 和 action，返回新的 state，通过语句表达即 (state, action) =&gt; newState。</p>
-<p>这个需求里，我们需要定义两个 reducer，add 和 minus，分别用于计数的增和减。值得注意的是 add 时 record 的逻辑，他只在有更高的记录时才会被记录。</p>
-<blockquote>
-<p>请注意，这里的 add 和 minus 两个action，在 count model 的定义中是不需要加 namespace 前缀的，但是在自身模型以外是需要加 model 的 namespace</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">app.model(&#123;</span><br><span class="line">  namespace: &apos;count&apos;,</span><br><span class="line">  state: &#123;</span><br><span class="line">    record: 0,</span><br><span class="line">    current: 0,</span><br><span class="line">  &#125;,</span><br><span class="line">+ reducers: &#123;</span><br><span class="line">+   add(state) &#123;</span><br><span class="line">+     const newCurrent = state.current + 1;</span><br><span class="line">+     return &#123; ...state,</span><br><span class="line">+       record: newCurrent &gt; state.record ? newCurrent : state.record,</span><br><span class="line">+       current: newCurrent,</span><br><span class="line">+     &#125;;</span><br><span class="line">+   &#125;,</span><br><span class="line">+   minus(state) &#123;</span><br><span class="line">+     return &#123; ...state, current: state.current - 1&#125;;</span><br><span class="line">+   &#125;,</span><br><span class="line">+ &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h4 id="绑定数据"><a href="#绑定数据" class="headerlink" title="绑定数据"></a>绑定数据</h4><p>在定义了 Model 和 Component 之后，我们需要把他们连接起来。这样 Component 里就能使用 Model 里定义的数据，而 Model 中也能接收到 Component 里 dispatch 的 action 。</p>
-<p>这个需求里只要用到 count。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function mapStateToProps(state) &#123;</span><br><span class="line">  return &#123; count: state.count &#125;;</span><br><span class="line">&#125;</span><br><span class="line">const HomePage = connect(mapStateToProps)(CountApp);</span><br></pre></td></tr></table></figure>
-<p>这里的 connect 来自 react-redux。</p>
-<h4 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h4><p>接收到 url 之后决定渲染哪些 Component，这是由路由决定的。</p>
-<p>这个需求只有一个页面，路由的部分不需要修改。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">app.router((&#123;history&#125;) =&gt;</span><br><span class="line">  &lt;Router history=&#123;history&#125;&gt;</span><br><span class="line">    &lt;Route path=&quot;/&quot; component=&#123;HomePage&#125; /&gt;</span><br><span class="line">  &lt;/Router&gt;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-<h4 id="样式"><a href="#样式" class="headerlink" title="样式"></a>样式</h4><p>默认是通过 css modules 的方式来定义样式，这和普通的样式写法并没有太大区别，由于之前已经在 Component 里 hook 了 className，这里只需要在 index.less 里填入以下内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">.normal &#123;</span><br><span class="line">  width: 200px;</span><br><span class="line">  margin: 100px auto;</span><br><span class="line">  padding: 20px;</span><br><span class="line">  border: 1px solid #ccc;</span><br><span class="line">  box-shadow: 0 0 20px #ccc;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.record &#123;</span><br><span class="line">  border-bottom: 1px solid #ccc;</span><br><span class="line">  padding-bottom: 8px;</span><br><span class="line">  color: #ccc;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.current &#123;</span><br><span class="line">  text-align: center;</span><br><span class="line">  font-size: 40px;</span><br><span class="line">  padding: 40px 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.button &#123;</span><br><span class="line">  text-align: center;</span><br><span class="line">  button &#123;</span><br><span class="line">    width: 100px;</span><br><span class="line">    height: 40px;</span><br><span class="line">    background: #aaa;</span><br><span class="line">    color: #fff;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="异步处理"><a href="#异步处理" class="headerlink" title="异步处理"></a>异步处理</h4><p>在此之前，我们所有的操作处理都是同步的，用户点击 + 按钮，数值加 1</p>
-<p>现在我们要开始处理异步任务，dva 通过对 model 增加 effects 属性来处理 side effect(异步任务)，这是基于 redux-saga 实现的，语法为 generator</p>
-<p>在这个需求里，当用户点 + 按钮，数值加 1 之后，会额外触发一个 side effect，即延迟 1 秒之后数值 1 。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">app.model(&#123;</span><br><span class="line">  namespace: &apos;count&apos;,</span><br><span class="line">+ effects: &#123;</span><br><span class="line">+   *add(action, &#123; call, put &#125;) &#123;</span><br><span class="line">+     yield call(delay, 1000);</span><br><span class="line">+     yield put(&#123; type: &apos;minus&apos; &#125;);</span><br><span class="line">+   &#125;,</span><br><span class="line">+ &#125;,</span><br><span class="line">...</span><br><span class="line">+function delay(timeout)&#123;</span><br><span class="line">+  return new Promise(resolve =&gt; &#123;</span><br><span class="line">+    setTimeout(resolve, timeout);</span><br><span class="line">+  &#125;);</span><br><span class="line">+&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><em>add() {} 等同于 add: function</em>(){}</li>
-<li>call 和 put 都是 redux-saga 的 effects，call 表示调用异步函数，put 表示 dispatch action，其他的还有 select, take, fork, cancel 等，详见 redux-saga 文档</li>
-<li>默认的 effect 触发规则是每次都触发(takeEvery)，还可以选择 takeLatest，或者完全自定义 take 规则</li>
-</ul>
-<h4 id="订阅键盘事件"><a href="#订阅键盘事件" class="headerlink" title="订阅键盘事件"></a>订阅键盘事件</h4><blockquote>
-<p>在实现了鼠标测速之后，怎么实现键盘测速呢?</p>
-</blockquote>
-<p>在 dva 里有个叫 subscriptions 的概念，他来自于 elm。</p>
-<p>Subscription 语义是订阅，用于订阅一个数据源，然后根据条件 dispatch 需要的 action。数据源可以是当前的时间、服务器的 websocket 连接、keyboard 输入、geolocation 变化、history 路由变化等等。</p>
-<p>dva 中的 subscriptions 是和 model 绑定的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">+import key from &apos;keymaster&apos;;</span><br><span class="line">...</span><br><span class="line">app.model(&#123;</span><br><span class="line">  namespace: &apos;count&apos;,</span><br><span class="line">+ subscriptions: &#123;</span><br><span class="line">+   keyboardWatcher(&#123; dispatch &#125;) &#123;</span><br><span class="line">+     key(&apos;⌘+up, ctrl+up&apos;, () =&gt; &#123; dispatch(&#123;type:&apos;add&apos;&#125;) &#125;);</span><br><span class="line">+   &#125;,</span><br><span class="line">+ &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>这里我们不需要手动安装 keymaster 依赖，在我们敲入 import key from ‘keymaster’; 并保存的时候，dva-cli 会为我们安装 keymaster 依赖并保存到 package.json 中</p>
-<h4 id="构建应用"><a href="#构建应用" class="headerlink" title="构建应用"></a>构建应用</h4><p>我们已在开发环境下进行了验证，现在需要部署给用户使用。敲入以下命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm run build</span><br></pre></td></tr></table></figure>
-<p>输出:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt; @ build /private/tmp/dva-quickstart</span><br><span class="line">&gt; atool-build</span><br><span class="line"></span><br><span class="line">Child</span><br><span class="line">    Time: 6891ms</span><br><span class="line">        Asset       Size  Chunks             Chunk Names</span><br><span class="line">    common.js    1.18 kB       0  [emitted]  common</span><br><span class="line">     index.js     281 kB    1, 0  [emitted]  index</span><br><span class="line">    index.css  353 bytes    1, 0  [emitted]  index</span><br></pre></td></tr></table></figure>
-<p>该命令成功执行后，编译产物就在 dist 目录下。</p>
-<h2 id="应用源码"><a href="#应用源码" class="headerlink" title="应用源码"></a>应用源码</h2><p>应用源码：<a href="https://github.com/krislee94/DVA_DEMO/tree/master/myapp" target="_blank" rel="noopener">github地址</a></p>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://github.com/dvajs/dva-cli" target="_blank" rel="noopener">dva-cli github地址</a><br><a href="https://github.com/dvajs/dva-knowledgemap" target="_blank" rel="noopener">dva.js 知识导图</a><br><a href="https://github.com/dvajs/dva-docs/blob/master/v1/zh-cn/getting-started.md" target="_blank" rel="noopener">dva 快速上手</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2074,7 +2137,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2149,7 +2212,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
