@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="js," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文翻译自 作者：code_barbarian For vs forEach() vs for/in vs for/of in JavaScript 在JS中有许多方式去循环数组和对象。但在实际使用中容易产生使用上的混淆，这需要我们去权衡。在某些方式上甚至禁止某些循环结构。(详情请看)，本文我将重点描述四个循环结构迭代的方式:  for (let i = 0; i &amp;lt; arr.length">
+<meta name="keywords" content="js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="比较for&#x2F;foreach&#x2F;for in&#x2F;for of">
+<meta property="og:url" content="http://yoursite.com/2019/03/12/比较for-foreach-for-in-for-of/index.html">
+<meta property="og:site_name" content="Krislee的个人博客">
+<meta property="og:description" content="本文翻译自 作者：code_barbarian For vs forEach() vs for/in vs for/of in JavaScript 在JS中有许多方式去循环数组和对象。但在实际使用中容易产生使用上的混淆，这需要我们去权衡。在某些方式上甚至禁止某些循环结构。(详情请看)，本文我将重点描述四个循环结构迭代的方式:  for (let i = 0; i &amp;lt; arr.length">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5531021-11a77b2fa389e9fb.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-03-12T00:58:35.875Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="比较for&#x2F;foreach&#x2F;for in&#x2F;for of">
+<meta name="twitter:description" content="本文翻译自 作者：code_barbarian For vs forEach() vs for/in vs for/of in JavaScript 在JS中有许多方式去循环数组和对象。但在实际使用中容易产生使用上的混淆，这需要我们去权衡。在某些方式上甚至禁止某些循环结构。(详情请看)，本文我将重点描述四个循环结构迭代的方式:  for (let i = 0; i &amp;lt; arr.length">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5531021-11a77b2fa389e9fb.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/12/比较for-foreach-for-in-for-of/"/>
+
+
+
+
+
+  <title>比较for/foreach/for in/for of | Krislee的个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Krislee的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/12/比较for-foreach-for-in-for-of/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="KrisLee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Krislee的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">比较for/foreach/for in/for of</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-12T08:57:46+08:00">
+                2019-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://upload-images.jianshu.io/upload_images/5531021-11a77b2fa389e9fb.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="alesia-kazantceva-283285-unsplash (1).jpg"></p>
+<p>本文翻译自 <a href="http://thecodebarbarian.com/for-vs-for-each-vs-for-in-vs-for-of-in-javascript.html" target="_blank" rel="noopener">作者：code_barbarian For vs forEach() vs for/in vs for/of in JavaScript</a></p>
+<p>在JS中有许多方式去循环数组和对象。但在实际使用中容易产生使用上的混淆，这需要我们去权衡。在某些方式上甚至禁止某些循环结构。(<a href="http://airbnb.io/javascript/#iterators--nope" target="_blank" rel="noopener">详情请看</a>)，本文我将重点描述四个循环结构迭代的方式:</p>
+<ul>
+<li><code>for (let i = 0; i &lt; arr.length; ++i)</code></li>
+<li><code>arr.forEach((v, i) =&gt; { /* ... */ })</code></li>
+<li><code>for (let i in arr)</code></li>
+<li><code>for (const v of arr)</code></li>
+</ul>
+<p>我将使用几种不同的边缘情况概述这些循环结构之间的区别。我还将链接到相关的ESLint规则，您可以使用这些规则来强制在项目中执行从而达到循环的最佳实践。</p>
+<p><strong>语法概述</strong></p>
+<p>在for与for/in循环结构给你访问索引数组中，而不是实际的值。例如，假设您要打印出以下数组中存储的值：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>];</span><br></pre></td></tr></table></figure>
+<p>使用for 和 for/in ,如果需要打印出值，则需要arr[i],例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; arr.length; ++i) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(arr[i]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">in</span> arr) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(arr[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>与其他两个结构相比，forEach()并且for/of，您可以访问数组元素本身。有了forEach()你可以访问数组索引i，for/of不能。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">arr.forEach(<span class="function">(<span class="params">v, i</span>) =&gt;</span> <span class="built_in">console</span>.log(v));</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> v <span class="keyword">of</span> arr) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(v);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>非数值属性</strong></p>
+<p>js中数组是一种特殊的对象，这就意味着你可以添加string类型的属性值在你的数组里，不仅仅是数字。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">typeof</span> arr; <span class="comment">// 'object'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Assign to a non-numeric property</span></span><br><span class="line">arr.test = <span class="string">'bad'</span>;</span><br></pre></td></tr></table></figure>
+<p>4种循环结构有3种忽视非值属性，但是，for/in 却会打印出“bad”</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ab</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">const</span> arr = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>];</span><br><span class="line">	arr.test = <span class="string">'bad'</span>;</span><br><span class="line"></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">let</span> i <span class="keyword">in</span> arr)&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(arr[i]);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// for(let j of arr)&#123;</span></span><br><span class="line">	<span class="comment">// 	console.log(j);</span></span><br><span class="line">	<span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// for(let i=0;i&lt;arr.length;i++)&#123;</span></span><br><span class="line">	<span class="comment">// 	console.log(arr[i]);</span></span><br><span class="line">	<span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// arr.forEach((v,i)=&gt;&#123;</span></span><br><span class="line">	<span class="comment">// 	console.log(v);</span></span><br><span class="line">	<span class="comment">// &#125;)</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">ab();</span><br></pre></td></tr></table></figure>
+<p>打印的结果只有for/in 会展示“bad”的值</p>
+<p>显而易见，这也是为什么在循环的时候，通常我们不会去选择for/in的原因，因为其他的循环方式都可以正确的忽视非数值的值 。</p>
+<p><strong>摘要</strong>:除非你要确定要迭代非数字键和继承键，否则请避免使用<code>for/in</code></p>
+<p><strong>空元素</strong><br>js数组允许空元素，在语法中这是合法的，并且下面的例子长度是3.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [<span class="string">'a'</span>,,<span class="string">'c'</span>];</span><br><span class="line"></span><br><span class="line">arr.length; <span class="comment">//3</span></span><br></pre></td></tr></table></figure>
+<p>令人困惑的是，循环结构的处理<figure class="highlight plain"><figcaption><span>也有不同的```['a',undefined,'c']```。下面是4个循环结构如何处理的呢。for/in 、forEach会跳过空元素，但是for，for/of并不会。</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">```js</span><br><span class="line">function ab()&#123;</span><br><span class="line">	const arr = [&apos;a&apos;,,&apos;c&apos;];</span><br><span class="line"></span><br><span class="line">	for(let i in arr)&#123;</span><br><span class="line">		console.log(arr[i]);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	arr.forEach((v,i)=&gt;&#123;</span><br><span class="line">		console.log(v);</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	for(let i of arr)&#123;</span><br><span class="line">		console.log(i);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	for(let i=0;i&lt;arr.length;i++)&#123;</span><br><span class="line">		console.log(arr[i]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">ab();</span><br></pre></td></tr></table></figure></p>
+<p>此外还有另一种方式将空元素添加到数组中:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>];</span><br><span class="line">arr[<span class="number">5</span>] = <span class="string">'e'</span>;  <span class="comment">//`['a', 'b', 'c',, 'e']`</span></span><br></pre></td></tr></table></figure>
+<p>forEach()并且for/in跳过在阵列中的空元素，for并且for/of没有。这种forEach()行为可能会导致问题，但JavaScript数组中的漏洞通常很少见，因为它们在JSON中不受支持：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="built_in">JSON</span>.parse(<span class="string">'&#123;"arr":["a","b","c"]&#125;'</span>)</span><br><span class="line">&#123; <span class="attr">arr</span>: [ <span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span> ] &#125;</span><br><span class="line">&gt; <span class="built_in">JSON</span>.parse(<span class="string">'&#123;"arr":["a",null,"c"]&#125;'</span>)</span><br><span class="line">&#123; <span class="attr">arr</span>: [ <span class="string">'a'</span>, <span class="literal">null</span>, <span class="string">'c'</span> ] &#125;</span><br><span class="line">&gt; <span class="built_in">JSON</span>.parse(<span class="string">'&#123;"arr":["a",,"c"]&#125;'</span>)</span><br><span class="line"><span class="built_in">SyntaxError</span>: Unexpected token , <span class="keyword">in</span> <span class="built_in">JSON</span> at position <span class="number">12</span></span><br></pre></td></tr></table></figure>
+<p><strong>函数上下文</strong></p>
+<p>函数上下文是js中很其他的一种方式<em>this</em>。for for/in for/of都可以保持自身之外的this的值，但是forEach()却有些不同，除非你使用剪头函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&apos;use strict&apos;; //严格模式下</span><br><span class="line"></span><br><span class="line">const arr = [&apos;a&apos;];</span><br><span class="line"></span><br><span class="line">// Prints &quot;undefined&quot;</span><br><span class="line">arr.forEach(function() &#123;</span><br><span class="line">  console.log(this);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><strong>Async/Await and Generators</strong></p>
+<p>另外一个边缘情况对于<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">```js</span><br><span class="line">async function run() &#123;</span><br><span class="line">  const arr = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;];</span><br><span class="line">  arr.forEach(el =&gt; &#123;</span><br><span class="line">    // SyntaxError</span><br><span class="line">    await new Promise(resolve =&gt; setTimeout(resolve, 1000));</span><br><span class="line">    console.log(el);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>同时你也不可以使用yield：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">run</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> arr = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>];</span><br><span class="line">  arr.forEach(<span class="function"><span class="params">el</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// SyntaxError</span></span><br><span class="line">    <span class="keyword">yield</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> setTimeout(resolve, <span class="number">1000</span>));</span><br><span class="line">    <span class="built_in">console</span>.log(el);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是上面的例子可以在for/of下很好的工作：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">asyncFn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> arr = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>];</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> el <span class="keyword">of</span> arr) &#123;</span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> setTimeout(resolve, <span class="number">1000</span>));</span><br><span class="line">    <span class="built_in">console</span>.log(el);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">generatorFn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> arr = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>];</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> el <span class="keyword">of</span> arr) &#123;</span><br><span class="line">    <span class="keyword">yield</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> setTimeout(resolve, <span class="number">1000</span>));</span><br><span class="line">    <span class="built_in">console</span>.log(el);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><em>即使你将forEach回调标记位async，你也在异步中遇到很大的麻烦，下面这个列子将相反的顺序打印0-9</em></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">print</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// Wait 1 second before printing 0, 0.9 seconds before printing 1, etc.</span></span><br><span class="line">  <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> resolve(), <span class="number">1000</span> - n * <span class="number">100</span>));</span><br><span class="line">  <span class="comment">// Will usually print 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 but order is not strictly</span></span><br><span class="line">  <span class="comment">// guaranteed.</span></span><br><span class="line">  <span class="built_in">console</span>.log(n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>].forEach(print);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test();</span><br></pre></td></tr></table></figure>
+<h6 id="如果你正在使用async-await或者generator，请记住这forEach-是语法糖，你应该谨慎使用使用。"><a href="#如果你正在使用async-await或者generator，请记住这forEach-是语法糖，你应该谨慎使用使用。" class="headerlink" title="如果你正在使用async/await或者generator，请记住这forEach()是语法糖，你应该谨慎使用使用。"></a>如果你正在使用async/await或者generator，请记住这forEach()是语法糖，你应该谨慎使用使用。</h6><h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>通常，for/of是JavaScript中迭代数组的最强大的方法。它比传统的更简洁的for循环，并没有许多边缘事例 for/in和forEach()。主要的缺点fro/of是你需要做额外的工作来访问索引(1),forEach()有几个边缘案例，应该谨慎使用，但是很多情况下，它使代码更简洁。</p>
+<p><strong>tips: 要在for/of循环中访问当前数组索引，可以使用Array#entries()函数。</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> [i, v] <span class="keyword">of</span> arr.entries()) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(i, v); <span class="comment">// Prints "0 a", "1 b", "2 c"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/js/" rel="tag"># js</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/03/JS设计模式-工厂模式，抽象工厂模式/" rel="next" title="JS设计模式-工厂模式，抽象工厂模式">
+                <i class="fa fa-chevron-left"></i> JS设计模式-工厂模式，抽象工厂模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">KrisLee</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/krislee94" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="lidazhoukris@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-globe"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#如果你正在使用async-await或者generator，请记住这forEach-是语法糖，你应该谨慎使用使用。"><span class="nav-number">1.</span> <span class="nav-text">如果你正在使用async/await或者generator，请记住这forEach()是语法糖，你应该谨慎使用使用。</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结论"><span class="nav-number"></span> <span class="nav-text">结论</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KrisLee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
