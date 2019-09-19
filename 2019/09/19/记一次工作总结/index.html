@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="web," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言记一次工作记录,这里涉及到的技术，大致是，JQ,VUE,ECHARTS,fastclick,其他问题。所以目录大致为  1.适配 2.业务流程的学习 3.mock 4.数据可视化echarts 5.使用eruda来查看 6.其他   适配  1.项目使用的是flexible + rem 的方式。2.但是有个比较麻烦的事，就是px转rem需要自己去计算…这个很不智能。如果能使用webpack的p">
+<meta name="keywords" content="web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记一次工作总结">
+<meta property="og:url" content="http://yoursite.com/2019/09/19/记一次工作总结/index.html">
+<meta property="og:site_name" content="Krislee的个人博客">
+<meta property="og:description" content="前言记一次工作记录,这里涉及到的技术，大致是，JQ,VUE,ECHARTS,fastclick,其他问题。所以目录大致为  1.适配 2.业务流程的学习 3.mock 4.数据可视化echarts 5.使用eruda来查看 6.其他   适配  1.项目使用的是flexible + rem 的方式。2.但是有个比较麻烦的事，就是px转rem需要自己去计算…这个很不智能。如果能使用webpack的p">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://myblob-1256303682.picsh.myqcloud.com/aerial-shot-bird-s-eye-view-blue-1295036.jpg">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5531021-560f9a666961541e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5531021-fca3463d2f74fe72.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-09-19T18:15:58.433Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="记一次工作总结">
+<meta name="twitter:description" content="前言记一次工作记录,这里涉及到的技术，大致是，JQ,VUE,ECHARTS,fastclick,其他问题。所以目录大致为  1.适配 2.业务流程的学习 3.mock 4.数据可视化echarts 5.使用eruda来查看 6.其他   适配  1.项目使用的是flexible + rem 的方式。2.但是有个比较麻烦的事，就是px转rem需要自己去计算…这个很不智能。如果能使用webpack的p">
+<meta name="twitter:image" content="http://myblob-1256303682.picsh.myqcloud.com/aerial-shot-bird-s-eye-view-blue-1295036.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/09/19/记一次工作总结/"/>
+
+
+
+
+
+  <title>记一次工作总结 | Krislee的个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Krislee的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/19/记一次工作总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="KrisLee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Krislee的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">记一次工作总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-19T16:07:46+08:00">
+                2019-09-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h5><p>记一次工作记录,这里涉及到的技术，大致是，JQ,VUE,ECHARTS,fastclick,其他问题。所以目录大致为</p>
+<ul>
+<li><a href="#1">1.适配</a></li>
+<li><a href="#2">2.业务流程的学习</a></li>
+<li><a href="#3">3.mock</a></li>
+<li><a href="#4">4.数据可视化echarts</a></li>
+<li><a href="#5">5.使用eruda来查看</a></li>
+<li><a href="#6">6.其他</a></li>
+</ul>
+<p><img src="http://myblob-1256303682.picsh.myqcloud.com/aerial-shot-bird-s-eye-view-blue-1295036.jpg" alt="pic"></p>
+<h4 id="1">适配</h4>
+
+<p>1.项目使用的是flexible + rem 的方式。<br>2.但是有个比较麻烦的事，就是px转rem需要自己去计算…这个很不智能。如果能使用webpack的px2rem就很好啦。可惜项目用的是gulp。gulp怎么去调试px2rem我还没研究过..<br>3.如果项目中使用viewport那就再好不过啦。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    <span class="keyword">let</span> _clientWidth = <span class="built_in">window</span>.screen.availWidth;</span><br><span class="line">    setViewport();</span><br><span class="line">    <span class="built_in">window</span>.onresize = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">' -----&gt; window.screen.availWidth'</span>, <span class="built_in">window</span>.screen.availWidth)</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">' -----&gt; _clientWidth'</span>, _clientWidth)</span><br><span class="line">      <span class="keyword">if</span> (_clientWidth !== <span class="built_in">window</span>.screen.availWidth) &#123;</span><br><span class="line">        setViewport()</span><br><span class="line">        _clientWidth = <span class="built_in">window</span>.screen.availWidth</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">setViewport</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">const</span> clientWidth = <span class="built_in">window</span>.screen.availWidth,</span><br><span class="line">          viewport = <span class="built_in">document</span>.querySelector(<span class="string">'meta[name="viewport"]'</span>);</span><br><span class="line">          viewportScale = clientWidth / <span class="number">375</span>;</span><br><span class="line">          viewportWidth = <span class="number">375</span>;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">' -----&gt; clientWidth'</span>, clientWidth)</span><br><span class="line">      viewport.setAttribute(<span class="string">'content'</span>, <span class="string">'width='</span> + viewportWidth + <span class="string">', initial-scale='</span> + viewportScale + <span class="string">', maximum-scale='</span> + viewportScale + <span class="string">', user-scalable=0'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+<p>毕竟flexible只是一个过渡方案。</p>
+<h4 id="2">业务流程的学习</h4>
+
+<p>不得不说，业务这块还是很难懂的，之前在开户组里，现在突然调到理财投资组里。他们的业务很晦涩难懂。不也好在能慢慢接受。其实我想说，之前写过java，每次在敲代码的时候，都会想详细设计。在后台这块设计很重要，前端同样很重要。上家公司写代码，简单看了需求，就开始疯狂写前端代码，认为前端只要做好交互，页面，和调用代码就可以了。其实业务同样很重要。</p>
+<p>这里推荐一篇文章-<a href="https://zhuanlan.zhihu.com/p/45492055" target="_blank" rel="noopener">思维混乱，是因为大脑没有结构</a></p>
+<p>同样分享一下《阿里工程师的自我修养》同样值得去逐行阅读 <a href="https://github.com/krislee94/docs/blob/master/%E9%98%BF%E9%87%8C%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E8%87%AA%E6%88%91%E4%BF%AE%E5%85%BB.pdf" target="_blank" rel="noopener">链接</a></p>
+<p>这里我就不过多介绍啦。</p>
+<h4 id="3">mock</h4>
+
+<p>mock系统嘛… 首先要熟悉下mock.js的语法，这里可以使用网站，<a href="https://www.easy-mock.com/login" target="_blank" rel="noopener">easy mock</a> 。</p>
+<p><strong>当然啦，我们也可以自己在本地启个mock服务</strong></p>
+<ul>
+<li><p><a href="https://github.com/jamesdbloom/mockserver" target="_blank" rel="noopener">https://github.com/jamesdbloom/mockserver</a></p>
+</li>
+<li><p><a href="https://github.com/dreamhead/moco" target="_blank" rel="noopener">https://github.com/dreamhead/moco</a></p>
+</li>
+</ul>
+<p>参考这两个github库都可以写一个自己的mock数据。这样对于前端数据开发更好，也不需要等着后端给我们返回数据，我们再写页面逻辑。</p>
+<h4 id="4">数据可视化echarts</h4>
+
+<p>这里使用的是百度的echarts</p>
+<p>做出来的效果类似这样</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5531021-560f9a666961541e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><a href="https://www.echartsjs.com/zh/api.html#echarts" target="_blank" rel="noopener">echars官网</a></p>
+<p>掌握他的几种方式其实就可以做到啦。</p>
+<p>options 里面有很多配置，可以根据自己的需求来指定配置。例如tooltips：<br><img src="https://upload-images.jianshu.io/upload_images/5531021-fca3463d2f74fe72.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="5">使用eruda来查看</h4>
+
+<p><a href="https://github.com/liriliri/eruda" target="_blank" rel="noopener">eruda的github地址</a></p>
+<h4 id="6">其他</h4>
+
+<ol>
+<li>android line-height不起作用，需要单独做适配</li>
+<li>fastclick可以解决ios上双击滚动事件，组织body默认事件。</li>
+<li>写个自己的 防抖节流方法。</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/web/" rel="tag"># web</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/12/2019-08-12/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">KrisLee</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/krislee94" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="lidazhoukris@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-globe"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1"><span class="nav-number"></span> <span class="nav-text">适配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2"><span class="nav-number"></span> <span class="nav-text">业务流程的学习</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3"><span class="nav-number"></span> <span class="nav-text">mock</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4"><span class="nav-number"></span> <span class="nav-text">数据可视化echarts</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5"><span class="nav-number"></span> <span class="nav-text">使用eruda来查看</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6"><span class="nav-number"></span> <span class="nav-text">其他</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KrisLee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

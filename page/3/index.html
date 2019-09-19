@@ -244,6 +244,733 @@
   
   
 
+  <article class="post post-type-tags" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/16/http-理解-下/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="KrisLee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Krislee的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/16/http-理解-下/" itemprop="url">http 理解(下)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-16T10:13:42+08:00">
+                2018-05-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Testing/" itemprop="url" rel="index">
+                    <span itemprop="name">Testing</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Web的攻击技术"><a href="#Web的攻击技术" class="headerlink" title="Web的攻击技术"></a>Web的攻击技术</h2><p>简单的HTTP协议本身并不存在安全性问题。目前来自互联网的攻击大多是冲着Web站点来的，他们大多把Web应用作为攻击目标。</p>
+<h3 id="在客户端即可篡改请求。"><a href="#在客户端即可篡改请求。" class="headerlink" title="在客户端即可篡改请求。"></a>在客户端即可篡改请求。</h3><p>在Web应用中，从浏览器拿接受到的HTTP请求的全部内容，都可以在客户端自由地变更、篡改。所以Web应用可能会接受到与预期数据不同相同的内容。</p>
+<p>在HTTP请求报文内加载攻击代码，就能发起对Web应用的攻击。通过URL查询字段或表单、HTTP首部、cookie等途径把攻击代码传入。</p>
+<h3 id="针对Web应用的攻击模式"><a href="#针对Web应用的攻击模式" class="headerlink" title="针对Web应用的攻击模式"></a>针对Web应用的攻击模式</h3><ul>
+<li>主动攻击</li>
+<li>被动攻击</li>
+</ul>
+<p>主动攻击模式里主要是攻击<strong>服务器上的资源</strong>进行攻击，代表性的攻击是SQL注入攻击和OS命令注入攻击。</p>
+<p>被动攻击 主要攻击用户的资源和权限</p>
+<h3 id="因输出值转义不完全引发的安全漏洞"><a href="#因输出值转义不完全引发的安全漏洞" class="headerlink" title="因输出值转义不完全引发的安全漏洞"></a>因输出值转义不完全引发的安全漏洞</h3><ul>
+<li>客户端的验证</li>
+<li>Web应用端(服务器端)的验证<ul>
+<li>输入值验证</li>
+<li>输出值转义</li>
+</ul>
+</li>
+</ul>
+<h3 id="跨站脚本攻击"><a href="#跨站脚本攻击" class="headerlink" title="跨站脚本攻击"></a>跨站脚本攻击</h3><p>跨站脚本攻击（Cross-Site Scripting，XSS）是指通过存在安全漏洞的Web网站注册用户的浏览器内运行非法的HTML标签或JS进行的一种攻击。动态创建的HTML部分有可能隐藏着安全漏洞。就这样，攻击者编写脚本设下陷阱，用户在自己的浏览器上运行时，一不小心就会受到被动攻击。</p>
+<p>跨站脚本攻击有可能造成以下影响。</p>
+<ul>
+<li>利用虚假输入表单片区用户个人信息</li>
+<li>利用脚本窃取用户的Cookie值，被害者在不知情的情况下，帮助攻击者发送恶意请求。</li>
+<li>显示伪造的文章或图片</li>
+</ul>
+<h3 id="SQL注入攻击"><a href="#SQL注入攻击" class="headerlink" title="SQL注入攻击"></a>SQL注入攻击</h3><p>如果在调用SQL语句的方式上存在疏漏，就有可能执行被恶意注入(Injection)非法SQL语句。</p>
+<p>SQL注入攻击有可能会造城以下等影响</p>
+<ul>
+<li>非法查看或篡改数据库内的数据</li>
+<li>规避认证</li>
+<li>执行和数据库服务器业务关联的程序。</li>
+</ul>
+<h3 id="OS命令注入攻击"><a href="#OS命令注入攻击" class="headerlink" title="OS命令注入攻击"></a>OS命令注入攻击</h3><p>OS命令注入攻击(OS Command Injection)是指通过Web应用，执行非法的操作系统命令达到攻击的目的。只要在能调用Shell函数的地方就有存在被攻击的风险。</p>
+<h3 id="HTTP首部注入攻击"><a href="#HTTP首部注入攻击" class="headerlink" title="HTTP首部注入攻击"></a>HTTP首部注入攻击</h3><p>HTTP首部注入攻击（HTTP header Injection）是指攻击者通过在响应首部字段内插入换行。添加任意响应首部或主体的一种攻击。属于被动攻击模式。</p>
+<blockquote>
+<p>Location:’xxxxx’<br>Set-Cookie:UID=123445</p>
+</blockquote>
+<p><code>这里的123445就是插入之</code></p>
+<p>可能造成的影响：</p>
+<ul>
+<li>设置任何Cookie信息</li>
+<li>重定向至任意URL</li>
+<li>显示任意的主体(HTTP响应截断攻击)</li>
+</ul>
+<h3 id="邮件首部注入攻击"><a href="#邮件首部注入攻击" class="headerlink" title="邮件首部注入攻击"></a>邮件首部注入攻击</h3><h3 id="目录遍历攻击"><a href="#目录遍历攻击" class="headerlink" title="目录遍历攻击"></a>目录遍历攻击</h3><h3 id="远程文件包含漏洞"><a href="#远程文件包含漏洞" class="headerlink" title="远程文件包含漏洞"></a>远程文件包含漏洞</h3><h2 id="因设置或设计上的缺陷引发的安全漏洞"><a href="#因设置或设计上的缺陷引发的安全漏洞" class="headerlink" title="因设置或设计上的缺陷引发的安全漏洞"></a>因设置或设计上的缺陷引发的安全漏洞</h2><h3 id="强制浏览"><a href="#强制浏览" class="headerlink" title="强制浏览"></a>强制浏览</h3><p>强势浏览 是指 从安置在Web服务器的公开目录下的文件中，浏览那些原本非自愿公开的文件</p>
+<p>强制浏览可能会造成以下一些影响：</p>
+<ul>
+<li>泄露顾客的个人信息等重要情报</li>
+<li>泄露原本需要具有访问权限的用户才可查阅的信息内容</li>
+<li>泄露未外连到外界的文件</li>
+</ul>
+<h3 id="不正确的错误消息处理"><a href="#不正确的错误消息处理" class="headerlink" title="不正确的错误消息处理"></a>不正确的错误消息处理</h3><p>web应用的错误信息内包含对攻击者有用的信息，与web应用有关的主要错误信息：</p>
+<ul>
+<li>php或asp等脚本错误</li>
+<li>数据库或中间件</li>
+<li>web服务器错误</li>
+</ul>
+<h3 id="开放重定向"><a href="#开放重定向" class="headerlink" title="开放重定向"></a>开放重定向</h3><p>开放重定向功能，假如指定的重定向URL到某个具有恶意的Web网站，那么用户就会被诱导至那个Web网站</p>
+<h2 id="因会话管理疏忽引发的安全漏洞"><a href="#因会话管理疏忽引发的安全漏洞" class="headerlink" title="因会话管理疏忽引发的安全漏洞"></a>因会话管理疏忽引发的安全漏洞</h2><h3 id="会话劫持"><a href="#会话劫持" class="headerlink" title="会话劫持"></a>会话劫持</h3><p>通过某种手段拿到了用户的会话ID，并非法使用此会话ID伪装成用户，达到攻击的目的。</p>
+<h3 id="会话固定攻击"><a href="#会话固定攻击" class="headerlink" title="会话固定攻击"></a>会话固定攻击</h3><p>该攻击会强制用户使用攻击者指定的会话ID，属于被动攻击</p>
+<h3 id="跨站点请求伪造"><a href="#跨站点请求伪造" class="headerlink" title="跨站点请求伪造"></a>跨站点请求伪造</h3><p>跨站点请求伪造攻击是指攻击者通过设置好的陷进，强制对已完成认证的用户进行非预期的个人信息或设定信息等某些状态更新，属于被动攻击。</p>
+<h2 id="其他安全漏洞"><a href="#其他安全漏洞" class="headerlink" title="其他安全漏洞"></a>其他安全漏洞</h2><h3 id="密码破解"><a href="#密码破解" class="headerlink" title="密码破解"></a>密码破解</h3><h3 id="点击劫持"><a href="#点击劫持" class="headerlink" title="点击劫持"></a>点击劫持</h3><h3 id="DoS攻击"><a href="#DoS攻击" class="headerlink" title="DoS攻击"></a>DoS攻击</h3><p>DoS攻击是一种让运行中的服务呈停止状态的攻击，Dos攻击的对象不仅限于Web网站，还包括网络设备及服务器等。</p>
+<p>主要有一下两种DoS攻击方式。</p>
+<ul>
+<li>集中利用访问请求造成资源过载，资源用尽的同时，实际上服务也就呈停止状态。</li>
+<li>通过攻击安全漏洞使服务停止。</li>
+</ul>
+<p>当多台计算机发起的Dos攻击称为DDoS攻击</p>
+<h3 id="后门程序"><a href="#后门程序" class="headerlink" title="后门程序"></a>后门程序</h3><p>通常后门程序分为3中类型</p>
+<ul>
+<li>开发阶段作为Debug调用的后门程序</li>
+<li>开发者为了自身利益植入的后门程序</li>
+<li>攻击者攻击者通过某种方法设置的后门程序</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/15/http-理解-中/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="KrisLee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Krislee的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/15/http-理解-中/" itemprop="url">http 理解(中)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-15T14:53:22+08:00">
+                2018-05-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="确保Web安全的HTTPS"><a href="#确保Web安全的HTTPS" class="headerlink" title="确保Web安全的HTTPS"></a>确保Web安全的HTTPS</h2><p>在HTTP协议中有可能 存在 信息窃听或身份伪装等安全问题。使用HTTPS通信机制可以有效地防止这些问题。</p>
+<h3 id="HTTP的缺点"><a href="#HTTP的缺点" class="headerlink" title="HTTP的缺点"></a>HTTP的缺点</h3><ul>
+<li>通信使用明文(不加密)，内容可能会被窃听</li>
+<li>不验证通信方的身份，因此有可能遭遇伪装</li>
+<li>无法证明报文的完整性，所以有可能已遭遇创思</li>
+</ul>
+<p>当然这些问题不仅仅是在HTTP上出现，其他未加密协议中也会存在这类问题。</p>
+<p>除此之外，HTTP本身还有很多缺点。而且，还有像某些特定的Web服务器和特定的Web浏览器在实际应用中存在的不足。</p>
+<p><strong>加密处理防止被窃听</strong></p>
+<p>通信的加密</p>
+<p>HTTP协议中没有加密机制。但可以通过和SSL 或 TLS 的组合使用，加密HTTP的通信内容。</p>
+<ul>
+<li>用SSL建立安全通信路线之后，就可以在这条线路上进行HTTP通信了，与SSL组合使用的HTTP被称之为 HTTPS</li>
+<li>查明对方的证书</li>
+<li>通过MD5和SHA-1等散列值校验方法</li>
+</ul>
+<h3 id="HTTP-加密-认证-完整性保护-HTTPS"><a href="#HTTP-加密-认证-完整性保护-HTTPS" class="headerlink" title="HTTP + 加密 + 认证 + 完整性保护 = HTTPS"></a>HTTP + 加密 + 认证 + 完整性保护 = HTTPS</h3><p>既然HTTPS那么安全可靠，那为何所有的Web网站不一直使用HTTPS。</p>
+<ul>
+<li><p>与纯文本通信相比，加密通信会消耗更多的CPU和内存资源，如果每次通信都加密，会消耗相当多的资源，平摊到一台计算机上时，能够处理的请求数量必定也会随之减少。</p>
+</li>
+<li><p>购买证书的开销也是原因之一。</p>
+</li>
+</ul>
+<h2 id="确认访问用户身份的认证"><a href="#确认访问用户身份的认证" class="headerlink" title="确认访问用户身份的认证"></a>确认访问用户身份的认证</h2><p>谱写web页面指向让特定的人浏览，或者干脆仅本人可见。为达到这个目标，必不可少的就是认证功能。</p>
+<p>通常我们知道的认证 有以下：</p>
+<ul>
+<li>密码</li>
+<li>动态令牌</li>
+<li>数字证书</li>
+<li>生物认证</li>
+<li>IC卡等</li>
+</ul>
+<h3 id="HTTP-使用的认证方式"><a href="#HTTP-使用的认证方式" class="headerlink" title="HTTP 使用的认证方式"></a>HTTP 使用的认证方式</h3><p>HTTP/1.1 使用的认证方式如下所示。</p>
+<ul>
+<li>BASIC 认证(基本认证)</li>
+<li>DIGEST 认证(摘要认证)</li>
+<li>SSL 客户端认证</li>
+<li>FormBase 认证(基于表单认证)</li>
+</ul>
+<p>前面两个用的不多，在这里就不过多描述，SSL 虽然安全，但是如果是个人网站，则购买证书也需要花费金额。因此大多数会采用基于表单认证。</p>
+<p><strong>Session 管理 及 Cookie 应用</strong></p>
+<h2 id="基于HTTP的动能追加协议"><a href="#基于HTTP的动能追加协议" class="headerlink" title="基于HTTP的动能追加协议"></a>基于HTTP的动能追加协议</h2><p>虽然HTTP协议既简单又简洁，但随着时代的发展，其功能使用上捉襟见肘的疲态已经凸现。</p>
+<h3 id="消除HTTP瓶颈的SPDY"><a href="#消除HTTP瓶颈的SPDY" class="headerlink" title="消除HTTP瓶颈的SPDY"></a>消除HTTP瓶颈的SPDY</h3><p>Google在2010年发布了SPDY，其开发目标旨在解决HTTP的性能瓶颈，缩短Web页面的加载时间</p>
+<p>http标准的瓶颈：</p>
+<ul>
+<li>一条连接上只可发送一个请求</li>
+<li>请求只能从客户端开始。客户端不可以接受除响应以外的指令</li>
+<li>请求/响应首部未经压缩就发送。首部信息越多延迟越大。</li>
+<li>发送冗长的首部。每次互相发送相同的首部造成的浪费较多。</li>
+<li>可任意选择数据压缩格式。非强制压缩发送。</li>
+</ul>
+<p>AJAX的方案 和 comet的方案的出现解决一部分问题，但是仍为解决http的瓶颈问题。</p>
+<p>SPDY的目标</p>
+<p>SPDY没有完全改写HTTP协议，而是在TCP/IP的应用层与传输层之间通过新加会话层的形式运作。同时，考虑到安全性问题，SPDY规定通信中使用SSL。</p>
+<p>使用SPDY后，HTTP协议获得额外功能。</p>
+<ul>
+<li><p>多路复用流<br><em>通过单一的TCP连接，可以无限制处理多个HTTP请求。所有请求的处理都在一条TCP连接上完成，因此TCP的处理效率得到提高。</em></p>
+</li>
+<li><p>赋予请求优先级<br><em>SPDY不仅可以无限制地并发处理请求，还可以给请求逐个分配优先级。这样主要是为了在发送多个请求时，解决因带宽低而导致响应变慢的问题</em></p>
+</li>
+<li><p>压缩HTTP首部<br><em>压缩HTTP请求和响应的首部。这样依赖，通信产生的数据包数量和发送的字节数就更少了</em></p>
+</li>
+<li>推送功能 <em>支持服务器主动向客户端推送数据的功能。这样，服务器可直接发送数据，而不必等待客户端的请求</em></li>
+<li>服务器提示功能 <em>服务器可以主动提示客户端请求所需的资源，由于在客户端发现资源之前就可以获得资源的存在，因此在资源已经缓存等情况下，可以避免发送不必要的请求</em></li>
+</ul>
+<h3 id="使用浏览器进行全双工通信的-WebSocket"><a href="#使用浏览器进行全双工通信的-WebSocket" class="headerlink" title="使用浏览器进行全双工通信的 WebSocket"></a>使用浏览器进行全双工通信的 WebSocket</h3><p>利用Ajax和Comet技术进行通信可以提升Web的浏览速度。但问题在于通信若使用HTTP协议，就无法彻底解决瓶颈问题。WebSocket网络技术正是为解决这些问题而实现的一套新协议及API。</p>
+<h4 id="WebSocket的设计与功能"><a href="#WebSocket的设计与功能" class="headerlink" title="WebSocket的设计与功能"></a>WebSocket的设计与功能</h4><p>WebSocket，即Web浏览器与Web服务器之间全双工通信标准。其中，WebSocket协议由IETF定为标准，WebSocket API 由W3C定为标准。扔在开发中的WebSocket技术主要是为了解决Ajax 和 Comet里XMLHttpRequest附带的缺陷所引起的问题。</p>
+<p>成功握手确立WebSocket连接之后，通信时，不再使用HTTP的数据帧，而采用WebSocket独立的数据帧。</p>
+<h2 id="HTTP-2-0"><a href="#HTTP-2-0" class="headerlink" title="HTTP/2.0"></a>HTTP/2.0</h2><p>HTTP/2.0 的目标是改善用户在使用Web时的速度体验。由于基本上都会先通过HTTP/1.1与TCP连接，现在我们以下面这些协议为基础，探讨一下它们的实现方法。</p>
+<ul>
+<li>SPDY</li>
+<li>HTTP Speed + Mobiliity</li>
+<li>Network-Friendly HTTP Upgrade</li>
+</ul>
+<p><strong>HTTP Speed + Mobiliity </strong>是由微软起草，用于改善并提高移动通信时的通信速度和性能的标准。它建立在Google公司提出的SPDY与WEBSOCKET的基础上。</p>
+<p><strong>Network-Friendly HTTP Upgrade</strong> 主要是在移动端通信时改善HTTP性能的标准。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/14/http理解-上/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="KrisLee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Krislee的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/14/http理解-上/" itemprop="url">http理解(上)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-14T11:45:25+08:00">
+                2018-05-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="TCP-IP-通信传输流"><a href="#TCP-IP-通信传输流" class="headerlink" title="TCP/IP 通信传输流"></a>TCP/IP 通信传输流</h2><p>首先来看 7层 协议 模型</p>
+<p>七层结构记忆方法：应、表、会、传、网、数、物；</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5531021-7c5ff4d2498a42ae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>其中传输也分为四种协议 应用层， 传输层  网络层  链路层</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5531021-3280778fcb1c2c04.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="四层模型.png"></p>
+<h2 id="确保可靠性的TCP协议"><a href="#确保可靠性的TCP协议" class="headerlink" title="确保可靠性的TCP协议"></a>确保可靠性的TCP协议</h2><p><img src="https://upload-images.jianshu.io/upload_images/5531021-3d5c61760e2f87d8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="三次握手.png"></p>
+<p>为了确保准确无误的将数据送达目标。TCP协议采用了三次握手策略。</p>
+<p>相当于 发送端 和  接受端之间的会话 。 你吃了吗？- 吃了。- 好的。</p>
+<p>不过在握手过程中使用了TCP的标志 SYN和ACK </p>
+<p>发送端首先发送一个带SYN标志的数据包给对方。接受端接受到了后，回传一个带有SYN/ACK的数据包。最后发送端再回传一个带ACK标志的数据包。代表结束。</p>
+<p>######握手失败该如何处理</p>
+<p>第一次握手A发送SYN传输失败，A,B都不会申请资源，连接失败。如果一段时间内发出多个SYN连接请求，那么A只会接受它最后发送的那个SYN的SYN+ACK回应，忽略其他回应全部回应，B中多申请的资源也会释放</p>
+<p> 第二次握手B发送SYN+ACK传输失败，A不会申请资源，B申请了资源，但收不到A的ACK，过一段时间释放资源。如果是收到了多个A的SYN请求，B都会回复SYN+ACK，但A只会承认其中它最早发送的那个SYN的回应，并回复最后一次握手的ACK</p>
+<p> 第三次握手ACK传输失败，B没有收到ACK，释放资源，对于后序的A的传输数据返回RST。实际上B会因为没有收到A的ACK会多次发送SYN+ACK，次数是可以设置的，如果最后还是没有收到A的ACK，则释放资源，对A的数据传输返回RST</p>
+<h2 id="简单的HTTP协议"><a href="#简单的HTTP协议" class="headerlink" title="简单的HTTP协议"></a>简单的HTTP协议</h2><p>通常我们发送一个请求给服务器，服务器会给我们返回。</p>
+<p>我们的请求，通常包括 <strong>方法</strong> - <strong>URI</strong> - <strong>版本协议</strong> - <strong>请求首部字段</strong> - <strong>内容实体</strong></p>
+<blockquote>
+<p>POST /from/entry HTTP /1.1<br>Host:hackr.jp<br>Connection:keep-alive<br>Content-Type:application/x-www-form-urlencoded<br>Content-Length:16</p>
+</blockquote>
+<p>name=krislee &amp; age = 25</p>
+<h3 id="请求的方法"><a href="#请求的方法" class="headerlink" title="请求的方法"></a>请求的方法</h3><p>GET POST PUT HEAD DELETE OPTIONS TRACE </p>
+<h3 id="Connection"><a href="#Connection" class="headerlink" title="Connection"></a>Connection</h3><p>持久连接的好处在于 减少了TCP链接的重复建立 和 断开 所造成的额外开销，减轻了服务器端的负载。另外，减少开销的那部分时间，使HTTP请求和响应能够更早的技术。这样Web页面的显示速度也就相应的提高。</p>
+<h3 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h3><p>服务器端是不保存请求和响应的状态的。这时候应该如何处理？</p>
+<h2 id="返回结果的HTTP状态码"><a href="#返回结果的HTTP状态码" class="headerlink" title="返回结果的HTTP状态码"></a>返回结果的HTTP状态码</h2><p><strong>2XX 成功</strong></p>
+<p><strong>3XX 重定向</strong></p>
+<p><strong>4XX 客户端错误</strong></p>
+<p><strong>5XX 服务器端错误</strong></p>
+<h2 id="与HTTP协作的Web服务器"><a href="#与HTTP协作的Web服务器" class="headerlink" title="与HTTP协作的Web服务器"></a>与HTTP协作的Web服务器</h2><p>一台Web服务器可搭建多个独立域名的Web网站，也可作为通信路径上的中转服务器提升传输效率。</p>
+<h3 id="用单台虚拟机实现多个域名"><a href="#用单台虚拟机实现多个域名" class="headerlink" title="用单台虚拟机实现多个域名"></a>用单台虚拟机实现多个域名</h3><p>方式通过虚拟主机的方式实现。</p>
+<h3 id="通信数据的转发程序：代理、网关、隧道"><a href="#通信数据的转发程序：代理、网关、隧道" class="headerlink" title="通信数据的转发程序：代理、网关、隧道"></a>通信数据的转发程序：代理、网关、隧道</h3><p><strong>代理：</strong></p>
+<p>  一种有转发功能的应用程序，它扮演了位于服务器和客户端“中间人”的角色，接受由客户端发送的请求并转发给服务器，同时也接受服务器发送的响应并转发给客户端。</p>
+<p>  代理服务器的基本行为就是接受客户端发送的请求后转发给其它服务器。不改变请求URI，直接发送给前方持有资源的目标服务器。持有资源实体的服务器被称为源服务器。从源服务器返回的响应经过代理服务器后再传给客户端。</p>
+<p>   在HTTP通信过程中，可级联多台代理服务器。请求和响应的转发会经过数台类似锁链一样连接起来的代理服务器。转发时，需要附加Via首部字段以标记出经过的主机信息。</p>
+<ul>
+<li><p>利用缓存技术减少网络带宽的流量</p>
+<p><code>*缓存代理：代理转发响应时，缓存代理会预先将资源的副本保存在代理服务器上。 当代理再次接收到对相同资源的请求时，就可以不从源服务器那里获取资源，而是将之前缓存的资源作为响应返回。</code></p>
+<ul>
+<li>组织内部针对特定网站的访问控制</li>
+</ul>
+</li>
+</ul>
+<p><code>通过设置组织内部的代理服务器可做到针对特定URI访问的控制。</code></p>
+<ul>
+<li>以获取访问日志为主要目的</li>
+</ul>
+<p><strong>网关：</strong></p>
+<p>   利用网关可以由HTTP请求转化为其它协议通信。 网关的工作机制和代理十分相似。 </p>
+<ul>
+<li>如果一个服务器是非HTTP服务器，而客户端想用HTTP协议与该服务器进行通信，那就要借助网关啦。因为网关能把HTTP协议转化为非HTTP协议，把非HTTP响应转化为HTTP响应。</li>
+</ul>
+<ul>
+<li>利用网关能提高通信的安全性，因为可以在客户端与网关之间的通信线路上加密以确保连接的安全。</li>
+</ul>
+<p><strong>隧道</strong></p>
+<p> 隧道可按要求建立起一条与其它服务器的通信线路，届时使用SSL等加密手段进行通信。隧道的目的是确保客户端能与服务器进行安全的通信。</p>
+<p> 隧道本身不会去解析HTTP请求。也就是说，请求保持原样中转给之后的服务器。隧道会在通信双方断开连接时结束。</p>
+<h2 id="HTTP首部"><a href="#HTTP首部" class="headerlink" title="HTTP首部"></a>HTTP首部</h2><h3 id="HTTP首部报文"><a href="#HTTP首部报文" class="headerlink" title="HTTP首部报文"></a>HTTP首部报文</h3><p>HTTP报文的结构 由 报文首部，空行（CR+LF）报文主体</p>
+<p>HTTP请求报文 在请求中，HTTP报文由方法、URI、HTTP版本、HTTP首部字段等部分构成。</p>
+<p>下面我截取一段信息</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5531021-11d9bedffbfb32a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="![屏幕快照 2018-05-14 下午3.10.53.png](https://upload-images.jianshu.io/upload_images/5531021-4e1bea73071968d8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+"></p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://www.jianshu.com/p/25f297ba5de1" target="_blank" rel="noopener">作者：爱吃萝卜的小蘑菇 简书</a></p>
+<p><a href="">图解HTTP 作者：上野 宣</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/13/通过github-hexo-nexT搭建个人博客/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="KrisLee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Krislee的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/13/通过github-hexo-nexT搭建个人博客/" itemprop="url">通过github/hexo/nexT搭建个人博客</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-13T09:43:04+08:00">
+                2018-05-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>文章整个搭建参考下面的文章，搭建时间大概一天左右。中间也踩了一点坑，不过 搜索一下 ，也是可以很快解决的。</p>
+<p>唯一的一个大坑，大概就是，每次 hexo g 的时候总是不通过。 通过 强大的 搜索引擎。</p>
+<p>发现在 _config.yml 文件中 # Site， #URL 的冒号 后面需要手动加空格，不然编译不过(哪怕那里没有内容，也要加空格)</p>
+<p>至于其他的内容，参考下面的参考链接。都很详细 。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://www.jianshu.com/p/15848a8c70db" target="_blank" rel="noopener">简书作者：ShmilyCoder 文章 基于GitHub和Hexo搭建个人博客</a>  </p>
+<p><a href="http://theme-next.iissnan.com/" target="_blank" rel="noopener">nexT官方文档</a></p>
+<h2 id="hexo的新建文章"><a href="#hexo的新建文章" class="headerlink" title="hexo的新建文章"></a>hexo的新建文章</h2><ul>
+<li><code>hexo new &#39;xxx&#39;</code></li>
+<li><code>找到资源文件_post下的md，更新文章</code></li>
+<li><code>hexo clean</code></li>
+<li><code>hexo s （查看本地）</code></li>
+<li><code>hexo g  (部署)</code></li>
+<li><code>hexo d (发布)</code></li>
+</ul>
+<p>其中<code>hexo clean</code>并不需要每次都使用</p>
+<h2 id="搭建完成的博客"><a href="#搭建完成的博客" class="headerlink" title="搭建完成的博客"></a>搭建完成的博客</h2><p><a href="http://www.krislee-vip.com/" target="_blank" rel="noopener">kris-lee的个人博客</a></p>
+<p>博客地址  ： <a href="http://www.krislee-vip.com/" target="_blank" rel="noopener">http://www.krislee-vip.com/</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
@@ -534,7 +1261,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

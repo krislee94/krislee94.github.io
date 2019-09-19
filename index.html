@@ -249,6 +249,554 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/19/记一次工作总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="KrisLee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Krislee的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/19/记一次工作总结/" itemprop="url">记一次工作总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-19T16:07:46+08:00">
+                2019-09-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h5><p>记一次工作记录,这里涉及到的技术，大致是，JQ,VUE,ECHARTS,fastclick,其他问题。所以目录大致为</p>
+<ul>
+<li><a href="#1">1.适配</a></li>
+<li><a href="#2">2.业务流程的学习</a></li>
+<li><a href="#3">3.mock</a></li>
+<li><a href="#4">4.数据可视化echarts</a></li>
+<li><a href="#5">5.使用eruda来查看</a></li>
+<li><a href="#6">6.其他</a></li>
+</ul>
+<p><img src="http://myblob-1256303682.picsh.myqcloud.com/aerial-shot-bird-s-eye-view-blue-1295036.jpg" alt="pic"></p>
+<h4 id="1">适配</h4>
+
+<p>1.项目使用的是flexible + rem 的方式。<br>2.但是有个比较麻烦的事，就是px转rem需要自己去计算…这个很不智能。如果能使用webpack的px2rem就很好啦。可惜项目用的是gulp。gulp怎么去调试px2rem我还没研究过..<br>3.如果项目中使用viewport那就再好不过啦。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    <span class="keyword">let</span> _clientWidth = <span class="built_in">window</span>.screen.availWidth;</span><br><span class="line">    setViewport();</span><br><span class="line">    <span class="built_in">window</span>.onresize = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">' -----&gt; window.screen.availWidth'</span>, <span class="built_in">window</span>.screen.availWidth)</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">' -----&gt; _clientWidth'</span>, _clientWidth)</span><br><span class="line">      <span class="keyword">if</span> (_clientWidth !== <span class="built_in">window</span>.screen.availWidth) &#123;</span><br><span class="line">        setViewport()</span><br><span class="line">        _clientWidth = <span class="built_in">window</span>.screen.availWidth</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">setViewport</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">const</span> clientWidth = <span class="built_in">window</span>.screen.availWidth,</span><br><span class="line">          viewport = <span class="built_in">document</span>.querySelector(<span class="string">'meta[name="viewport"]'</span>);</span><br><span class="line">          viewportScale = clientWidth / <span class="number">375</span>;</span><br><span class="line">          viewportWidth = <span class="number">375</span>;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">' -----&gt; clientWidth'</span>, clientWidth)</span><br><span class="line">      viewport.setAttribute(<span class="string">'content'</span>, <span class="string">'width='</span> + viewportWidth + <span class="string">', initial-scale='</span> + viewportScale + <span class="string">', maximum-scale='</span> + viewportScale + <span class="string">', user-scalable=0'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+<p>毕竟flexible只是一个过渡方案。</p>
+<h4 id="2">业务流程的学习</h4>
+
+<p>不得不说，业务这块还是很难懂的，之前在开户组里，现在突然调到理财投资组里。他们的业务很晦涩难懂。不也好在能慢慢接受。其实我想说，之前写过java，每次在敲代码的时候，都会想详细设计。在后台这块设计很重要，前端同样很重要。上家公司写代码，简单看了需求，就开始疯狂写前端代码，认为前端只要做好交互，页面，和调用代码就可以了。其实业务同样很重要。</p>
+<p>这里推荐一篇文章-<a href="https://zhuanlan.zhihu.com/p/45492055" target="_blank" rel="noopener">思维混乱，是因为大脑没有结构</a></p>
+<p>同样分享一下《阿里工程师的自我修养》同样值得去逐行阅读 <a href="https://github.com/krislee94/docs/blob/master/%E9%98%BF%E9%87%8C%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E8%87%AA%E6%88%91%E4%BF%AE%E5%85%BB.pdf" target="_blank" rel="noopener">链接</a></p>
+<p>这里我就不过多介绍啦。</p>
+<h4 id="3">mock</h4>
+
+<p>mock系统嘛… 首先要熟悉下mock.js的语法，这里可以使用网站，<a href="https://www.easy-mock.com/login" target="_blank" rel="noopener">easy mock</a> 。</p>
+<p><strong>当然啦，我们也可以自己在本地启个mock服务</strong></p>
+<ul>
+<li><p><a href="https://github.com/jamesdbloom/mockserver" target="_blank" rel="noopener">https://github.com/jamesdbloom/mockserver</a></p>
+</li>
+<li><p><a href="https://github.com/dreamhead/moco" target="_blank" rel="noopener">https://github.com/dreamhead/moco</a></p>
+</li>
+</ul>
+<p>参考这两个github库都可以写一个自己的mock数据。这样对于前端数据开发更好，也不需要等着后端给我们返回数据，我们再写页面逻辑。</p>
+<h4 id="4">数据可视化echarts</h4>
+
+<p>这里使用的是百度的echarts</p>
+<p>做出来的效果类似这样</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5531021-560f9a666961541e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><a href="https://www.echartsjs.com/zh/api.html#echarts" target="_blank" rel="noopener">echars官网</a></p>
+<p>掌握他的几种方式其实就可以做到啦。</p>
+<p>options 里面有很多配置，可以根据自己的需求来指定配置。例如tooltips：<br><img src="https://upload-images.jianshu.io/upload_images/5531021-fca3463d2f74fe72.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="5">使用eruda来查看</h4>
+
+<p><a href="https://github.com/liriliri/eruda" target="_blank" rel="noopener">eruda的github地址</a></p>
+<h4 id="6">其他</h4>
+
+<ol>
+<li>android line-height不起作用，需要单独做适配</li>
+<li>fastclick可以解决ios上双击滚动事件，组织body默认事件。</li>
+<li>写个自己的 防抖节流方法。</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/12/2019-08-12/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="KrisLee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Krislee的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/08/12/2019-08-12/" itemprop="url">未命名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-12T01:20:16+08:00">
+                2019-08-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="冒烟测试执行"><a href="#冒烟测试执行" class="headerlink" title="冒烟测试执行"></a>冒烟测试执行</h1><p>冒烟测试是指对提交测试的软件在进行详细深入的测试之前而进行的预测试，这种预测试的主要目的是暴露导致软件需要重新发布的基本功能失效等严重问题。</p>
+<ol>
+<li>构建是否成功</li>
+<li>每次构建完成build目录是否有内容输出</li>
+</ol>
+<ul>
+<li>是否有JS、css等静态资源文件</li>
+<li>是否有html文件</li>
+</ul>
+<h3 id="判断构建是否成功"><a href="#判断构建是否成功" class="headerlink" title="判断构建是否成功"></a>判断构建是否成功</h3><h4 id="编写mocha测试用例"><a href="#编写mocha测试用例" class="headerlink" title="编写mocha测试用例"></a>编写mocha测试用例</h4><ul>
+<li></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/28/2019-06-28/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="KrisLee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Krislee的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/28/2019-06-28/" itemprop="url">未命名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-28T15:08:18+08:00">
+                2019-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="6月总结"><a href="#6月总结" class="headerlink" title="6月总结"></a>6月总结</h1><ol>
+<li>6.6号上午迟到，打卡时间9.26分</li>
+<li>18号请假半天，19号请假一天（病假），未跟医院要病假条。明基医院的病历是一张卡。</li>
+<li>6.25打卡时间是9.45.旷工半天。</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/26/webpack实现一个工具打包/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="KrisLee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Krislee的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/26/webpack实现一个工具打包/" itemprop="url">webpack实现一个工具打包</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-26T17:25:56+08:00">
+                2019-06-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="任务：实现一个大整数方法的打包"><a href="#任务：实现一个大整数方法的打包" class="headerlink" title="任务：实现一个大整数方法的打包"></a>任务：实现一个大整数方法的打包</h4><h4 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h4><ol>
+<li>npm的账号，且在终端<code>npm login</code>,登录账号</li>
+<li>webpack的安装</li>
+</ol>
+<p>#### </p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/02/5月总结-中下旬/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1609,698 +2157,6 @@ Legacy version - 历史版本
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/28/JS的运行机制/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="KrisLee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Krislee的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/12/28/JS的运行机制/" itemprop="url">JS的运行机制</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-28T11:02:52+08:00">
-                2018-12-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><img src="https://upload-images.jianshu.io/upload_images/5531021-069f3a0866e9392d.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="sc1105.jpeg"></p>
-<h3 id="为什么JavaScript是单线程"><a href="#为什么JavaScript是单线程" class="headerlink" title="为什么JavaScript是单线程"></a>为什么JavaScript是单线程</h3><p>JavaScript语言的一大特点就是单线程，也就是说，同一个时间只能做一件事。那么，为什么JavaScript不能有多个线程呢？这样能提高效率啊。</p>
-<p>JavaScript的单线程，与它的用途有关。作为浏览器脚本语言，JavaScript的主要用途是与用户互动，以及操作DOM。这决定了它只能是单线程，否则会带来很复杂的同步问题。比如，假定JavaScript同时有两个线程，一个线程在某个DOM节点上添加内容，另一个线程删除了这个节点，这时浏览器应该以哪个线程为准？</p>
-<p>所以，为了避免复杂性，从一诞生，JavaScript就是单线程，这已经成了这门语言的核心特征，将来也不会改变。</p>
-<p>为了利用多核CPU的计算能力，HTML5提出Web Worker标准，允许JavaScript脚本创建多个线程，但是子线程完全受主线程控制，且不得操作DOM。所以，这个新标准并没有改变JavaScript单线程的本质。</p>
-<h3 id="任务队列"><a href="#任务队列" class="headerlink" title="任务队列"></a>任务队列</h3><p>单线程就意味着，所有任务需要排队，前一个任务结束，才会执行后一个任务。如果前一个任务耗时很长，后一个任务就不得不一直等着。</p>
-<p>如果排队是因为计算量大，CPU忙不过来，倒也算了，但是很多时候CPU是闲着的，因为IO设备（输入输出设备）很慢（比如Ajax操作从网络读取数据），不得不等着结果出来，再往下执行。</p>
-<p>JavaScript语言的设计者意识到，这时主线程完全可以不管IO设备，挂起处于等待中的任务，先运行排在后面的任务。等到IO设备返回了结果，再回过头，把挂起的任务继续执行下去。</p>
-<p>于是，所有任务可以分成两种，一种是同步任务（synchronous），另一种是异步任务（asynchronous）。同步任务指的是，在主线程上排队执行的任务，只有前一个任务执行完毕，才能执行后一个任务；异步任务指的是，不进入主线程、而进入”任务队列”（task queue）的任务，只有”任务队列”通知主线程，某个异步任务可以执行了，该任务才会进入主线程执行。</p>
-<p>具体来说，异步执行的运行机制如下。（同步执行也是如此，因为它可以被视为没有异步任务的异步执行。）</p>
-<ol>
-<li>所有同步任务都在主线程上执行，形成一个执行栈（execution context stack）。也称之为<strong>宏任务</strong></li>
-<li>主线程之外，还存在一个”任务队列”（task queue）。只要异步任务有了运行结果，就在”任务队列”之中放置一个事件。这样的任务队列也叫<strong>微任务</strong></li>
-<li>一旦”执行栈”中的所有同步任务执行完毕，系统就会读取”任务队列”，看看里面有哪些事件。那些对应的异步任务，于是结束等待状态，进入执行栈，开始执行。</li>
-<li>主线程不断重复上面的第三步。</li>
-</ol>
-<p><strong>只要主线程空了，就会去读取”任务队列”，这就是JavaScript的运行机制。这个过程会不断重复。</strong></p>
-<h3 id="事件和回调函数"><a href="#事件和回调函数" class="headerlink" title="事件和回调函数"></a>事件和回调函数</h3><p>“任务队列”是一个事件的队列（也可以理解成消息的队列），IO设备完成一项任务，就在”任务队列”中添加一个事件，表示相关的异步任务可以进入”执行栈”了。主线程读取”任务队列”，就是读取里面有哪些事件。</p>
-<p>“任务队列”中的事件，除了IO设备的事件以外，还包括一些用户产生的事件（比如鼠标点击、页面滚动等等）。只要指定过回调函数，这些事件发生时就会进入”任务队列”，等待主线程读取。</p>
-<p>所谓”回调函数”（callback），就是那些会被主线程挂起来的代码。异步任务必须指定回调函数，当主线程开始执行异步任务，就是执行对应的回调函数。</p>
-<p><em>“任务队列”是一个先进先出的数据结构，排在前面的事件，优先被主线程读取。主线程的读取过程基本上是自动的，只要执行栈一清空，”任务队列”上第一位的事件就自动进入主线程。但是，由于存在后文提到的”定时器”功能，主线程首先要检查一下执行时间，某些事件只有到了规定的时间，才能返回主线程。</em></p>
-<h3 id="Event-Loop"><a href="#Event-Loop" class="headerlink" title="Event Loop"></a>Event Loop</h3><p>主线程从”任务队列”中读取事件，这个过程是循环不断的，所以整个的这种运行机制又称为Event Loop（事件循环）。</p>
-<p>图转引自<a href="https://vimeo.com/96425312" target="_blank" rel="noopener">Philip Roberts的演讲《Help, I’m stuck in an event-loop》</a>。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/5531021-816b9f0082bf9110.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="bg2014100802.png"></p>
-<p>主线程运行的时候，产生堆（heap）和栈（stack），栈中的代码调用各种外部API，它们在”任务队列”中加入各种事件（click，load，done）。只要栈中的代码执行完毕，主线程就会去读取”任务队列”，依次执行那些事件所对应的回调函数。</p>
-<h3 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">console.log(1);</span><br><span class="line">setTimeout(function()&#123;console.log(2);&#125;,1000);</span><br><span class="line">console.log(3);</span><br></pre></td></tr></table></figure>
-<p>上面代码的执行结果是1，3，2，因为setTimeout()将第二行推迟到1000毫秒之后执行。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(function()&#123;console.log(1);&#125;, 0);</span><br><span class="line">console.log(2);</span><br></pre></td></tr></table></figure>
-<p>上面代码的执行结果总是2，1，因为只有在执行完第二行以后，系统才会去执行”任务队列”中的回调函数。</p>
-<p>总之，setTimeout(fn,0)的含义是，指定某个任务在主线程最早可得的空闲时间执行，也就是说，尽可能早得执行。它在”任务队列”的尾部添加一个事件，因此要等到同步任务和”任务队列”现有的事件都处理完，才会得到执行。</p>
-<p>HTML5标准规定了setTimeout()的第二个参数的最小值（最短间隔），不得低于4毫秒，如果低于这个值，就会自动增加。在此之前，老版本的浏览器都将最短间隔设为10毫秒。另外，对于那些DOM的变动（尤其是涉及页面重新渲染的部分），通常不会立即执行，而是每16毫秒执行一次。这时使用requestAnimationFrame()的效果要好于setTimeout()。</p>
-<p>需要注意的是，setTimeout()只是将事件插入了”任务队列”，必须等到当前代码（执行栈）执行完，主线程才会去执行它指定的回调函数。要是当前代码耗时很长，有可能要等很久，所以并没有办法保证，回调函数一定会在setTimeout()指定的时间执行。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(function()&#123;</span><br><span class="line">    console.log(&apos;定时器开始啦&apos;)</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">new Promise(function(resolve)&#123;</span><br><span class="line">    console.log(&apos;马上执行for循环啦&apos;);</span><br><span class="line">    for(var i = 0; i &lt; 10000; i++)&#123;</span><br><span class="line">        i == 99 &amp;&amp; resolve();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).then(function()&#123;</span><br><span class="line">    console.log(&apos;执行then函数啦&apos;)</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">console.log(&apos;代码执行结束&apos;);</span><br></pre></td></tr></table></figure>
-<p>那么这个执行结果是什么呢？？？</p>
-<p><em>[马上执行for循环拉 — 代码执行结束  — 执行then函数拉 — 定时器开始啦]</em></p>
-<ol>
-<li>整体script作为第一个宏任务进入主线程，这是第一轮宏任务。</li>
-<li>遇到setTimeout，其回调函数被分发到宏任务Event Queue中，这是第二个宏任务。</li>
-<li>继续执行，打印【马上执行for循环啦】</li>
-<li>遇到promise.then()微任务，这是第一轮宏任务下的微任务，因为整体script是第一轮宏任务嘛</li>
-<li>继续执行，打印【代码执行结束】</li>
-<li>现在整体script作为第一轮宏任务，去检查这一轮下的微任务，发现有一个promise.then()，去执行它</li>
-</ol>
-<p>（至此现在第一轮宏任务，以及这一轮宏任务下的微任务都被执行过了）<br>7.开始第二轮宏任务，发现宏任务队列里有一个setTimeout，执行它，就打印了【定时器开始啦】</p>
-<h3 id="Node-js的Event-Loop"><a href="#Node-js的Event-Loop" class="headerlink" title="Node.js的Event Loop"></a>Node.js的Event Loop</h3><p>Node.js也是单线程的Event Loop，但是它的运行机制不同于浏览器环境。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/5531021-b005065c20b85aa8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="bg20141008031.png"></p>
-<p>根据上图，Node.js的运行机制如下。</p>
-<p>（1）V8引擎解析JavaScript脚本。</p>
-<p>（2）解析后的代码，调用Node API。</p>
-<p>（3）libuv库负责Node API的执行。它将不同的任务分配给不同的线程，形成一个Event Loop（事件循环），以异步的方式将任务的执行结果返回给V8引擎。</p>
-<p>（4）V8引擎再将结果返回给用户。</p>
-<p>除了setTimeout和setInterval这两个方法，Node.js还提供了另外两个与”任务队列”有关的方法：process.nextTick和setImmediate。它们可以帮助我们加深对”任务队列”的理解。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">process.nextTick(function A() &#123;</span><br><span class="line">  console.log(1);</span><br><span class="line">  process.nextTick(function B()&#123;console.log(2);&#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">setTimeout(function timeout() &#123;</span><br><span class="line">  console.log(&apos;TIMEOUT FIRED&apos;);</span><br><span class="line">&#125;, 0)</span><br><span class="line">// 1</span><br><span class="line">// 2</span><br><span class="line">// TIMEOUT FIRED</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">setImmediate(function ()&#123;</span><br><span class="line">  setImmediate(function A() &#123;</span><br><span class="line">    console.log(1);</span><br><span class="line">    setImmediate(function B()&#123;console.log(2);&#125;);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  setTimeout(function timeout() &#123;</span><br><span class="line">    console.log(&apos;TIMEOUT FIRED&apos;);</span><br><span class="line">  &#125;, 0);</span><br><span class="line">&#125;);</span><br><span class="line">// 1</span><br><span class="line">// TIMEOUT FIRED</span><br><span class="line">// 2</span><br></pre></td></tr></table></figure>
-<p>另外，由于process.nextTick指定的回调函数是在本次”事件循环”触发，而setImmediate指定的是在下次”事件循环”触发，所以很显然，前者总是比后者发生得早，而且执行效率也高（因为不用检查”任务队列”）</p>
-<p>原文请查看<a href="http://www.ruanyifeng.com/blog/2014/10/event-loop.html" target="_blank" rel="noopener">JavaScript 运行机制详解：再谈Event Loop</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/06/git原理/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="KrisLee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Krislee的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/06/git原理/" itemprop="url">git原理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-06T08:50:20+08:00">
-                2018-11-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>如果你不是太懂git…那么你可以通过阅读<a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="noopener">廖雪峰的官网</a>来使用。这里讲解的git浅显易懂。</p>
-<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>首先，让我们创建一个项目目录，并进入该目录。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir my-project</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd my-project</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
-<p>这里的<code>git init</code> 只做一件事，就是在项目根目录下创建一个.git的子目录，用来保存版本信息。<br><img src="https://upload-images.jianshu.io/upload_images/5531021-c3a3f78d6d07cc88.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2018-11-06 上午9.06.33.png"></p>
-<h3 id="保存对象"><a href="#保存对象" class="headerlink" title="保存对象"></a>保存对象</h3><p>接下来，新建一个空文件 <strong>test.txt</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch test.txt</span><br></pre></td></tr></table></figure>
-<p>然后，把这个文件加入git仓库，也就是为test。txt的当前内容创建一个副本。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git hash-object -w test.txt</span><br></pre></td></tr></table></figure>
-<p>输出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">e69de29bb2d1d6434b8b29ae775ad8c2e48c5391</span><br></pre></td></tr></table></figure></p>
-<p>上面代码中，git hash-object命令把test。txt的当前内容压缩成二进制文件，存入Git。压缩后的二进制文件，称为一个Git对象，保存在.git/objects目录。</p>
-<p>这个命令还会计算当前内容的SHA1 哈希值（长度40的字符串）作为该对象的文件名。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ls -R .git/objects</span><br><span class="line"></span><br><span class="line">.git/objects/e6:</span><br><span class="line">9de29bb2d1d6434b8b29ae775ad8c2e48c5391</span><br></pre></td></tr></table></figure>
-<p>上面代码可以看到，.git/objects下面多了一个子目录，目录名是哈希值的前2个字符，该子目录下面有一个文件，文件名是哈希值的后38个字符。</p>
-<p>再看一下这个文件的内容。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cat .git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391</span><br></pre></td></tr></table></figure>
-<p>上面代码输出的文件内容，都是一些二进制字符。你可能会问，test.txt是一个空文件，为什么会有内容？这是因为二进制对象里面还保存一些元数据。</p>
-<p>如果想看该文件原始的文本内容，要用git cat-file命令。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git cat-file -p e69de29bb2d1d6434b8b29ae775ad8c2e48c5391</span><br></pre></td></tr></table></figure>
-<p>因为原始文件是空文件，所以上面的命令什么也看不到，现在向test.txt写入一些内容。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ echo &apos;hello world&apos; &gt; test.txt</span><br></pre></td></tr></table></figure>
-<p>因为文件内容已经改变，需要将它再次保存成Git对象。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git hash-object -w test.txt</span><br><span class="line"></span><br><span class="line">3b18e512dba79e4c8300dd08aeb37f8e728b8dad</span><br></pre></td></tr></table></figure>
-<p>上面代码可以看到，随着内容改变，test.txt的哈希值已经变了。同时，新文件.git/objects/3b/18e512dba79e4c8300dd08aeb37f8e728b8dad 也已经生成了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git cat-file -p 3b18e512dba79e4c8300dd08aeb37f8e728b8dad</span><br></pre></td></tr></table></figure>
-<p>输出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hello world</span><br></pre></td></tr></table></figure></p>
-<h3 id="暂存区"><a href="#暂存区" class="headerlink" title="暂存区"></a>暂存区</h3><p>文件保存成二进制对象以后，还需要通知 Git 哪些文件发生了变动。所有变动的文件，Git 都记录在一个区域，叫做”暂存区”（英文叫做 index 或者 stage）。等到变动告一段落，再统一把暂存区里面的文件写入正式的版本历史。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git update-index //用于在暂存区记录一个发生变动的文件。</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git update-index --add --cacheinfo 100644 \</span><br><span class="line">3b18e512dba79e4c8300dd08aeb37f8e728b8dad test.txt</span><br></pre></td></tr></table></figure>
-<p>上面命令向暂存区写入文件名test.txt、二进制对象名（哈希值）和文件权限。</p>
-<p>git ls-files命令可以显示暂存区当前的内容。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git ls-files --stage</span><br><span class="line"></span><br><span class="line">100644 3b18e512dba79e4c8300dd08aeb37f8e728b8dad 0   test.txt</span><br></pre></td></tr></table></figure>
-<p>上面代码表示，暂存区现在只有一个文件test.txt，以及它的二进制对象名和权限。知道了二进制对象名，就可以在.git/objects子目录里面读出这个文件的内容。</p>
-<p>git status命令会产生更可读的结果。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git status</span><br><span class="line"></span><br><span class="line">要提交的变更：</span><br><span class="line">    新文件：   test.txt</span><br></pre></td></tr></table></figure>
-<h3 id="git-add命令"><a href="#git-add命令" class="headerlink" title="git add命令"></a>git add命令</h3><p>上面两步（保存对象和更新暂存区），如果每个文件都做一遍，那是很麻烦的。Git 提供了git add命令简化操作。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git add --all  // git add .</span><br></pre></td></tr></table></figure>
-<p>上面命令相当于，对当前项目所有变动的文件，执行前面的两步操作。</p>
-<h3 id="commit的概念"><a href="#commit的概念" class="headerlink" title="commit的概念"></a>commit的概念</h3><p>暂存区保留本次变动的文件信息，等到修改了差不多了，就要把这些信息写入历史，这就相当于生成了当前项目的一个快照（snapshot）。</p>
-<p>项目的历史就是由不同时点的快照构成。Git 可以将项目恢复到任意一个快照。快照在 Git 里面有一个专门名词，叫做 commit，生成快照又称为完成一次提交。</p>
-<p>下文所有提到”快照”的地方，指的就是 commit。</p>
-<h3 id="完成提交"><a href="#完成提交" class="headerlink" title="完成提交"></a>完成提交</h3><p>首先，设置一下用户名和 Email，保存快照的时候，会记录是谁提交的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name &quot;用户名&quot; </span><br><span class="line">$ git config --global user.email &quot;Email 地址&quot;</span><br></pre></td></tr></table></figure>
-<p>接下来，要保存当前的目录结构。前面保存对象的时候，只是保存单个文件，并没有记录文件之间的目录关系（哪个文件在哪里）。</p>
-<p><strong>git write-tree</strong>命令用来将当前的目录结构，生成一个 Git 对象。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git write-tree</span><br><span class="line"></span><br><span class="line">c3b8bb102afeca86037d5b5dd89ceeb0090eae9d</span><br></pre></td></tr></table></figure>
-<p>上面代码中，目录结构也是作为二进制对象保存的，也保存在.git/objects目录里面，对象名就是哈希值。</p>
-<p>git commit-tree命令用于将目录树对象写入版本历史。</p>
-<p>git log命令也可以用来查看某个快照信息。</p>
-<h3 id="git-commit命令"><a href="#git-commit命令" class="headerlink" title="git commit命令"></a>git commit命令</h3><p>Git 提供了git commit命令，简化提交操作。保存进暂存区以后，只要git commit一个命令，就同时提交目录结构和说明，生成快照。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m &quot;first commit&quot;</span><br></pre></td></tr></table></figure>
-<p>此外，还有两个命令也很有用</p>
-<ul>
-<li>git checkout命令用于切换到某个快照。</li>
-<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout c9053865e9dff393fd2f7a92a18f9bd7f2caa7fa</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>git show命令用于展示某个快照的所有代码变动。</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git show c9053865e9dff393fd2f7a92a18f9bd7f2caa7fa</span><br></pre></td></tr></table></figure>
-<h3 id="branch的概念"><a href="#branch的概念" class="headerlink" title="branch的概念"></a>branch的概念</h3><p>到了这一步，还没完。如果这时用git log命令查看整个版本历史，你看不到新生成的快照。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log</span><br></pre></td></tr></table></figure>
-<p>上面命令没有任何输出，这是为什么呢？快照明明已经写入历史了。</p>
-<p>原来git log命令只显示当前分支的变动，虽然我们前面已经提交了快照，但是还没有记录这个快照属于哪个分支。</p>
-<p>所谓分支（branch）就是指向某个快照的指针，分支名就是指针名。哈希值是无法记忆的，分支使得用户可以为快照起别名。而且，分支会自动更新，如果当前分支有新的快照，指针就会自动指向它。比如，master 分支就是有一个叫做 master 指针，它指向的快照就是 master 分支的当前快照。</p>
-<p>用户可以对任意快照新建指针。比如，新建一个 fix-typo 分支，就是创建一个叫做 fix-typo 的指针，指向某个快照。所以，Git 新建分支特别容易，成本极低。</p>
-<p>Git 有一个特殊指针HEAD， 总是指向当前分支的最近一次快照。另外，Git 还提供简写方式，HEAD^指向 HEAD的前一个快照（父节点），HEAD~6则是HEAD之前的第6个快照。</p>
-<p>每一个分支指针都是一个文本文件，保存在.git/refs/heads/目录，该文件的内容就是它所指向的快照的二进制对象名（哈希值）。</p>
-<h3 id="更新分支"><a href="#更新分支" class="headerlink" title="更新分支"></a>更新分支</h3><p>git log的运行过程是这样的：</p>
-<ol>
-<li>查找HEAD指针对应的分支，本例是master</li>
-<li><p>找到master指针指向的快照，本例是 785f188674ef3c6ddc5b516307884e1d551f53ca</p>
-</li>
-<li><p>找到父节点（前一个快照）c9053865e9dff393fd2f7a92a18f9bd7f2caa7fa</p>
-</li>
-<li>以此类推，显示当前分支的所有快照</li>
-</ol>
-<p><strong>最后，补充一点。前面说过，分支指针是动态的。原因在于，下面三个命令会自动改写分支指针。</strong></p>
-<ul>
-<li>git commit：当前分支指针移向新创建的快照。</li>
-<li>git pull：当前分支与远程分支合并后，指针指向新创建的快照。</li>
-<li>git reset [commit_sha]：当前分支指针重置为指定快照。</li>
-</ul>
-<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="https://medium.com/@shalithasuranga/how-does-git-work-internally-7c36dcb1f2cf" target="_blank" rel="noopener">How does git work internally</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/03/redux思想写微信小程序/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="KrisLee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Krislee的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/03/redux思想写微信小程序/" itemprop="url">redux思想写微信小程序</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-03T23:20:26+08:00">
-                2018-10-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/03/JavaScript数据可视化库/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="KrisLee">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Krislee的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/03/JavaScript数据可视化库/" itemprop="url">JavaScript数据可视化库</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-03T21:09:10+08:00">
-                2018-10-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h6 id="在前端的开发中…数据是枯燥的，但是图形的展示却是有趣的。有些时候我们需要借助一些三方的js库来实现数据可视化。让用户更加直观的看透数据的变化更替。下面我们列出如下："><a href="#在前端的开发中…数据是枯燥的，但是图形的展示却是有趣的。有些时候我们需要借助一些三方的js库来实现数据可视化。让用户更加直观的看透数据的变化更替。下面我们列出如下：" class="headerlink" title="在前端的开发中…数据是枯燥的，但是图形的展示却是有趣的。有些时候我们需要借助一些三方的js库来实现数据可视化。让用户更加直观的看透数据的变化更替。下面我们列出如下："></a>在前端的开发中…数据是枯燥的，但是图形的展示却是有趣的。有些时候我们需要借助一些三方的js库来实现数据可视化。让用户更加直观的看透数据的变化更替。下面我们列出如下：</h6><h3 id="D3-js"><a href="#D3-js" class="headerlink" title="D3.js"></a>D3.js</h3><p><strong>star 数：80K</strong></p>
-<p>它允许你将任意数据绑定到文档对象模型（DOM），然后在文档上应用数据转换。</p>
-<p><a href="https://github.com/d3/d3/blob/master/API.md" target="_blank" rel="noopener">这里是D3的API</a></p>
-<p><strong>如果使用npm</strong></p>
-<figure class="highlight plain"><figcaption><span>install d3```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">**你也可以加载d3使用如下： d3js.org, CDNJS, or unpkg.**</span><br></pre></td></tr></table></figure>
-<p><script src="https://d3js.org/d3.v5.js"></script><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
-<p><script src="https://d3js.org/d3.v5.min.js"></script><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
-<p>import * as d3 from “d3”;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
-<p>import {scaleLinear} from “d3-scale”;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">**在node里**</span><br></pre></td></tr></table></figure></p>
-<p>var d3 = require(“d3”);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">当然你也可以按模块加载使用Object.assign</span><br><span class="line"></span><br><span class="line">```var d3 = Object.assign(&#123;&#125;, require(&quot;d3-format&quot;), require(&quot;d3-geo&quot;), require(&quot;d3-geo-projection&quot;));</span><br></pre></td></tr></table></figure></p>
-<p>这里有一个很棒的例子 ：<a href="https://github.com/d3/d3/wiki/Gallery" target="_blank" rel="noopener">https://github.com/d3/d3/wiki/Gallery</a></p>
-<p>项目地址：<a href="https://github.com/d3/d3/" target="_blank" rel="noopener">https://github.com/d3/d3/</a></p>
-<h3 id="ChartJS"><a href="#ChartJS" class="headerlink" title="ChartJS"></a>ChartJS</h3><p><strong>star 数：40K</strong></p>
-<p>一个非常受欢迎的开源 HTML5 图表库，它使用画布元素构建响应式 Web 应用。ChartJS 提供了混合图表类型，新的图表轴类型和漂亮的动画。它的设计简单而优雅，有 8 种基本的图表类型，你可以将该库与 moment.js 结合在一起使用，用于渲染时间轴。</p>
-<p>如果项目中使用的是react，这里有<a href="https://github.com/reactjs/react-chartjs" target="_blank" rel="noopener">react-chartjs</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var LineChart = require(&quot;react-chartjs&quot;).Line;</span><br><span class="line"></span><br><span class="line">var MyComponent = React.createClass(&#123;</span><br><span class="line">  render: function() &#123;</span><br><span class="line">    return &lt;LineChart data=&#123;chartData&#125; options=&#123;chartOptions&#125; width=&quot;600&quot; height=&quot;250&quot;/&gt;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>项目地址：<a href="https://cdnjs.com/libraries/Chart.js" target="_blank" rel="noopener">https://cdnjs.com/libraries/Chart.js</a></p>
-<h3 id="ThreeJS"><a href="#ThreeJS" class="headerlink" title="ThreeJS"></a>ThreeJS</h3><p>ThreeJS 用 WebGL 创建 3d 动画。该项目的灵活性和抽象性意味着它也可用于 2 维或 3 维的数据可视化。</p>
-<p>使用方法：<br><a href="https://threejs.org/build/three.min.js" target="_blank" rel="noopener">下载微型库</a>并包含在你的html代码中，同样你可以使用npm，通过install 然后import 在你的模块中，二者选一，这也取决你如何搭建你的项目。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=&quot;js/three.min.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-<h6 id="这段代码创建一个场景、一个摄像机和一个几何立方体，并将立方体添加到场景中。然后，它为场景和摄像机创建一个WebGL渲染器，并将该视图添加到文档中。body元素。最后，它为摄像机动画场景中的立方体。"><a href="#这段代码创建一个场景、一个摄像机和一个几何立方体，并将立方体添加到场景中。然后，它为场景和摄像机创建一个WebGL渲染器，并将该视图添加到文档中。body元素。最后，它为摄像机动画场景中的立方体。" class="headerlink" title="这段代码创建一个场景、一个摄像机和一个几何立方体，并将立方体添加到场景中。然后，它为场景和摄像机创建一个WebGL渲染器，并将该视图添加到文档中。body元素。最后，它为摄像机动画场景中的立方体。"></a>这段代码创建一个场景、一个摄像机和一个几何立方体，并将立方体添加到场景中。然后，它为场景和摄像机创建一个WebGL渲染器，并将该视图添加到文档中。body元素。最后，它为摄像机动画场景中的立方体。</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">var camera, scene, renderer;</span><br><span class="line">var geometry, material, mesh;</span><br><span class="line"></span><br><span class="line">init();</span><br><span class="line">animate();</span><br><span class="line"></span><br><span class="line">function init() &#123;</span><br><span class="line"></span><br><span class="line">	camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 10 );</span><br><span class="line">	camera.position.z = 1;</span><br><span class="line"></span><br><span class="line">	scene = new THREE.Scene();</span><br><span class="line"></span><br><span class="line">	geometry = new THREE.BoxGeometry( 0.2, 0.2, 0.2 );</span><br><span class="line">	material = new THREE.MeshNormalMaterial();</span><br><span class="line"></span><br><span class="line">	mesh = new THREE.Mesh( geometry, material );</span><br><span class="line">	scene.add( mesh );</span><br><span class="line"></span><br><span class="line">	renderer = new THREE.WebGLRenderer( &#123; antialias: true &#125; );</span><br><span class="line">	renderer.setSize( window.innerWidth, window.innerHeight );</span><br><span class="line">	document.body.appendChild( renderer.domElement );</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function animate() &#123;</span><br><span class="line"></span><br><span class="line">	requestAnimationFrame( animate );</span><br><span class="line"></span><br><span class="line">	mesh.rotation.x += 0.01;</span><br><span class="line">	mesh.rotation.y += 0.02;</span><br><span class="line"></span><br><span class="line">	renderer.render( scene, camera );</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Echarts-amp-Highcharts"><a href="#Echarts-amp-Highcharts" class="headerlink" title="Echarts &amp; Highcharts"></a>Echarts &amp; Highcharts</h3><p><strong>star 数：30K</strong></p>
-<p>百度的 Echarts 项目是一个基于浏览器的交互式图表和可视化库。它是用纯 JavaScript 编写的，基于 zrender 画布。它支持以画布、SVG(4.0+) 和 VML 的形式绘制图表。除了 PC 和移动浏览器外，ECharts 还可以与 node 上的 node-canvas 一起使用，以便进行高效的服务器端渲染（SSR）。</p>
-<p>这也是个人比较推荐的项目…因为也是有比较清晰和明确的中文文档。</p>
-<p>echarts可以个性化自定义定制属于自己的主题，地址如下：<br><a href="http://echarts.baidu.com/theme-builder/#acc-line-body" target="_blank" rel="noopener">http://echarts.baidu.com/theme-builder/#acc-line-body</a></p>
-<p>库的下载地址如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://echarts.baidu.com/download.html</span><br></pre></td></tr></table></figure>
-<p><strong>Highcharts</strong></p>
-<p><strong>star 数：8K</strong></p>
-<p>Highcharts JS 是一个广受欢迎的基于 SVG 的 JavaScript 图表库，针对旧的浏览器可降级到 VML 和画布。世界上最大的 100 家公司中，有 72 家公司（Facebook、Twitter 等）使用了这个库，这使得它成为世界上最流行的 JS 图表 API。</p>
-<p>项目地址:<br><a href="https://github.com/highcharts/highcharts" target="_blank" rel="noopener">https://github.com/highcharts/highcharts</a></p>
-<h3 id="Metric-Graphics"><a href="#Metric-Graphics" class="headerlink" title="Metric-Graphics"></a>Metric-Graphics</h3><p><strong>star 数：7K</strong></p>
-<p>Metric-Graphics 用于可视化和布局时间序列数据。它相对较小（80kb），提供了小而优雅的线条图、散点图、直方图、柱状图和数据表，以及地格图（rug plot）和基本线性回归等特性。</p>
-<p>这里有一个交互式的示例库：</p>
-<p><a href="https://metricsgraphicsjs.org/examples.htm" target="_blank" rel="noopener">https://metricsgraphicsjs.org/examples.htm</a></p>
-<p>项目地址：</p>
-<p><a href="https://github.com/metricsgraphics/metrics-graphics" target="_blank" rel="noopener">https://github.com/metricsgraphics/metrics-graphics</a></p>
-<h3 id="Recharts"><a href="#Recharts" class="headerlink" title="Recharts"></a>Recharts</h3><p>Recharts 是一个使用 React 和 D3 构建的图表库，可以作为声明性的 React 组件使用。 该库提供原生 SVG 支持，轻量级依赖树（D3 子模块）高度可定制。官网文档中可以找到很多例子。</p>
-<p>项目地址：</p>
-<p><a href="https://github.com/recharts/recharts" target="_blank" rel="noopener">https://github.com/recharts/recharts</a></p>
-<h3 id="Raphael"><a href="#Raphael" class="headerlink" title="Raphael"></a>Raphael</h3><p><strong>star 数：10K</strong></p>
-<p>Raphael 是一个 JavaScript 矢量库，可在 Web 中绘制矢量图形。该库使用 SVG W3C 和 VML 作为创建图形的基础，因此每个图形对象也是 DOM 对象，你可以附加 JavaScript 事件处理程序。Raphael 目前支持 Firefox 3.0+、Safari 3.0+、Chrome 5.0+、Opera 9.5+ 和 Internet Explorer 6.0+。</p>
-<p>项目地址：</p>
-<p><a href="https://github.com/DmitryBaranovskiy/raphael" target="_blank" rel="noopener">https://github.com/DmitryBaranovskiy/raphael</a></p>
-<h3 id="C3js"><a href="#C3js" class="headerlink" title="C3js"></a>C3js</h3><p><strong>star 数：8K</strong></p>
-<p>C3 是一个基于 D3 的可重用 Web 应用图表库。该库为每个元素提供了相应的类，这样你就可以通过这些类来自定义样式，并通过 D3 直接扩展结构。它还提供了多种 API 和回调来访问图表状态。借助它们，你可以更新图表，即使是已经渲染好的图标。</p>
-<p>看看这些例子：<a href="https://c3js.org/examples.html" target="_blank" rel="noopener">https://c3js.org/examples.html</a></p>
-<p>项目地址：<a href="https://github.com/c3js/c3" target="_blank" rel="noopener">https://github.com/c3js/c3</a></p>
-<h3 id="React-Vis"><a href="#React-Vis" class="headerlink" title="React Vis"></a>React Vis</h3><p><strong>star 数：4K</strong></p>
-<p>React-vis 是 Uber 开发的一系列数据可视化组件，包括线 / 面 / 柱状图、热图、散热图、等高线图、六角热图等等。使用该库不需要事先掌握 D3 或任何其他 data-vis 库的知识，并提供了低级模块化的构建块组件，如 x/y 轴。</p>
-<p>项目地址：<a href="https://github.com/uber/react-vis" target="_blank" rel="noopener">https://github.com/uber/react-vis</a></p>
-<h3 id="React-Virtualized"><a href="#React-Virtualized" class="headerlink" title="React Virtualized"></a>React Virtualized</h3><p><strong>star 数：12K</strong></p>
-<p>React virtualized 是一组 React 组件，有效地呈现大型列表和表格数据。ES6、CommonJS 和 UMD 版本可以在每个分发版中使用，该项目支持 Webpack 4 工作流。请注意，为了避免版本冲突，必须将 react，react-dom 指定为 peer 依赖。</p>
-<p>项目地址：<a href="https://github.com/bvaughn/react-virtualized" target="_blank" rel="noopener">https://github.com/bvaughn/react-virtualized</a></p>
-<h3 id="Victory"><a href="#Victory" class="headerlink" title="Victory"></a>Victory</h3><p><strong>star 数：6K+</strong></p>
-<p>Victory 在 Web 和 React Native 应用程序中使用相同的 API，以便于跨平台绘制图表。一种优雅而灵活的方式来利用 React 组件来支持实用的数据可视化。</p>
-<p>项目地址：</p>
-<p><a href="https://github.com/FormidableLabs/victory" target="_blank" rel="noopener">https://github.com/FormidableLabs/victory</a></p>
-<h3 id="CartoDB"><a href="#CartoDB" class="headerlink" title="CartoDB"></a>CartoDB</h3><p><strong>star 数：2K</strong></p>
-<p>Carto 是一个位置智能和数据可视化工具，用于发现位置数据中的见解。你可以通过 Web 表单上传地理空间数据（Shapefiles、GeoJSON 等），并在数据集或地图上将其可视化，使用 SQL 进行搜索，并使用 CartoCSS 来应用地图样式。</p>
-<p>这里有一些视频演示：<a href="https://vimeo.com/channels/carto" target="_blank" rel="noopener">https://vimeo.com/channels/carto</a></p>
-<p>项目地址：<a href="https://github.com/CartoDB/cartodb" target="_blank" rel="noopener">https://github.com/CartoDB/cartodb</a></p>
-<h3 id="Raw-graphs"><a href="#Raw-graphs" class="headerlink" title="Raw graphs"></a>Raw graphs</h3><p><strong>star 数：5K</strong></p>
-<p>Raw 是电子表格和数据可视化之间的连接，基于 d3.js 库创建基于向量的自定义可视化。它可以处理表格数据（电子表格和 CSV）和从其他应用程序复制和粘贴的文本。因为是 SVG 格式，所以可以使用矢量图形编辑器编辑，或直接嵌入到网页中。</p>
-<p>这里有一个例子：<a href="https://rawgraphs.io/gallery/" target="_blank" rel="noopener">https://rawgraphs.io/gallery/</a></p>
-<p>项目地址：</p>
-<p><a href="https://github.com/densitydesign/raw" target="_blank" rel="noopener">https://github.com/densitydesign/raw</a></p>
-<h3 id="Metabase"><a href="#Metabase" class="headerlink" title="Metabase"></a>Metabase</h3><p><strong>star 数：11K+</strong></p>
-<p>Metabase 是一种相当快速和简单的方法，可以在不了解 SQL 的情况下创建数据仪表盘（分析师和数据专业人士可使用 SQL 模式）。 你可以创建片段和度量指标，发送数据到 Slack（通过 MetaBot 在 Slack 中查看数据）等等。它可能是一个很好的工具，可用它在团队内部可视化数据，尽管可能需要做一些维护工作。</p>
-<p>项目地址：</p>
-<p><a href="https://github.com/metabase/metabase" target="_blank" rel="noopener">https://github.com/metabase/metabase</a></p>
-<h3 id="tauCharts"><a href="#tauCharts" class="headerlink" title="tauCharts"></a>tauCharts</h3><p><strong>star 数：2K</strong></p>
-<p>tauCharts 一个基于 D3 的图表库。该库提供了一个声明接口，用于将数据字段快速映射到可视化属性，它的架构允许你使用插件构建切面和扩展图表行为。</p>
-<p>项目地址：</p>
-<p><a href="https://github.com/TargetProcess/tauCharts" target="_blank" rel="noopener">https://github.com/TargetProcess/tauCharts</a></p>
-<h3 id="原文链接：https-blog-bitsrc-io-11-javascript-charts-and-data-visualization-libraries-for-2018-f01a283a5727"><a href="#原文链接：https-blog-bitsrc-io-11-javascript-charts-and-data-visualization-libraries-for-2018-f01a283a5727" class="headerlink" title="原文链接：https://blog.bitsrc.io/11-javascript-charts-and-data-visualization-libraries-for-2018-f01a283a5727"></a>原文链接：<a href="https://blog.bitsrc.io/11-javascript-charts-and-data-visualization-libraries-for-2018-f01a283a5727" target="_blank" rel="noopener">https://blog.bitsrc.io/11-javascript-charts-and-data-visualization-libraries-for-2018-f01a283a5727</a></h3>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2351,7 +2207,7 @@ Legacy version - 历史版本
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
